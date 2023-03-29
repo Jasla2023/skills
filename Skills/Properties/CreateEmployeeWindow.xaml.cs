@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,6 +81,32 @@ namespace Skills.Properties
             grd2createEmployee.Children.Add(addedSkillLevelComboBoxes.Last());
 
             rowsAdded++;
+
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            //Connection with Sql using ConnectionString
+            SqlConnection connection = new SqlConnection("Data Source=LAPTOP-AI5QJL80\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            //Open the Sql Connection
+            connection.Open();
+
+            //Sql Insert Command
+            SqlCommand command = new SqlCommand("Insert into Employees values (@FirstName,@LastName)", connection);
+            SqlCommand command1 = new SqlCommand("Insert into Skills values (@Skill,@SkillLevel)", connection);
+
+            command.Parameters.AddWithValue("@FirstName", tbxFirstName);
+            command.Parameters.AddWithValue("@LastName", tbxLastName);
+            command.ExecuteNonQuery();
+
+            command.Parameters.AddWithValue("@Skill", tbxSkill);
+            command.Parameters.AddWithValue("@SkillLevel", cbxLevel);
+            command1.ExecuteNonQuery();
+
+            //Close Sql Connection
+            connection.Close();
+            MessageBox.Show("Successfully Saved");
+
 
         }
     }

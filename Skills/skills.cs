@@ -8,6 +8,34 @@ namespace Skills
 {
     class skills
     {
+        string skill;
+        string skillLevel;
+
+        public string Skill
+        {
+            get
+            {
+                return skill;
+            }
+
+            set
+            {
+                skill = value;
+            }
+        }
+
+        public string SkillLevel
+        {
+            get
+            {
+                return skillLevel;
+            }
+
+            set
+            {
+                skillLevel = value;
+            }
+        }
 
     }
 }

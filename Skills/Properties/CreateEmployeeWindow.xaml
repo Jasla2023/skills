@@ -39,7 +39,7 @@
         
         
         <Button Name="btnClose" Content="Schließen" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Click="btnClose_Click"/>
-        <Button Name="btnSave" Content="Speichern" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+        <Button Name="btnSave" Content="Speichern" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Click="btnSave_Click"/>
 
         <Grid Name="grd2createEmployee" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
 
