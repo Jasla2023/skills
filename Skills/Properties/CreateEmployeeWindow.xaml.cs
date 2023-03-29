@@ -1,5 +1,4 @@
-﻿using Skills.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,27 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Skills
+namespace Skills.Properties
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für CreateEmployeeWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CreateEmployeeWindow : Window
     {
-        public MainWindow()
+        public CreateEmployeeWindow()
         {
             InitializeComponent();
-
-            
         }
 
-        private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            CreateEmployeeWindow cew = new CreateEmployeeWindow();
-            cew.Show();
+            Close();
         }
     }
 }
