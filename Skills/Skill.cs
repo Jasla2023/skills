@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace Skills
 {
-    class skills
+    class Skill
     {
-        string skill;
-        string skillLevel;
-
-        public string Skill
+        string skillName;
+        int skillLevel;
+     
+        public string SkillName
         {
             get
             {
-                return skill;
+                return skillName;
             }
 
             set
             {
-                skill = value;
+                skillName = value;
             }
         }
 
-        public string SkillLevel
+        public int SkillLevel
         {
             get
             {

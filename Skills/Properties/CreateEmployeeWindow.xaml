@@ -31,9 +31,9 @@
         <Label Name="lblLevel" Content="Stufe: "   Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         <ComboBox Name="cbxLevel" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ComboBoxItem IsSelected="True">Grundkenntnisse</ComboBoxItem>
-            <ComboBoxItem>fortgeschrittene Kenntnisse</ComboBoxItem>
-            <ComboBoxItem>bereits in Projekt eingesetzt</ComboBoxItem>
-            <ComboBoxItem>umfangreiche Projekterfahrungen</ComboBoxItem>
+            <ComboBoxItem>Fortgeschrittene Kenntnisse</ComboBoxItem>
+            <ComboBoxItem>Bereits in Projekt eingesetzt</ComboBoxItem>
+            <ComboBoxItem>Umfangreiche Projekterfahrungen</ComboBoxItem>
         </ComboBox>
 
         
