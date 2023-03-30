@@ -84,27 +84,69 @@ namespace Skills.Properties
 
         }
 
+        private int AssignSkillLevel(ComboBox skillLevel)
+        {
+
+            int level = 0;
+            switch ((skillLevel.SelectedItem as ComboBoxItem).Content.ToString())
+            {
+                case "Grundkenntnisse": level = 1;
+                    break;
+                   
+                case "Fortgeschrittene Kenntnisse": level = 2;
+                    break;
+
+                case "Bereits in Projekt eingesetzt": level = 3;
+                    break;
+
+
+                case "Umfangreiche Projekterfahrungen": level = 4;
+                    break;
+
+            }
+            return level;
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            Employee employee = new Employee();
+            employee.FirstName = tbxFirstName.Text;
+            employee.LastName = tbxLastName.Text;
+
+            Skill skill = new Skill();
+            skill.SkillName = tbxSkill.Text;
+            skill.SkillLevel = AssignSkillLevel(cbxLevel);
+            
+
             //Connection with Sql using ConnectionString
             SqlConnection connection = new SqlConnection("Data Source=LAPTOP-AI5QJL80\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             //Open the Sql Connection
             connection.Open();
 
             //Sql Insert Command
-            SqlCommand command = new SqlCommand("Insert into Employees values (@FirstName,@LastName)", connection);
-            SqlCommand command1 = new SqlCommand("Insert into Skills values (@Skill,@SkillLevel)", connection);
+            SqlCommand command = new SqlCommand("Insert into Employees (FirstName,LastName,Employee_Id) values (@FirstName,@LastName,(Select SCOPE_IDENTITY()))", connection);
 
-            command.Parameters.AddWithValue("@FirstName", tbxFirstName);
-            command.Parameters.AddWithValue("@LastName", tbxLastName);
+            SqlCommand command1 = new SqlCommand("Select Skill, SkillLevel from Skills where Employee_Id = @Employee_Id", connection);
+            SqlDataReader reader1;
+            reader1 = command1.ExecuteReader();
+            if (reader1.Read())
+            {
+               
+            }
+
+            SqlCommand command2 = new SqlCommand("Insert into Skills (Skill,SkillLevel,Employee_Id) values (@Skill,@SkillLevel,@Employee_Id)", connection);
+
+            command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+            command.Parameters.AddWithValue("@LastName", employee.LastName);
             command.ExecuteNonQuery();
 
-            command.Parameters.AddWithValue("@Skill", tbxSkill);
-            command.Parameters.AddWithValue("@SkillLevel", cbxLevel);
-            command1.ExecuteNonQuery();
+            command2.Parameters.AddWithValue("@Skill", skill.SkillName);
+            command2.Parameters.AddWithValue("@SkillLevel", skill.SkillLevel);
+            command2.ExecuteNonQuery();
 
             //Close Sql Connection
             connection.Close();
+
             MessageBox.Show("Successfully Saved");
 
 

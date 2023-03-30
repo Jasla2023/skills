@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Skills
 {
-    class employees
+    class Employee
     {
         int employee_Id;
         string firstName;
