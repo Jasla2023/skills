@@ -84,6 +84,14 @@ namespace Skills.Properties
 
         }
 
+        private int getSkillLevel(ComboBox SL)
+        {
+            int result = 0;
+            while((SL.Items[result] as ComboBoxItem).IsSelected == false)
+                result++;
+            return result + 1;
+        }
+        
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             //Connection with Sql using ConnectionString
@@ -91,6 +99,7 @@ namespace Skills.Properties
             //Open the Sql Connection
             connection.Open();
 
+            //specify columns!!!
             //Sql Insert Command
             SqlCommand command = new SqlCommand("Insert into Employees values (@FirstName,@LastName)", connection);
             SqlCommand command1 = new SqlCommand("Insert into Skills values (@Skill,@SkillLevel)", connection);
@@ -99,13 +108,30 @@ namespace Skills.Properties
             command.Parameters.AddWithValue("@LastName", tbxLastName);
             command.ExecuteNonQuery();
 
-            command.Parameters.AddWithValue("@Skill", tbxSkill);
-            command.Parameters.AddWithValue("@SkillLevel", cbxLevel);
+            
+            command1.Parameters.AddWithValue("@Skill", tbxSkill);
+            command1.Parameters.AddWithValue("@SkillLevel", cbxLevel);
             command1.ExecuteNonQuery();
+
+
+            
+
+            foreach(TextBox skill in addedSkillTextBoxes)
+            {
+                SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skill, skillevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN))", connection);
+                insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkill", skill.Text);
+                insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkillLevel", getSkillLevel(addedSkillLevelComboBoxes[addedSkillTextBoxes.IndexOf(skill)]));
+                insertAllAdditionalSkills.Parameters.AddWithValue("@FN", tbxFirstName.Text);
+                insertAllAdditionalSkills.Parameters.AddWithValue("@LN", tbxLastName.Text);
+
+                insertAllAdditionalSkills.ExecuteNonQuery();
+
+            }
 
             //Close Sql Connection
             connection.Close();
             MessageBox.Show("Successfully Saved");
+
 
 
         }
