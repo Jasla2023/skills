@@ -65,9 +65,9 @@ namespace Skills.Properties
 
             addedSkillLevelComboBoxes.Add(new ComboBox());
             addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Grundkenntnisse", IsSelected=true});
-            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "fortgeschrittene Kenntnisse" });
-            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "bereits in Projekt eingesetzt" });
-            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "umfangreiche Projekterfahrungen" });
+            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" });
+            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" });
+            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Umfangreiche Projekterfahrungen" });
             Grid.SetRow(addedSkillLevelComboBoxes.Last(), 1 + rowsAdded);
             Grid.SetColumn(addedSkillLevelComboBoxes.Last(), 3);
             addedSkillLevelComboBoxes.Last().HorizontalAlignment = HorizontalAlignment.Left;
@@ -87,7 +87,7 @@ namespace Skills.Properties
         private int AssignSkillLevel(ComboBox skillLevel)
         {
 
-            int level = 0;
+            int level;
             switch ((skillLevel.SelectedItem as ComboBoxItem).Content.ToString())
             {
                 case "Grundkenntnisse": level = 1;
@@ -102,6 +102,7 @@ namespace Skills.Properties
 
                 case "Umfangreiche Projekterfahrungen": level = 4;
                     break;
+                default: throw new ArgumentException() ;
 
             }
             return level;
@@ -149,17 +150,20 @@ namespace Skills.Properties
                 command2.ExecuteNonQuery();
 
 
-
+                int row = 0;
 
                 foreach (TextBox skill in addedSkillTextBoxes)
                 {
-                    SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skill, skillevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN))", connection);
+                    SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skill, skilllevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN))", connection);
                     insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkill", skill.Text);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkillLevel", AssignSkillLevel(addedSkillLevelComboBoxes[addedSkillTextBoxes.IndexOf(skill)]));
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@FN", tbxFirstName.Text);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@LN", tbxLastName.Text);
 
-                    insertAllAdditionalSkills.ExecuteNonQuery();
+                    insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkillLevel", AssignSkillLevel(addedSkillLevelComboBoxes[addedSkillTextBoxes.IndexOf(skill)]));
+                
+
+                insertAllAdditionalSkills.Parameters.AddWithValue("@FN", tbxFirstName.Text);
+                insertAllAdditionalSkills.Parameters.AddWithValue("@LN", tbxLastName.Text);
+
+                insertAllAdditionalSkills.ExecuteNonQuery();
 
                 }
             }
@@ -171,7 +175,7 @@ namespace Skills.Properties
             finally
             { connection.Close(); }
 
-            MessageBox.Show("Successfully Saved");
+            MessageBox.Show("Erfolgreich gespeichert");
 
 
 
