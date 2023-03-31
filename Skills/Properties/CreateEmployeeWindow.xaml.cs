@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Skills;
+using System.Data.SqlTypes;
 
 namespace Skills.Properties
 {
@@ -109,15 +110,29 @@ namespace Skills.Properties
 
                 case "Umfangreiche Projekterfahrungen": level = 4;
                     break;
-                default: throw new ArgumentException() ;
+                
 
                 default: throw new ArgumentException("" + addedSkillLevelComboBoxes.IndexOf(skillLevel) + "");
             }
             return level;
         }
 
+        
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            if(dpcDateOfBirth.SelectedDate == null)
+            {
+                MessageBox.Show("Geben Sie bitte ein Geburtsdatum ein!");
+                return;
+            }
+
+
+            if (DatabaseConnections.EmployeeExists(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)))
+            {
+                MessageBox.Show("Der Mitarbeiter existiert schon!");
+            }
+
+
             List<string> skillNames = new List<string>();
             List<int> sls = new List<int>();
 
@@ -135,7 +150,7 @@ namespace Skills.Properties
 
             try
             {
-                DatabaseConnections.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
+                DatabaseConnections.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate), tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
             }
             catch (SqlException exception)
             {
