@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Skills;
 
 namespace Skills.Properties
 {
@@ -37,6 +38,12 @@ namespace Skills.Properties
         private List<Label> addedSkillLevelLabels = new List<Label>();
         private List<ComboBox> addedSkillLevelComboBoxes = new List<ComboBox>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        
         private void btnAddMoreSkills_Click(object sender, RoutedEventArgs e)
         {
             CreateEmployee.Height += 30;
@@ -65,9 +72,9 @@ namespace Skills.Properties
 
             addedSkillLevelComboBoxes.Add(new ComboBox());
             addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Grundkenntnisse", IsSelected=true});
-            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "fortgeschrittene Kenntnisse" });
-            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "bereits in Projekt eingesetzt" });
-            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "umfangreiche Projekterfahrungen" });
+            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" });
+            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" });
+            addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Umfangreiche Projekterfahrungen" });
             Grid.SetRow(addedSkillLevelComboBoxes.Last(), 1 + rowsAdded);
             Grid.SetColumn(addedSkillLevelComboBoxes.Last(), 3);
             addedSkillLevelComboBoxes.Last().HorizontalAlignment = HorizontalAlignment.Left;
@@ -103,78 +110,38 @@ namespace Skills.Properties
                 case "Umfangreiche Projekterfahrungen": level = 4;
                     break;
 
+                default: throw new ArgumentException("" + addedSkillLevelComboBoxes.IndexOf(skillLevel) + "");
             }
             return level;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            /*Employee employee = new Employee();
-            employee.FirstName = tbxFirstName.Text;
-            employee.LastName = tbxLastName.Text;
+            List<string> skillNames = new List<string>();
+            List<int> sls = new List<int>();
 
-            Skill skill = new Skill();
-            skill.SkillName = tbxSkill.Text;
-            skill.SkillLevel = AssignSkillLevel(cbxLevel);
-            */
+            foreach (TextBox tb in addedSkillTextBoxes)
 
-            //Connection with Sql using ConnectionString
-            SqlConnection connection = new SqlConnection("Data Source=LAPTOP-AI5QJL80\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            //Open the Sql Connection
+            {
+                skillNames.Add(tb.Text);
+            }
+
+            foreach (ComboBox cb in addedSkillLevelComboBoxes)
+            {
+                sls.Add(AssignSkillLevel(cb));
+            }
+       
+
             try
             {
-                connection.Open();
-
-                //Sql Insert Command
-                SqlCommand command = new SqlCommand("Insert into Employees (FirstName,LastName) values (@FirstName,@LastName)", connection);
-
-                /*SqlCommand command1 = new SqlCommand("Select Skill, SkillLevel from Skills where Employee_Id = @Employee_Id", connection);
-                SqlDataReader reader1;
-                reader1 = command1.ExecuteReader();
-                if (reader1.Read())
-                {
-
-                }*/
-
-                SqlCommand command2 = new SqlCommand("Insert into Skills (Skill,SkillLevel,Employee_Id) values (@Skill,@SkillLevel,SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN)", connection);
-
-                command.Parameters.AddWithValue("@FirstName", tbxFirstName.Text);
-                command.Parameters.AddWithValue("@LastName", tbxLastName.Text);
-                command.ExecuteNonQuery();
-
-                command2.Parameters.AddWithValue("@Skill", tbxSkill.Text);
-                command2.Parameters.AddWithValue("@SkillLevel", AssignSkillLevel(cbxLevel));
-                command2.Parameters.AddWithValue("@FN", tbxFirstName.Text);
-                command2.Parameters.AddWithValue("@LN", tbxLastName.Text);
-                command2.ExecuteNonQuery();
-
-
-
-
-                foreach (TextBox skill in addedSkillTextBoxes)
-                {
-                    SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skill, skillevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN))", connection);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkill", skill.Text);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkillLevel", AssignSkillLevel(addedSkillLevelComboBoxes[addedSkillTextBoxes.IndexOf(skill)]));
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@FN", tbxFirstName.Text);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@LN", tbxLastName.Text);
-
-                    insertAllAdditionalSkills.ExecuteNonQuery();
-
-                }
+                DatabaseConnections.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
             }
-            catch (SqlException ex)
+            catch (SqlException exception)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(exception.Message);
             }
-            //Close Sql Connection
-            finally
-            { connection.Close(); }
 
-            MessageBox.Show("Successfully Saved");
-
-
-
+            MessageBox.Show("Mitarbeiterdaten erfolgreich erfasst!");
         }
     }
 }
