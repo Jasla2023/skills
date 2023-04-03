@@ -96,7 +96,7 @@ namespace Skills
             try
             {
                 connection.Open();
-                SqlCommand getDuplicates = new SqlCommand("SELECT COUNT(1) \"c\" FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate");
+                SqlCommand getDuplicates = new SqlCommand("SELECT COUNT(1) \"c\" FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate",connection);
                 getDuplicates.Parameters.AddWithValue("FN", FN);
                 getDuplicates.Parameters.AddWithValue("LN", LN);
                 getDuplicates.Parameters.AddWithValue("@birthdate", BD);

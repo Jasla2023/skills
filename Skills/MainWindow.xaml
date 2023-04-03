@@ -22,8 +22,11 @@
 
         <Button Name="btnAddEmployee" Content="Mitarbeiter hinzufügen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddEmployee_Click"/>
 
+        <Button Name="btnSearchEmployee" Content="Mitarbeiter suchen" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchEmployee_Click" Width="126"/>
+
+
     </Grid>
 
-    
+
 
 </Window>

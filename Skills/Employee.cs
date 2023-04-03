@@ -1,56 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Skills
 {
-    class Employee
+  public class Employee
     {
         int employee_Id;
         string firstName;
         string lastName;
+        DateTime birthdate;
 
-        public int Employee_Id
-        {
-            get
-            {
-                return employee_Id;
-            }
-
-            set
-            {
-                employee_Id = value;
-            }
-        }
-
-
-        public string FirstName
-        {
-            get
-            {
-                return firstName;
-            }
-
-            set
-            {
-                firstName = value;
-            }
-        }
-
-        public string LastName
-        {
-            get
-            {
-                return lastName;
-            }
-
-            set
-            {
-                lastName = value;
-            }
-        }
+        public int Employee_Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        
     }
 
    

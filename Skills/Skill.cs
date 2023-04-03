@@ -1,41 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Skills
 {
-    class Skill
+  public class Skill
     {
+        [Key]
+        int skill_Id;
         string skillName;
         int skillLevel;
+        int employee_Id;
      
-        public string SkillName
-        {
-            get
-            {
-                return skillName;
-            }
+      public int Skill_Id { get; set; }
+      public string SkillName { get; set; }
+      public int SkillLevel { get; set; }
 
-            set
-            {
-                skillName = value;
-            }
-        }
-
-        public int SkillLevel
-        {
-            get
-            {
-                return skillLevel;
-            }
-
-            set
-            {
-                skillLevel = value;
-            }
-        }
+    public int Employee_Id { get; set;}
 
     }
 }

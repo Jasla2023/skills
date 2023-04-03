@@ -1,71 +1,101 @@
 ﻿<Window x:Class="Skills.Properties.CreateEmployeeWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Skills.Properties"
-        mc:Ignorable="d"
-        Name="CreateEmployee"
-        Title="Mitarbeiter Hinzufügen" Height="450" Width="900">
-    <Grid Name="grd1createEmployee">
+        xmlns:local="clr-namespace:Skills"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:uc1="clr-namespace:Skills"
+        mc:Ignorable="d" Height="650" Width="1000" Background="Transparent" WindowStyle="None"
+        WindowStartupLocation="CenterScreen" AllowsTransparency="True">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="225*"/>
-            <ColumnDefinition Width="225*"/>
-            <ColumnDefinition Width="184*"/>
-            <ColumnDefinition Width="41*"/>
-            <ColumnDefinition Width="225*"/>
-
+            <ColumnDefinition Width="450"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
 
-        <Label Name="lblFirstName" Content="Vorname: " Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="162,0,0,0"/>
-        <TextBox Name="tbxFirstName" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
+        <!--Left Section-->
 
-        <Label Name="lblLastName" Content="Name: " Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="177,0,0,0"/>
-        <TextBox Name="tbxLastName" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
+        <Border Background="AliceBlue" Padding="30" CornerRadius="25 0 0 25">
+            <StackPanel VerticalAlignment="Center">
+                <Image Source="/Images/logo.jpg" Width="382" Height="265" Margin="0 0 0 40"/>
 
-        <Label Name="lblSkill" Content="Kenntniss/Erfahrung: " Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,217,0,0" Grid.RowSpan="2"/>
-        <TextBox Name="tbxSkill" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Width="150"/>
-
-        <Label Name="lblLevel" Content="Stufe: " Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,217,0,0" Grid.RowSpan="2"/>
-        <ComboBox Name="cbxLevel" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,217,0,0" Grid.RowSpan="2">
-            <ComboBoxItem IsSelected="True">Grundkenntnisse</ComboBoxItem>
-            <ComboBoxItem>Fortgeschrittene Kenntnisse</ComboBoxItem>
-            <ComboBoxItem>Bereits in Projekt eingesetzt</ComboBoxItem>
-            <ComboBoxItem>Umfangreiche Projekterfahrungen</ComboBoxItem>
-        </ComboBox>
+                <TextBlock Text="Erfassung eines Mitarbeiters" TextAlignment="Center" FontWeight="SemiBold" FontSize="28" Foreground="#363636" />
 
 
 
-        <Button Name="btnClose" Content="Schließen" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,187,0,0" Click="btnClose_Click"/>
-        <Button Name="btnSave" Content="Speichern" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,187,0,0" Click="btnSave_Click"/>
+            </StackPanel>
 
-        <Grid Name="grd2createEmployee" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,217,0,0" Grid.RowSpan="2">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
+        </Border>
 
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
 
-            <Button Name="btnAddMoreSkills" Content="Weitere Kenntnisse hinzufügen" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddMoreSkills_Click"/>
 
-        </Grid>
-        <DatePicker Name="dpcDateOfBirth" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Name="lblDateOfBirth"  Grid.Column="3" Content="Geburtsdatum:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+        <!--Input Section-->
+        <Border Grid.Column="1" Padding="20" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown">
+            <Grid>
+                <Image Source="/Images/Close_Icons.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" />
+                <Image Source="/Images/Minimize.png" Width="20" Margin="0 7 60 0" Style="{StaticResource iconApp}" />
+
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="216" Width="370">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+
+                    </Grid.RowDefinitions>
+
+                    <TextBox Grid.Column="1"  Grid.Row="0"  Style="{StaticResource text}" Margin="0,-2,0,0" VerticalAlignment="Top"/>
+                    <TextBox Grid.Column="1" Grid.Row="1"  Style="{StaticResource text}"/>
+                    <DatePicker Grid.Column="1" Grid.Row="2"  Style="{StaticResource date}"/>
+                    <TextBox Grid.Column="1" Grid.Row="3"  Style="{StaticResource text}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="4" Height="25">
+                        <ComboBoxItem IsSelected="True">
+                            Grundkenntnisse
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Fortgeschrittene Kenntnisse
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Bereits in Projekt eingesetzt
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Umfangreiche Projekterfahrungen
+                        </ComboBoxItem>
+
+                    </ComboBox>
+
+                    <Label Grid.Row="0" Content="Vorname:"/>
+                    <Label Grid.Row="1" Content="Nachname:"/>
+                    <Label Grid.Row="2" Content="Geburtsdatum:"/>
+                    <Label Grid.Row="3" Content="Kenntnisse:"/>
+                    <Label Grid.Row="4" Content="Kenntnissstufe:"/>
+
+
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Margin="0 10">
+
+                    </StackPanel>
+                    <Grid Grid.Column="1" Grid.Row="7" Margin="0 40 0 0"/>
+
+                    <Button Content="Beenden" Margin="-16,244,29,-225" Grid.Row="6" Click="Button_Click"/>
+                    <Button Content="Sichern" Margin="93,244,-9,-225" Grid.Column="1" Grid.Row="6" Click="Button_Click1"/>
+
+
+                </Grid>
+            </Grid>
+        </Border>
 
 
 
     </Grid>
+
 </Window>
