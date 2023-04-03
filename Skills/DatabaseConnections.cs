@@ -27,12 +27,15 @@ namespace Skills
         private static string connectionString = "Data Source=LAPTOP-AI5QJL80\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         /// <summary>
-        /// 
+        /// Adds a new record into the employees table in the databese and a record into the skills table in the database for each skill
         /// </summary>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="s"></param>
-        /// <param name="l"></param>
+        /// <param name="firstName">First name of the employee</param>
+        /// <param name="lastName">Last name of the employee</param>
+        /// <param name="bd">Date of birth of the employee</param>
+        /// <param name="firstSkill">First skill of the employee</param>
+        /// <param name="firstSkillLevel">Level of the first skill of the employee</param>
+        /// <param name="s">List of all the additional skills of the employee</param>
+        /// <param name="l">List of all the levels corresponding to the additional skills of the employee</param>
         public static void SaveEmployeeIntoDatabase(string firstName, string lastName, SqlDateTime bd, string firstSkill, int firstSkillLevel, List<string> s, List<int> l)
         {
             //Connection with Sql using ConnectionString
@@ -88,10 +91,19 @@ namespace Skills
 
 
         }
-
+        /// <summary>
+        /// Checks for duplicate EMployees in the database
+        /// </summary>
+        /// <param name="FN">First name of the employee</param>
+        /// <param name="LN">Last name of the employee</param>
+        /// <param name="BD">Date of birth of the employee</param>
+        /// <returns>True if the employee with the specified first name, last name and date of birth exsists, otherwise false</returns>
+        /// <exception cref="Exception">For internal use only</exception>
         public static bool EmployeeExists(string FN, string LN, SqlDateTime BD)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+
+            bool result;
 
             try
             {
@@ -108,7 +120,7 @@ namespace Skills
                 if (numberOfDuplicates == -1)
                     throw new Exception("Error in the SQL-query");
 
-                return numberOfDuplicates > 0;
+                result = numberOfDuplicates > 0;
 
                 
             }
@@ -120,6 +132,8 @@ namespace Skills
             {
                 connection.Close(); 
             }
+
+            return result;
         }
 
     }

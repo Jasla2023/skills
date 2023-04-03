@@ -26,6 +26,38 @@ namespace Skills
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Converts a skill level into its name
+        /// </summary>
+        /// <param name="l">skill level (digit 1 to 4)</param>
+        /// <returns>a string, description of the skill level</returns>
+        /// <exception cref="ArgumentOutOfRangeException">throws an ArgumentOutOfRangeException if l is outside range [1;4]</exception>
+        private string ExtractSkillLevelFromNumber (int l)
+        {
+            if (l != 1 && l != 2 && l != 3 && l != 4)
+                throw new ArgumentOutOfRangeException();
+            switch(l)
+            {
+                case 1:
+                    return "Grundkenntnisse";
+                    break;
+                case 2:
+                    return "Fortgeschrittene Kenntnisse";
+                    break ;
+                case 3:
+                    return "Bereits in Projekt eingesetzt";
+                    break;
+                case 4:
+                    return "Umfangreiche Projekterfahrungen";
+                    break;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+        /// <summary>
+        /// Searches the employee with th given first name, last name and date of birth
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             if (dpcDateOfBirth.SelectedDate == null)
@@ -111,16 +143,25 @@ namespace Skills
                                               select new { g.Key.FirstName, g.Key.LastName, Skills = g.Select(s => new { s.SkillName, s.SkillLevel }) };
 
                     string result = "";
+
+                    string previousFirstName = "";
+                    string previousLastName = "";
+
                     foreach (var employee in employeesWithSkills)
                     {
-                        result += $"{employee.FirstName} {employee.LastName} -";
+                        if (!(employee.FirstName == previousFirstName  && employee.LastName == previousLastName))
+                            result += $"{employee.FirstName} {employee.LastName} -";
 
                         foreach (var skill in employee.Skills)
                         {
-                            result += $" {skill.SkillName}: {skill.SkillLevel},";
+                            result += $" {skill.SkillName}: {ExtractSkillLevelFromNumber(skill.SkillLevel)},";
                         }
 
                         result = result.TrimEnd(',') + "\n";
+
+                        previousFirstName = employee.FirstName;
+                        previousLastName = employee.LastName;
+
                     }
 
                     tbxOutput.Text = result;

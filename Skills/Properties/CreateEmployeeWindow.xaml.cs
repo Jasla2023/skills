@@ -49,6 +49,11 @@ namespace Skills.Properties
         private List<Label> addedSkillLevelLabels = new List<Label>();
         private List<ComboBox> addedSkillLevelComboBoxes = new List<ComboBox>();
 
+        /// <summary>
+        /// Closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -59,7 +64,7 @@ namespace Skills.Properties
 
 
         /// <summary>
-        /// 
+        /// Adds additional skill and skill level entry
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -124,7 +129,12 @@ namespace Skills.Properties
         {
 
         }
-
+        /// <summary>
+        /// Gets a skill level out of a ComboBox
+        /// </summary>
+        /// <param name="skillLevel">The ComboBox used for selecting a skill level</param>
+        /// <returns>Returns a level based on its description selected in the ComboBox</returns>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the ComboBox is not suitable for selecting a skill level aka doesn't have the necerssary ComboBoxItems</exception>
         private int AssignSkillLevel(ComboBox skillLevel)
         {
 
@@ -149,12 +159,16 @@ namespace Skills.Properties
                     break;
 
 
-                default: throw new ArgumentException("" + addedSkillLevelComboBoxes.IndexOf(skillLevel) + "");
+                default: throw new ArgumentException("Not a skilllevel ComboBox!");
             }
             return level;
         }
 
-
+        /// <summary>
+        /// Saves the new employee in the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (dpcDateOfBirth.SelectedDate == null)
