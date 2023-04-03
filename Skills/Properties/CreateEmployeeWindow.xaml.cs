@@ -72,7 +72,7 @@ namespace Skills.Properties
         private void btnAddMoreSkills_Click(object sender, RoutedEventArgs e)
         {
             Height += 70;
-            grdEntries.Height += 60;
+            //grdEntries.Height += 60;
             
             grdEntries.RowDefinitions.Add(new RowDefinition());
             grdEntries.RowDefinitions.Add(new RowDefinition());
@@ -88,9 +88,9 @@ namespace Skills.Properties
             addedSkillTextBoxes.Add(new TextBox());
             Grid.SetRow(addedSkillTextBoxes.Last(), 6 + rowsAdded);
             Grid.SetColumn(addedSkillTextBoxes.Last(), 1);
-            addedSkillTextBoxes.Last().HorizontalAlignment = HorizontalAlignment.Left;
+            addedSkillTextBoxes.Last().HorizontalAlignment = HorizontalAlignment.Stretch;
             addedSkillTextBoxes.Last().VerticalAlignment = VerticalAlignment.Center;
-            addedSkillTextBoxes.Last().Width = 150;
+            
             addedSkillTextBoxes.Last().Style = new Style();
             addedSkillTextBoxes.Last().Height = 25;
                 
@@ -108,8 +108,9 @@ namespace Skills.Properties
             addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Umfangreiche Projekterfahrungen" });
             Grid.SetRow(addedSkillLevelComboBoxes.Last(), 7 + rowsAdded);
             Grid.SetColumn(addedSkillLevelComboBoxes.Last(), 1);
-            addedSkillLevelComboBoxes.Last().HorizontalAlignment = HorizontalAlignment.Left;
+            addedSkillLevelComboBoxes.Last().HorizontalAlignment = HorizontalAlignment.Stretch;
             addedSkillLevelComboBoxes.Last().VerticalAlignment = VerticalAlignment.Center;
+            addedSkillLevelComboBoxes.Last().Height = 25;
 
             Grid.SetRow(btnAddMoreSkills, 8 + rowsAdded);
 
@@ -175,6 +176,12 @@ namespace Skills.Properties
             {
                 MessageBox.Show("Geben Sie bitte ein Geburtsdatum ein!");
                 return;
+            }
+
+            if (tbxFirstName.Text == ""||tbxLastName.Text == ""||tbxSkill.Text=="")
+            {
+                MessageBox.Show("Alle Felder müssen ausgefüllt sein!");
+                return ;
             }
 
 

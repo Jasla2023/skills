@@ -37,7 +37,7 @@
                 <Image Source="/Images/Close_Icons.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click"/>
                 <Image Source="/Images/Minimize.png" Width="20" Margin="0 7 60 0" Style="{StaticResource iconApp}" />
 
-                <Grid Name="grdEntries" HorizontalAlignment="Center" VerticalAlignment="Center" Height="216" Width="370">
+                <Grid Name="grdEntries" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="370">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="*"/>
