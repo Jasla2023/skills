@@ -24,6 +24,8 @@
 
         <Button Name="btnSearchEmployee" Content="Mitarbeiter suchen" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchEmployee_Click" Width="126"/>
 
+        <Button Name="btnSearchEmployeesBySkills" Content="Angeferderte Kenntnísse eingeben"    Grid.Row="2"    HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchEmployeesBySkills_Click" />
+
 
     </Grid>
 

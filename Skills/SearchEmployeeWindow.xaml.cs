@@ -54,7 +54,8 @@ namespace Skills
             }
         }
         /// <summary>
-        /// Searches the employee with th given first name, last name and date of birth
+        /// Searches the employee with th given first name, last name and date of birth. The search result is being shown in the TextBox in the present window. If not all of the search fields 
+        /// in the window are filled in, shows a corresponding error message and stops.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

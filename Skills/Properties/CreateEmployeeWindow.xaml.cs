@@ -26,7 +26,11 @@ namespace Skills.Properties
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Behavior upon clicking on the border of the window (moving the window with the mouse button pressed)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -59,12 +63,12 @@ namespace Skills.Properties
             Close();
         }
 
-       
+
 
 
 
         /// <summary>
-        /// Adds additional skill and skill level entry
+        /// Adds additional skill and skill level entry  into the UI and in the corresponding lists
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -131,10 +135,10 @@ namespace Skills.Properties
 
         }
         /// <summary>
-        /// Gets a skill level out of a ComboBox
+        /// Converts a skill level ComboBox into a digit representing the skill level
         /// </summary>
         /// <param name="skillLevel">The ComboBox used for selecting a skill level</param>
-        /// <returns>Returns a level based on its description selected in the ComboBox</returns>
+        /// <returns>Returns a level based on its description selected in the ComboBox within the range [1;4]</returns>
         /// <exception cref="ArgumentException">Throws an ArgumentException if the ComboBox is not suitable for selecting a skill level aka doesn't have the necerssary ComboBoxItems</exception>
         private int AssignSkillLevel(ComboBox skillLevel)
         {
@@ -217,6 +221,7 @@ namespace Skills.Properties
             }
 
             MessageBox.Show("Mitarbeiterdaten erfolgreich erfasst!");
+            Close();
         }
     }
 }

@@ -70,5 +70,11 @@ namespace Skills
             //    }
             //}
         }
+
+        private void btnSearchEmployeesBySkills_Click(object sender, RoutedEventArgs e)
+        {
+            RequiredSkillsForm requiredSkillsForm = new RequiredSkillsForm();
+            requiredSkillsForm.Show();
+        }
     }
 }

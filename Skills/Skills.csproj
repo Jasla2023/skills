@@ -186,6 +186,9 @@
     </ApplicationDefinition>
     <Compile Include="DatabaseConnections.cs" />
     <Compile Include="EmployeeDb.cs" />
+    <Compile Include="Properties\RequiredSkillsForm.xaml.cs">
+      <DependentUpon>RequiredSkillsForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchEmployeeWindow.xaml.cs">
       <DependentUpon>SearchEmployeeWindow.xaml</DependentUpon>
     </Compile>
@@ -204,6 +207,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Properties\CreateEmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Properties\RequiredSkillsForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
