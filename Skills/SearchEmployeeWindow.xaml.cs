@@ -75,8 +75,15 @@ namespace Skills
                     lbxOutput.ItemsSource = null;
                     foreach (var item in query)
                     {
-                        var skillsText = string.Join(", ", item.Skills.Select(s => string.Format("{0} ({1})", s.SkillName, GetSkillLevelText.Compile()(s.SkillLevel))));
-                        lbxOutput.Items.Add($"{item.FirstName} {item.LastName} - {skillsText}");
+                        var skillsText = "";
+                        foreach (var skill in item.Skills)
+                        {
+                            skillsText += $"{skill.SkillName} ({GetSkillLevelText.Compile()(skill.SkillLevel)})\n";
+                        }
+
+                        lbxOutput.Items.Add($"{item.FirstName} {item.LastName}:");
+                        lbxOutput.Items.Add(skillsText);
+
                     }
                 }
                 else

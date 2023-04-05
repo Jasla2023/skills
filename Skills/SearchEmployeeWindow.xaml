@@ -54,22 +54,22 @@
                     <Image Source="/Images/Minimize.png" Width="20" Margin="239,0,0,0" Style="{StaticResource iconApp}" MouseLeftButtonDown="MinimizeWindow" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     <Image Source="/Images/Close_Icons.png" Width="25" Margin="274,0,0,0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                    <Label Name="lblFirstName" Content="Vorname:" Grid.Column="0" Grid.Row="1" Margin="21,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Label Name="lblFirstName" Content="Vorname:" Grid.Column="0" Grid.Row="1" Margin="21,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
                     <TextBox Name="tbxFirstName" Grid.Column="1" Grid.Row="1" Margin="5 30" VerticalAlignment="Center"/>
 
-                    <Label Name="lblLastName" Content="Name:" Grid.Column="0" Grid.Row="2" Margin="0,9,7,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                    <Label Name="lblLastName" Content="Name:" Grid.Column="0" Grid.Row="2" Margin="0,8,305,0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                     <TextBox Name="tbxLastName" Grid.Column="1" Grid.Row="2" Margin="5,0,5,0"/>
 
                     <Label Name="lblDateOfBirth" Content="Geburtsdatum:" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-8,32,0,0"/>
-                    <DatePicker Name="dpcDateOfBirth" Grid.Column="1" Grid.Row="3" Margin="5,32,0,0" VerticalAlignment="Top" Height="25"/>
+                    <DatePicker Name="dpcDateOfBirth" Grid.Row="3" Margin="5,32,5,0" VerticalAlignment="Top" Height="25" Grid.Column="1"/>
 
-                    <Button Name="btnSearch" Content="Suchen" Grid.Row="3" Margin="3,79,0,170" Grid.Column="1" Click="btnSearch_Click">
+                    <Button Name="btnSearch" Content="Suchen" Grid.Row="3" Margin="167,263,6,2" Click="btnSearch_Click" Grid.Column="1">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
                         </Button.Effect>
                     </Button>
 
-                    <ListBox Name="lbxOutput" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Margin="10,150,0,-18" VerticalAlignment="Stretch" Grid.RowSpan="2"/>
+                    <ListBox Name="lbxOutput" Grid.Column="1" Grid.Row="3" Margin="5,83,5,67"/>
 
 
 
