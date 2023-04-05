@@ -136,5 +136,117 @@ namespace Skills
             return result;
         }
 
+        /// <summary>
+        /// Returns a list of employee_ids of the employee that possess the all the given skills at the corresponding given levels or better
+        /// </summary>
+        /// <param name="firstSkill">The name of the first skill</param>
+        /// <param name="firstSkillLevel">The numeric representation of its level</param>
+        /// <param name="s">The name of all further skills (maximal number, including the firstSkill is 6)</param>
+        /// <param name="l">The numeric representation of their levels</param>
+        /// <returns></returns>
+        public static List<int> SearchEmployeeBySkills(string firstSkill, int firstSkillLevel, List<string> s, List<int> l)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            List<int> EmployeeIDs = new List<int>();
+            try
+            {
+                connection.Open();
+                
+                SqlCommand getEmployeeIDs = new SqlCommand();
+                getEmployeeIDs.Connection = connection;
+                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname LIKE '%" + firstSkill + "%' AND skilllevel >= " + firstSkillLevel;
+
+                foreach(string skill in s)
+                {
+                    getEmployeeIDs.CommandText += "INTERSECT SELECT employee_id FROM skills WHERE skillname LIKE '%" + skill + "%' AND skillevel >= " + l[s.IndexOf(skill)];
+                }
+
+                SqlDataReader IDs = getEmployeeIDs.ExecuteReader();
+                while (IDs.Read())
+                    EmployeeIDs.Add(IDs.GetInt32(0));
+
+            }
+            catch(SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return EmployeeIDs;
+        }
+
+        /// <summary>
+        /// Returns the first name of the employee with the specifies ID from the table employees in the database
+        /// </summary>
+        /// <param name="id">A valid existing employee_id</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws a new ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
+        public static string GetFirstNameByID(int id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            string FN;
+
+            try
+            {
+                connection.Open();
+                SqlCommand getFirstName = new SqlCommand("SELECT firstname FROM employees WHERE employee_id = @EID", connection);
+                getFirstName.Parameters.AddWithValue("@EID", id);
+                SqlDataReader firstName = getFirstName.ExecuteReader();
+                FN = "";
+                while (firstName.Read())
+                    FN = firstName.GetString(0);
+                if (FN == "")
+                    throw new ArgumentException("Not a valid ID!");
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally 
+            { 
+                connection.Close(); 
+            }
+
+            return FN;
+        }
+
+        /// <summary>
+        /// Returns the last name of the employee with the specifies ID from the table employees in the database
+        /// </summary>
+        /// <param name="id">A valid existing employee_id</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws a new ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
+        public static string GetLastNameByID(int id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            string LN;
+
+            try
+            {
+                connection.Open();
+                SqlCommand getLastName = new SqlCommand("SELECT lastname FROM employees WHERE employee_id = @EID", connection);
+                getLastName.Parameters.AddWithValue("@EID", id);
+                SqlDataReader lastName = getLastName.ExecuteReader();
+                LN = "";
+                while (lastName.Read())
+                    LN = lastName.GetString(0);
+                if (LN == "")
+                    throw new ArgumentException("Not a valid ID!");
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return LN;
+        }
+
     }
 }

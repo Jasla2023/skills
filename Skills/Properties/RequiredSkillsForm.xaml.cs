@@ -122,15 +122,79 @@ namespace Skills.Properties
             Close();
         }
         /// <summary>
-        /// Send the search form to the database
+        /// Sends the search form to the database. If no skills are specified, shows an error message and stops
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            List<string> skillNames = new List<string>();
+            List<int> sls = new List<int>();
+
+            if(tbxSkill.Text == "")
+            {
+                MessageBox.Show("Mindestens 1 Kenntnis muss eingegeben werden");
+                return;
+            }
+            
+            foreach (TextBox tb in addedSkillTextBoxes)
+
+            {
+                skillNames.Add(tb.Text);
+            }
+
+            foreach (ComboBox cb in addedSkillLevelComboBoxes)
+            {
+                sls.Add(AssignSkillLevel(cb));
+            }
+            try
+            {
+                List<int> SearchResult = DatabaseConnections.SearchEmployeeBySkills(tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
+            }           
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+
             Close();
         }
 
+        /// <summary>
+        /// Converts a skill level ComboBox into a digit representing the skill level
+        /// </summary>
+        /// <param name="skillLevel">The ComboBox used for selecting a skill level</param>
+        /// <returns>Returns a level based on its description selected in the ComboBox within the range [1;4]</returns>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the ComboBox is not suitable for selecting a skill level aka doesn't have the necerssary ComboBoxItems</exception>
+        private int AssignSkillLevel(ComboBox skillLevel)
+        {
+
+            int level;
+            switch ((skillLevel.SelectedItem as ComboBoxItem).Content.ToString())
+            {
+                case "Grundkenntnisse":
+                    level = 1;
+                    break;
+
+                case "Fortgeschrittene Kenntnisse":
+                    level = 2;
+                    break;
+
+                case "Bereits in Projekt eingesetzt":
+                    level = 3;
+                    break;
+
+
+                case "Umfangreiche Projekterfahrungen":
+                    level = 4;
+                    break;
+
+
+                default: throw new ArgumentException("Not a skilllevel ComboBox!");
+            }
+            return level;
+        }
 
     }
 }
