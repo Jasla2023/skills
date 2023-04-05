@@ -8,15 +8,18 @@
         xmlns:uc1="clr-namespace:Skills"
         mc:Ignorable="d" Height="650" Width="1000" Background="Transparent" WindowStyle="None"
         WindowStartupLocation="CenterScreen" AllowsTransparency="True">
+ 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="450"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel></StackPanel>
+      
         <!--Left Section-->
 
-        <Border Name="brd" Background="AliceBlue" Padding="30" CornerRadius="25 0 0 25">
+        <Border Grid.Column="0" Name="brd" Background="AliceBlue" Padding="30" CornerRadius="25 0 0 25" BorderThickness="4,4,0,4" BorderBrush="DarkSlateBlue">
             <StackPanel VerticalAlignment="Center">
                 <Image Source="/Images/logo.jpg" Width="382" Height="265" Margin="0 0 0 40"/>
 
@@ -29,10 +32,9 @@
 
         </Border>
 
-
-
+    
         <!--Input Section-->
-        <Border Grid.Column="1" Padding="20" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown">
+        <Border Grid.Column="1" Padding="20" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown"  BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue">
             <Grid>
                 <Image Source="/Images/Close_Icons.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click"/>
                 <Image Source="/Images/Minimize.png" Width="20" Margin="0 7 60 0" Style="{StaticResource iconApp}" />
@@ -96,7 +98,7 @@
             </Grid>
         </Border>
 
-
+    
 
     </Grid>
 

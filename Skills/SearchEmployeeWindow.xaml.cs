@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Skills
 {
@@ -26,160 +30,95 @@ namespace Skills
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Converts a skill level into its name
-        /// </summary>
-        /// <param name="l">skill level (digit 1 to 4)</param>
-        /// <returns>a string, description of the skill level</returns>
-        /// <exception cref="ArgumentOutOfRangeException">throws an ArgumentOutOfRangeException if l is outside range [1;4]</exception>
-        private string ExtractSkillLevelFromNumber (int l)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (l != 1 && l != 2 && l != 3 && l != 4)
-                throw new ArgumentOutOfRangeException();
-            switch(l)
-            {
-                case 1:
-                    return "Grundkenntnisse";
-                    break;
-                case 2:
-                    return "Fortgeschrittene Kenntnisse";
-                    break ;
-                case 3:
-                    return "Bereits in Projekt eingesetzt";
-                    break;
-                case 4:
-                    return "Umfangreiche Projekterfahrungen";
-                    break;
-                default: throw new ArgumentOutOfRangeException();
-            }
+            Close();
         }
-        /// <summary>
-        /// Searches the employee with th given first name, last name and date of birth. The search result is being shown in the TextBox in the present window. If not all of the search fields 
-        /// in the window are filled in, shows a corresponding error message and stops.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+
+        private void MinimizeWindow(object sender, MouseButtonEventArgs e)
         {
-            if (dpcDateOfBirth.SelectedDate == null)
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+
+        private void btnSearch_Click(object sender, RoutedEventArgs d)
+        {
+            using (var context = new EmployeeDb())
             {
-                MessageBox.Show("Geben Sie bitte ein Geburtsdatum ein!");
-                return;
-            }
+                var firstName = tbxFirstName.Text;
+                var lastName = tbxLastName.Text;
+                var dateOfBirth = dpcDateOfBirth.SelectedDate;
 
-            if (tbxFirstName.Text == null)
-            {
-                MessageBox.Show("Geben Sie bitte den Vornamen ein!");
-                return;
-            }
+                var query = (from employee in context.Employees
+                             where employee.FirstName.Contains(firstName) &&
+                                   employee.LastName.Contains(lastName) &&
+                                   employee.BirthDate == dateOfBirth
+                             select new
+                             {
+                                 employee.FirstName,
+                                 employee.LastName,
+                                 employee.BirthDate,
+                                 Skills = (from skill in context.Skills
+                                           where skill.Employee_Id == employee.Employee_Id
+                                           select new { SkillName = skill.SkillName, SkillLevel = skill.SkillLevel })
+                                         .ToList()
+                             }).ToList();
 
-            if (tbxLastName.Text == null)
-            {
-                MessageBox.Show("Geben Sie bitte den Nachnamen ein!");
-                return;
-            }
-
-
-
-
-            try
-            {
-                //using (var db = new EmployeeDb())
-                //{
-                //    StringBuilder sb = new StringBuilder();
-                //    foreach (var employee in db.Employees)
-                //    {
-                //        string birthDate = employee.BirthDate.ToString("dd.MM.yyyy");
-                //        sb.AppendLine($"{employee.Employee_Id} {employee.FirstName} {employee.LastName} {birthDate}");
-                //    }
-                //    MessageBox.Show(sb.ToString(), "Alle Mitarbeiter");
-                //}
-
-
-                //string[] skillNames = { "Java", "C#" };
-
-                //using (var db = new EmployeeDb())
-                //{
-                //    var employeesWithSkills = from em in db.Employees
-                //                              join sk in db.Skills on em.employee_id equals sk.employee_id
-                //                              where skillNames.Contains(sk.skillName)
-                //                              select new { em.firstname, em.lastname };
-
-                //    var uniqueEmployees = employeesWithSkills.Distinct();
-
-                //    foreach (var employee in uniqueEmployees)
-                //    {
-                //        Console.WriteLine("{0} {1}", employee.firstname, employee.lastname);
-                //    }
-                //}
-
-
-                //using (var db = new EmployeeDb())
-                //{
-                //    var employeesWithSkills = from em in db.Employees
-                //                              join sk in db.Skills on em.Employee_Id equals sk.Employee_Id
-                //                              where em.FirstName == tbxFirstName.Text && em.LastName == tbxLastName.Text && em.BirthDate == dpcDateOfBirth.SelectedDate
-                //                              select new { em.FirstName, em.LastName, sk.SkillName, sk.SkillLevel };
-
-                //    string result = "";
-                //    foreach (var employee in employeesWithSkills)
-                //    {
-                //        result += $"{employee.FirstName} {employee.LastName} - {employee.SkillName}: {employee.SkillLevel}\n";
-                //    }
-
-
-                //    tbxOutput.Text = result;
-                //}
-
-                using (var db = new EmployeeDb())
+                if (query.Any())
                 {
-                    var employeesWithSkills = from em in db.Employees
-                                              join g in (
-                                                  from sk in db.Skills
-                                                  group sk by new { sk.Employee_Id, sk.SkillName } into g
-                                                  select new { g.Key.Employee_Id, g.Key.SkillName, SkillLevel = g.Max(s => s.SkillLevel) }
-                                              ) on em.Employee_Id equals g.Employee_Id
-                                              where em.FirstName == tbxFirstName.Text && em.LastName == tbxLastName.Text && em.BirthDate == dpcDateOfBirth.SelectedDate
-                                              group g by new { em.FirstName, em.LastName } into g
-                                              select new { g.Key.FirstName, g.Key.LastName, Skills = g.Select(s => new { s.SkillName, s.SkillLevel }) };
-
-                    string result = "";
-
-                    string previousFirstName = "";
-                    string previousLastName = "";
-
-                    foreach (var employee in employeesWithSkills)
+                    lbxOutput.Items.Clear();
+                    lbxOutput.ItemsSource = null;
+                    foreach (var item in query)
                     {
-                        if (!(employee.FirstName == previousFirstName  && employee.LastName == previousLastName))
-                            result += $"{employee.FirstName} {employee.LastName} -";
-
-                        foreach (var skill in employee.Skills)
-                        {
-                            result += $" {skill.SkillName}: {ExtractSkillLevelFromNumber(skill.SkillLevel)},";
-                        }
-
-                        result = result.TrimEnd(',') + "\n";
-
-                        previousFirstName = employee.FirstName;
-                        previousLastName = employee.LastName;
-
+                        var skillsText = string.Join(", ", item.Skills.Select(s => string.Format("{0} ({1})", s.SkillName, GetSkillLevelText.Compile()(s.SkillLevel))));
+                        lbxOutput.Items.Add($"{item.FirstName} {item.LastName} - {skillsText}");
                     }
-
-                    tbxOutput.Text = result;
                 }
-
-
-
-
-
-
-
+                else
+                {
+                    lbxOutput.Items.Add("Keine Mitarbeiter gefunden.");
+                    lbxOutput.ItemsSource = null;
+                }
             }
-            catch (SqlException exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
+
+
+
+
 
         }
+
+
+
+        static Expression<Func<int, string>> GetSkillLevelText = (level) =>
+     level == 1 ? "Grundkenntnisse" :
+     level == 2 ? "Fortgeschrittene Kenntnisse" :
+     level == 3 ? "Bereits in Projekt eingesetzt" :
+     level == 4 ? "Umfangreiche Kenntnisse" :
+     "Keine Kenntnisse";
+
+
+
+
+
+
+
+
+
     }
+
 }
+       
+
+
+
+
+    
+
+
+
+

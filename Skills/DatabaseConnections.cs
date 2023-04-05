@@ -50,7 +50,7 @@ namespace Skills
 
 
 
-                SqlCommand command2 = new SqlCommand("Insert into Skills (Skill,SkillLevel,Employee_Id) values (@Skill,@SkillLevel,(SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
+                SqlCommand command2 = new SqlCommand("Insert into Skills (SkillName,SkillLevel,Employee_Id) values (@Skill,@SkillLevel,(SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
 
                 command.Parameters.AddWithValue("@FirstName", firstName);
                 command.Parameters.AddWithValue("@LastName", lastName);
@@ -69,7 +69,7 @@ namespace Skills
 
                 foreach (string skill in s)
                 {
-                    SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skill, skillLevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
+                    SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skillName, skillLevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
                     insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkill", skill);
                     insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkillLevel", l[row]);
                     insertAllAdditionalSkills.Parameters.AddWithValue("@FN", firstName);
