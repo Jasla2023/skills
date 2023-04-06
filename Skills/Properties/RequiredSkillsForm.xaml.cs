@@ -44,7 +44,7 @@ namespace Skills.Properties
 
             
             
-            Height += 70;
+            //Height += 70;
             //grdEntries.Height += 60;
 
             grdEntries.RowDefinitions.Add(new RowDefinition());
@@ -94,15 +94,18 @@ namespace Skills.Properties
             grdEntries.Children.Add(addedSkillLevelLabels.Last());
             grdEntries.Children.Add(addedSkillLevelComboBoxes.Last());
 
-            Grid.SetRow(btnClose, 7 + rowsAdded);
-            Grid.SetRow(btnSave, 7 + rowsAdded);
+            //Grid.SetRow(btnClose, 7 + rowsAdded);
+            //Grid.SetRow(btnSave, 7 + rowsAdded);
 
             rowsAdded += 2;
 
             countAddClicks++;
 
             if (countAddClicks >= 5)
+            { 
                 grdEntries.Children.Remove(btnAddMoreSkills);
+                
+            }
 
         }
         /// <summary>

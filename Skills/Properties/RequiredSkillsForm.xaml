@@ -32,7 +32,7 @@
 
 
         <!--Input Section-->
-        <Border Grid.Column="1" Padding="20" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown" BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue">
+        <Border Grid.Column="1" Padding="0" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown" BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue">
             <Grid>
                 <Image Source="/Images/Close_Icons.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click"/>
                 <Image Source="/Images/Minimize.png" Width="20" Margin="0 7 60 0" Style="{StaticResource iconApp}" />
@@ -80,9 +80,9 @@
 
 
 
-                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Margin="0 10">
+                    <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Margin="0 10">
 
-                    </StackPanel>
+                    </StackPanel>-->
 
 
                     <Button x:Name="btnClose" Height="25" Content="Beenden" Margin="-16,244,29,-225" Grid.Row="6" Click="btnClose_Click">
