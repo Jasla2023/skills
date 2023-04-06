@@ -57,6 +57,7 @@ namespace Skills.Properties
             Grid.SetColumn(addedSkillLabels.Last(), 0);
             addedSkillLabels.Last().HorizontalAlignment = HorizontalAlignment.Left;
             addedSkillLabels.Last().VerticalAlignment = VerticalAlignment.Center;
+            addedSkillLabels.Last().FontSize = 15;
 
             addedSkillTextBoxes.Add(new TextBox());
             Grid.SetRow(addedSkillTextBoxes.Last(), 3 + rowsAdded);
@@ -73,6 +74,7 @@ namespace Skills.Properties
             Grid.SetColumn(addedSkillLevelLabels.Last(), 0);
             addedSkillLevelLabels.Last().HorizontalAlignment = HorizontalAlignment.Left;
             addedSkillLevelLabels.Last().VerticalAlignment = VerticalAlignment.Center;
+            addedSkillLevelLabels.Last().FontSize = 15;
 
             addedSkillLevelComboBoxes.Add(new ComboBox());
             addedSkillLevelComboBoxes.Last().Items.Add(new ComboBoxItem { Content = "Grundkenntnisse", IsSelected = true });

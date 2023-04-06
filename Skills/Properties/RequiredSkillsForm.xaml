@@ -16,11 +16,11 @@
 
         <!--Left Section-->
 
-        <Border Name="brd" Background="AliceBlue" Padding="30" CornerRadius="25 0 0 25">
+        <Border Name="brd" Background="AliceBlue" Padding="30" CornerRadius="25 0 0 25" BorderThickness="4,4,0,4" BorderBrush="DarkSlateBlue">
             <StackPanel VerticalAlignment="Center">
                 <Image Source="/Images/logo.jpg" Width="382" Height="265" Margin="0 0 0 40"/>
 
-                <TextBlock Text="Suche der Mitarbeiter, die die angeforderten Kenntnisse haben" TextAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#363636" />
+                <TextBlock Text="Suche der Mitarbeiter, die zu Anforderungen passen" TextAlignment="Center" FontWeight="SemiBold" FontSize="16" Foreground="#363636" />
 
 
 
@@ -32,7 +32,7 @@
 
 
         <!--Input Section-->
-        <Border Grid.Column="1" Padding="20" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown">
+        <Border Grid.Column="1" Padding="20" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown" BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue">
             <Grid>
                 <Image Source="/Images/Close_Icons.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click"/>
                 <Image Source="/Images/Minimize.png" Width="20" Margin="0 7 60 0" Style="{StaticResource iconApp}" />
@@ -48,13 +48,13 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
-                        
+
 
                     </Grid.RowDefinitions>
 
-                    <TextBox Name="tbxSkill" Grid.Column="1"  Grid.Row="0"  Style="{StaticResource text}" Margin="0,-2,0,0" VerticalAlignment="Top"/>
-                    
-                    
+                    <TextBox Name="tbxSkill" Grid.Column="1" Grid.Row="0"  Style="{StaticResource text}" Margin="0,-2,0,0" VerticalAlignment="Top"/>
+
+
                     <ComboBox Name="cbxLevel" Grid.Column="1" Grid.Row="1" Height="25">
                         <ComboBoxItem IsSelected="True">
                             Grundkenntnisse
@@ -71,10 +71,12 @@
 
                     </ComboBox>
 
-                    
-                    <Label Grid.Row="0" Content="Kenntnisse:"/>
-                    <Label Grid.Row="1" Content="Kenntnissstufe:"/>
-                    <Button Name="btnAddMoreSkills" Grid.Row="5" Height="25" Content="+" Margin="0,8,125,0" VerticalAlignment="Top" Click="btnAddMoreSkills_Click"/>
+
+                    <Label Grid.Row="0" Content="Kenntnisse:" FontSize="15"/>
+                    <Label Grid.Row="1" Content="Kenntnissstufe:" FontSize="15"/>
+                    <Button Name="btnAddMoreSkills" Grid.Row="2" Height="25" Content="+" Margin="0,8,125,0" VerticalAlignment="Top" Click="btnAddMoreSkills_Click">
+
+                    </Button>
 
 
 
@@ -83,8 +85,16 @@
                     </StackPanel>
 
 
-                    <Button x:Name="btnClose" Height="25" Content="Beenden" Margin="-16,244,29,-225" Grid.Row="6" Click="btnClose_Click"/>
-                    <Button x:Name="btnSave" Height="25" Content="Suchen" Margin="93,244,-9,-225" Grid.Column="1" Grid.Row="6" Click="btnSave_Click"/>
+                    <Button x:Name="btnClose" Height="25" Content="Beenden" Margin="-16,244,29,-225" Grid.Row="6" Click="btnClose_Click">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+                    </Button>
+                    <Button x:Name="btnSave" Height="25" Content="Suchen" Margin="93,244,-9,-225" Grid.Column="1" Grid.Row="6" Click="btnSave_Click">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+                    </Button>
 
 
                 </Grid>
