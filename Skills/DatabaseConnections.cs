@@ -158,7 +158,7 @@ namespace Skills
 
                 foreach(string skill in s)
                 {
-                    getEmployeeIDs.CommandText += "INTERSECT SELECT employee_id FROM skills WHERE skillname LIKE '%" + skill + "%' AND skillevel >= " + l[s.IndexOf(skill)];
+                    getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname LIKE '%" + skill + "%' AND skillevel >= " + l[s.IndexOf(skill)];
                 }
 
                 SqlDataReader IDs = getEmployeeIDs.ExecuteReader();
