@@ -145,8 +145,16 @@
                         </Button.Effect>
                     </Button>-->
 
-                <Button x:Name="btnClose" Height="25" Content="Beenden" Margin="-21,464,298,-21"  Click="btnClose_Click"/>
-                <Button x:Name="btnSave" Height="25" Content="Ändern/Hinzufügen" Margin="289,463,-14,-20" Click="btnUpdate_Click" RenderTransformOrigin="-1.155,-1.04"/>
+                <Button x:Name="btnClose" Height="25" Content="Beenden" Margin="-21,464,298,-21"  Click="btnClose_Click">
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                    </Button.Effect>
+                </Button>
+                <Button x:Name="btnSave" Height="25" Content="Ändern/Hinzufügen" Margin="289,463,-14,-20" Click="btnUpdate_Click" RenderTransformOrigin="-1.155,-1.04">
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                    </Button.Effect>
+                </Button>
 
 
             </Grid>

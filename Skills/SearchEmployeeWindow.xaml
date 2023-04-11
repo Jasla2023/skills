@@ -63,7 +63,13 @@
                     <Label Name="lblDateOfBirth" Content="Geburtsdatum:" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-8,32,0,0"/>
                     <DatePicker Name="dpcDateOfBirth" Grid.Row="3" Margin="5,32,5,0" VerticalAlignment="Top" Height="25" Grid.Column="1"/>
 
-                    <Button Name="btnSearch" Content="Suchen" Grid.Row="3" Margin="167,263,6,2" Click="btnSearch_Click" Grid.Column="1">
+                    <Button Name="btnSearch" Content="Suchen" Grid.Row="3" Margin="167,266,6,2" Click="btnSearch_Click" Grid.Column="1">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+                    </Button>
+
+                    <Button x:Name="btnClose" Content="Beenden" Grid.Row="3" Grid.Column="0"  Click="btnClose_Click" Grid.ColumnSpan="2" Margin="0,266,254,2">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
                         </Button.Effect>
