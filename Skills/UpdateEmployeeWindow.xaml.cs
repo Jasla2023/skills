@@ -84,6 +84,8 @@ namespace Skills
             cbxUpdateLevel = FindName("cbxUpdateLevel") as ComboBox;
             cbxAddLevel = FindName("cbxAddLevel") as ComboBox;
             tbxAddSkillName = FindName("tbxAddSkillName") as TextBox;
+            tbxActualSkillName = FindName("ActualSkillName") as TextBox;
+            tbxActualSkillNameChange = FindName("ActualSkillNameChange") as TextBox;
         }
 
 
@@ -111,6 +113,11 @@ namespace Skills
                         lblUpdateLastName.Visibility = Visibility.Hidden;
                         lblUpdateFirstName.Visibility = Visibility.Visible;
                         lblAddSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel_Change.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblUpdateSkill.Visibility = Visibility.Hidden;
+
+
 
                         tbxUpdateFirstName.Visibility = Visibility.Visible;
                         tbxUpdateSkillName.Visibility = Visibility.Hidden;
@@ -119,6 +126,9 @@ namespace Skills
                         cbxUpdateLevel.Visibility = Visibility.Hidden;
                         cbxAddLevel.Visibility = Visibility.Hidden;
                         tbxAddSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillNameChange.Visibility = Visibility.Hidden;
+                        cbxActualLevel.Visibility = Visibility.Hidden;
                     }
                     else if (selectedValue == "Nachname ändern")
                     {
@@ -127,6 +137,9 @@ namespace Skills
                         lblUpdateLastName.Visibility = Visibility.Visible;
                         lblUpdateFirstName.Visibility = Visibility.Hidden;
                         lblAddSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel_Change.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblUpdateSkill.Visibility = Visibility.Hidden;
 
                         tbxUpdateFirstName.Visibility = Visibility.Hidden;
                         tbxUpdateSkillName.Visibility = Visibility.Hidden;
@@ -135,6 +148,9 @@ namespace Skills
                         cbxUpdateLevel.Visibility = Visibility.Hidden;
                         cbxAddLevel.Visibility = Visibility.Hidden;
                         tbxAddSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillNameChange.Visibility = Visibility.Hidden;
+                        cbxActualLevel.Visibility = Visibility.Hidden;
 
                     }
                     else if (selectedValue == "Geburtsdatum ändern")
@@ -144,6 +160,9 @@ namespace Skills
                         lblUpdateLastName.Visibility = Visibility.Hidden;
                         lblUpdateFirstName.Visibility = Visibility.Hidden;
                         lblAddSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel_Change.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblUpdateSkill.Visibility = Visibility.Hidden;
 
                         tbxUpdateFirstName.Visibility = Visibility.Hidden;
                         tbxUpdateSkillName.Visibility = Visibility.Hidden;
@@ -152,22 +171,32 @@ namespace Skills
                         cbxUpdateLevel.Visibility = Visibility.Hidden;
                         cbxAddLevel.Visibility = Visibility.Hidden;
                         tbxAddSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillNameChange.Visibility = Visibility.Hidden;
+                        cbxActualLevel.Visibility = Visibility.Hidden;
                     }
                     else if (selectedValue == "Kenntnisse/Kenntnisstufe ändern")
                     {
-                        lblUpdateSkillName_SkillLevel.Visibility = Visibility.Visible;
+                        lblUpdateSkillName_SkillLevel.Visibility = Visibility.Hidden;
                         lblUpdateBirthdate.Visibility = Visibility.Hidden;
                         lblUpdateLastName.Visibility = Visibility.Hidden;
                         lblUpdateFirstName.Visibility = Visibility.Hidden;
                         lblAddSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel_Change.Visibility = Visibility.Visible;
+                        lblActualSkillName_SkillLevel.Visibility = Visibility.Visible;
+                        lblUpdateSkill.Visibility = Visibility.Visible;
 
                         tbxUpdateFirstName.Visibility = Visibility.Hidden;
-                        tbxUpdateSkillName.Visibility = Visibility.Visible;
+                        tbxUpdateSkillName.Visibility = Visibility.Hidden;
                         tbxUpdateLastName.Visibility = Visibility.Hidden;
                         dpcUpdateBirthdate.Visibility = Visibility.Hidden;
                         cbxUpdateLevel.Visibility = Visibility.Visible;
                         cbxAddLevel.Visibility = Visibility.Hidden;
                         tbxAddSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillName.Visibility = Visibility.Visible;
+                        tbxActualSkillNameChange.Visibility = Visibility.Visible;
+                        cbxActualLevel.Visibility = Visibility.Visible;
+                        
                     }
 
                     else if (selectedValue == "Kenntnisse/Kenntnisstufe hinzufügen")
@@ -177,6 +206,9 @@ namespace Skills
                         lblUpdateLastName.Visibility = Visibility.Hidden;
                         lblUpdateFirstName.Visibility = Visibility.Hidden;
                         lblAddSkillName_SkillLevel.Visibility = Visibility.Visible;
+                        lblActualSkillName_SkillLevel_Change.Visibility = Visibility.Hidden;
+                        lblActualSkillName_SkillLevel.Visibility = Visibility.Hidden;
+                        lblUpdateSkill.Visibility = Visibility.Hidden;
 
                         tbxUpdateFirstName.Visibility = Visibility.Hidden;
                         tbxUpdateSkillName.Visibility = Visibility.Hidden;
@@ -185,6 +217,10 @@ namespace Skills
                         cbxUpdateLevel.Visibility = Visibility.Hidden;
                         cbxAddLevel.Visibility = Visibility.Visible;
                         tbxAddSkillName.Visibility = Visibility.Visible;
+                        tbxActualSkillName.Visibility = Visibility.Hidden;
+                        tbxActualSkillNameChange.Visibility = Visibility.Hidden;
+                        cbxActualLevel.Visibility = Visibility.Hidden;
+
                     }
                 }
            

@@ -74,7 +74,7 @@
 
                 </ComboBox>
 
-                <ComboBox Name="cbxUpdateLevel" Margin="101,324,60,121" Visibility="Hidden">
+                <ComboBox Name="cbxUpdateLevel" Margin="101,428,60,17" Visibility="Hidden">
                     <ComboBoxItem Content="Grundkenntnisse" IsSelected="True">
 
                     </ComboBoxItem>
@@ -88,6 +88,8 @@
 
                     </ComboBoxItem>
                 </ComboBox>
+
+
 
 
                 <ComboBox Name="cbxAddLevel" Margin="101,324,60,121" Visibility="Hidden">
@@ -105,13 +107,33 @@
                     </ComboBoxItem>
                 </ComboBox>
 
+                <ComboBox Name="cbxActualLevel" Margin="101,346,60,99" Visibility="Hidden">
+                    <ComboBoxItem Content="Grundkenntnisse" IsSelected="True">
+
+                    </ComboBoxItem>
+                    <ComboBoxItem Content="Fortgeschrittene Kenntnisse">
+
+                    </ComboBoxItem>
+                    <ComboBoxItem Content="Bereits in Projekt eingesetzt">
+
+                    </ComboBoxItem>
+                    <ComboBoxItem Content="Umfangreiche Projekterfahrungen">
+
+                    </ComboBoxItem>
+                </ComboBox>
+
                 <Label Name="lblUpdate" Content="Daten ändern / Kenntnisse hinzufügen?" HorizontalAlignment="Left" Height="44" FontSize="20" VerticalAlignment="Top" Margin="15,185,0,0" Width="358" />
+                <Label Name="lblUpdateSkill" Content="Welche Kenntnis möchtest du ändern?" HorizontalAlignment="Left" Height="44" FontSize="18" VerticalAlignment="Top" Margin="17,259,0,0" Width="358" Visibility="Hidden" />
                 <TextBox Name="tbxUpdateFirstName" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="31" ></TextBox>
                 <TextBox x:Name="tbxUpdateLastName" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="31" Visibility="Hidden" ></TextBox>
                 <DatePicker x:Name="dpcUpdateBirthdate" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="31" Visibility="Hidden" ></DatePicker>
                 <TextBox x:Name="tbxUpdateSkillName" Margin="0,282,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden" ></TextBox>
+                <TextBox x:Name="tbxActualSkillName" Margin="0,307,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden"  ></TextBox>
+                <TextBox x:Name="tbxActualSkillNameChange" Margin="0,388,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden" ></TextBox>
                 <TextBox x:Name="tbxAddSkillName" Margin="0,282,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden"></TextBox>
                 <Label Name="lblUpdateSkillName_SkillLevel" Content="Kenntnis ändern:"  HorizontalAlignment="Left" Margin="-3,282,0,150" Visibility="Hidden" />
+                <Label Name="lblActualSkillName_SkillLevel" Content="Aktuelle Kenntnis:"  HorizontalAlignment="Left" Margin="-3,309,0,123" Visibility="Hidden" />
+                <Label Name="lblActualSkillName_SkillLevel_Change" Content="Kenntnis ändern:"  HorizontalAlignment="Left" Margin="-4,389,0,47" Visibility="Hidden" />
                 <Label Name="lblAddSkillName_SkillLevel" Content="Kenntnis hinzufügen:"  HorizontalAlignment="Left" Margin="-20,282,0,150" Visibility="Hidden"/>
                 <Label Name="lblUpdateFirstName" Content="Vorname ändern:"  HorizontalAlignment="Left" Margin="-3,282,0,150"/>
                 <Label Name="lblUpdateLastName" Content="Nachname ändern:"  HorizontalAlignment="Left" Margin="-9,282,0,150" Visibility="Hidden" />
@@ -123,8 +145,8 @@
                         </Button.Effect>
                     </Button>-->
 
-                <Button x:Name="btnClose" Height="25" Content="Beenden" Margin="-10,443,287,0"  Click="btnClose_Click"/>
-                <Button x:Name="btnSave" Height="25" Content="Ändern/Hinzufügen" Margin="275,443,0,0" Click="btnUpdate_Click" RenderTransformOrigin="-1.155,-1.04"/>
+                <Button x:Name="btnClose" Height="25" Content="Beenden" Margin="-21,464,298,-21"  Click="btnClose_Click"/>
+                <Button x:Name="btnSave" Height="25" Content="Ändern/Hinzufügen" Margin="289,463,-14,-20" Click="btnUpdate_Click" RenderTransformOrigin="-1.155,-1.04"/>
 
 
             </Grid>
