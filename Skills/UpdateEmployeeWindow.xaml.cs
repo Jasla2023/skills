@@ -40,39 +40,59 @@ namespace Skills
         {
             Close();
         }
+        private int AssignSkillLevel(ComboBox skillLevel)
+        {
+
+            int level;
+            switch ((skillLevel.SelectedItem as ComboBoxItem).Content.ToString())
+            {
+                case "Grundkenntnisse":
+                    level = 1;
+                    break;
+
+                case "Fortgeschrittene Kenntnisse":
+                    level = 2;
+                    break;
+
+                case "Bereits in Projekt eingesetzt":
+                    level = 3;
+                    break;
+
+
+                case "Umfangreiche Projekterfahrungen":
+                    level = 4;
+                    break;
+
+
+                default: throw new ArgumentException("Not a skilllevel ComboBox!");
+            }
+            return level;
+        }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs d)
         {
-           
-               
-                var lastName = tbxLastName.Text;
-                var firstName = tbxFirstName.Text;
-                var birthDate = dpcDateOfBirth.SelectedDate;
-
-            
-
-            var newFirstName = tbxUpdateFirstName.Text;
-                // Schritt 2: Verbindung zur Datenbank herstellen
-                using (var db = new EmployeeDb())
-                {
-                    // Schritt 3: Datensatz mit den angegebenen Suchkriterien suchen
-                    var employee = db.Employees.FirstOrDefault(e => e.LastName == lastName && e.FirstName == firstName && e.BirthDate == birthDate);
-
-                    if (employee != null)
-                    {
-                        // Schritt 4: FirstName des Datensatzes aktualisieren
-                        employee.FirstName = newFirstName;
-
-                        // Schritt 5: Änderungen in der Datenbank speichern
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        // Fehlerbehandlung, wenn kein passender Datensatz gefunden wurde
-                        // ...
-                    }
-                }
+            int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)); ;
+            switch((cbxChooseUpdate.SelectedItem as ComboBoxItem).Content.ToString())
+            {
+                case "Vorname ändern":
+                    DatabaseConnections.SetFirstNameByID(empID, tbxUpdateFirstName.Text);
+                    break;
+                case "Nachname ändern":                   
+                    DatabaseConnections.SetLastNameByID(empID, tbxUpdateLastName.Text);
+                    break;
+                case "Geburtsdatum ändern":
+                    DatabaseConnections.SetBirthDateByID(empID, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcUpdateBirthdate.SelectedDate));
+                    break;
+                case "Kenntnisse/Kenntnisstufe ändern":
+                    DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(tbxActualSkillName.Text, empID), tbxActualSkillNameChange.Text, AssignSkillLevel(cbxUpdateLevel));
+                    break;
+                case "Kenntnisse/Kenntnisstufe hinzufügen":
+                    DatabaseConnections.AddSkill(tbxAddSkillName.Text, AssignSkillLevel(cbxAddLevel), empID);
+                    break;
             }
+               
+               
+        }
 
         //Sobald das Fenster UpdateEmployeeWindow geöffnet wird, werden die Felder initialisiert
         private void Window_Loaded(object sender, RoutedEventArgs e)

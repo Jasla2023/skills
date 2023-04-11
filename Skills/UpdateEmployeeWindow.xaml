@@ -45,10 +45,10 @@
                 <Image Source="/Images/Minimize.png" Margin="325,-3,39,0" Style="{StaticResource iconApp}" MouseLeftButtonDown="MinimizeWindow" HorizontalAlignment="Stretch" RenderTransformOrigin="4.738,0.877" />
                 <Image Source="/Images/Close_Icons.png" Width="25" Margin="360,-7,0,0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click" HorizontalAlignment="Left" RenderTransformOrigin="1.407,0.636"/>
 
-                <Label Name="lblFirstName" Content="Vorname:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,47,0,0"/>
+                <Label Name="lblFirstName" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,47,0,0"/>
                 <TextBox Name="tbxFirstName"   Margin="101,94,59,0" Height="31" RenderTransformOrigin="-2.076,0.24" VerticalAlignment="Top"/>
 
-                <Label Name="lblLastName" Content="Name:"  Margin="-5,97,0,174" HorizontalAlignment="Left" RenderTransformOrigin="0.475,1.704"/>
+                <Label Name="lblLastName" Content="Vorname:"  Margin="-5,97,0,174" HorizontalAlignment="Left" RenderTransformOrigin="0.475,1.704"/>
                 <TextBox Name="tbxLastName" Margin="101,44,59,0" VerticalAlignment="Top" Height="31"/>
 
                 <Label Name="lblDateOfBirth" Content="Geburtsdatum:"  HorizontalAlignment="Left" Margin="-4,146,0,136"/>
