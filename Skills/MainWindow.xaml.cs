@@ -76,5 +76,11 @@ namespace Skills
             RequiredSkillsForm requiredSkillsForm = new RequiredSkillsForm();
             requiredSkillsForm.Show();
         }
+
+        private void btnUpdateEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateEmployeeWindow updateEmployee = new UpdateEmployeeWindow();
+            updateEmployee.Show();
+        }
     }
 }
