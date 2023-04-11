@@ -218,7 +218,7 @@ namespace Skills
         /// </summary>
         /// <param name="id">A valid existing employee_id</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">Throws a new ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
         public static string GetLastNameByID(int id)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -246,6 +246,371 @@ namespace Skills
             }
 
             return LN;
+        }
+        /// <summary>
+        /// Returns the id of an employee that has the specifies first name, last name and the date of birth
+        /// </summary>
+        /// <param name="fn">First name of the employee</param>
+        /// <param name="ln">Last name of the employee</param>
+        /// <param name="bd">Date of birth of the employee</param>
+        /// <returns>Int representing an ID in the employees table (Primary key)</returns>
+        /// <exception cref="ArgumentException">Throws an argument exception if an employee with the specified first name, last name and date of birth does not exist</exception>
+        public static int GetIDByFirstNameLastNameAndDateOfBirth(string fn, string ln, SqlDateTime bd)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            int id;
+
+            try
+            {
+                connection.Open();
+                SqlCommand getID = new SqlCommand("SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = CONVERT(DATE, @BD)", connection);
+                getID.Parameters.AddWithValue("@FN", fn);
+                getID.Parameters.AddWithValue("@LN", ln);
+                getID.Parameters.AddWithValue("@BD", bd);
+                SqlDataReader empID = getID.ExecuteReader();
+                id = 0;
+                while (empID.Read())
+                    id = empID.GetInt32(0);
+                if (id == 0)
+                    throw new ArgumentException("Mitarbeiter existiert nicht!");
+            }
+            catch(SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return id;
+        }
+        /// <summary>
+        /// Updates the first name of the employee with the given ID in the database in the employees table
+        /// </summary>
+        /// <param name="id">A valid employee_id from the employees table</param>
+        /// <param name="newFN">A new desired first name</param>
+        /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
+        public static void SetFirstNameByID(int id, string newFN)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", id);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if(c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+                SqlCommand setFirstName = new SqlCommand("UPDATE employees SET firstname = @FN WHERE employee_id = @ID", connection);
+                setFirstName.Parameters.AddWithValue("@FN", newFN);
+                setFirstName.Parameters.AddWithValue("@ID", id);
+                setFirstName.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close ();
+            }
+        }
+
+
+        /// <summary>
+        /// Updates the last name of the employee with the given ID in the database in the employees table
+        /// </summary>
+        /// <param name="id">A valid employee_id from the employees table</param>
+        /// <param name="newLN">A new desired last name</param>
+        /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
+        public static void SetLastNameByID(int id, string newLN)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", id);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+                SqlCommand setLastName = new SqlCommand("UPDATE employees SET lastname = @LN WHERE employee_id = @ID", connection);
+                setLastName.Parameters.AddWithValue("@LN", newLN);
+                setLastName.Parameters.AddWithValue("@ID", id);
+                setLastName.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        /// <summary>
+        /// Updates the date of birth of the employee with the given ID in the database in the employees table
+        /// </summary>
+        /// <param name="id">A valid employee_id from the employees table</param>
+        /// <param name="newBD">A new desired date of birth</param>
+        /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
+        public static void SetBirthDateByID(int id, SqlDateTime newBD)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", id);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+                SqlCommand setDateOfBirth = new SqlCommand("UPDATE employees SET birthdate = CONVERT(DATE,@BD) WHERE employee_id = @ID", connection);
+                setDateOfBirth.Parameters.AddWithValue("@BD", newBD);
+                setDateOfBirth.Parameters.AddWithValue("@ID", id);
+                setDateOfBirth.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Modifies a skill with a known ID. Sets a new name and a new level for the skill
+        /// </summary>
+        /// <param name="skillID">A valid skill_id from the table skills from the database</param>
+        /// <param name="newSkillName">A new desired name for the skill</param>
+        /// <param name="newLevel">A new desired level for the skill (in the digital representation). Must be within range [1;4]</param>
+        /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throws an ArgumentOutOfRangeException if newLevel is outside the permitted range [1;4]</exception>
+        public static void ModifySkill(int skillID, string newSkillName, int newLevel)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            if (newLevel < 1 || newLevel > 4)
+                throw new ArgumentOutOfRangeException("Not a valid skill level!");
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", skillID);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+
+
+                SqlCommand updateSkill = new SqlCommand("UPDATE skills SET skillname = @SN, skilllevel = @SL WHERE skill_id = @ID", connection);
+                updateSkill.Parameters.AddWithValue("@SN", newSkillName);
+                updateSkill.Parameters.AddWithValue("@SL", newLevel);
+                updateSkill.Parameters.AddWithValue("@ID", skillID);
+                updateSkill.ExecuteNonQuery();
+            }
+            catch (SqlException) 
+            { 
+                throw; 
+            }
+            finally
+            {
+                connection.Close() ;
+            }
+        }
+        /// <summary>
+        /// Adds a new skill that an existing employee with a valid id owner possesses
+        /// </summary>
+        /// <param name="skillName">Name of the new skill</param>
+        /// <param name="skillLevel">Level of the new skill in the digital form. Must be in the range [1;4]</param>
+        /// <param name="owner">A valid employee_id from the table employees from the database</param>
+        /// <exception cref="ArgumentOutOfRangeException">Throws an ArgumentOutOfRangeException if newLevel is outside the permitted range [1;4]</exception>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the owner does not represent a valid existing employee_id in the employees table</exception>
+        public static void AddSkill(string skillName, int skillLevel, int owner)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            if (skillLevel < 1 || skillLevel > 4)
+                throw new ArgumentOutOfRangeException("Not a valid skill level!");
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", owner);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Owner is not a valid employee_id!");
+
+                SqlCommand addSkill = new SqlCommand("INSERT INTO skills (skillname, skilllevel, employee_id) values (@SN, @SL, @EID)", connection) ;
+                addSkill.Parameters.AddWithValue("@SN", skillName);
+                addSkill.Parameters.AddWithValue("@SL", skillLevel);
+                addSkill.Parameters.AddWithValue("@EID", owner);
+                addSkill.ExecuteNonQuery();
+            }
+            catch(SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+        /// <summary>
+        /// Deletes a skill with a known ID
+        /// </summary>
+        /// <param name="skillID">A valid skill ID from the skills table</param>
+        /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
+        public static void DeleteSkill(int skillID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", skillID);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+
+                SqlCommand deleteSkill = new SqlCommand("DELETE FROM skills WHERE skill_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", skillID);
+                deleteSkill.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally 
+            { 
+                connection.Close(); 
+            }
+        }
+        /// <summary>
+        /// Returns a list os skill_ids of the skills, possessed by an employee with the specified id
+        /// </summary>
+        /// <param name="id">A valid employee_id from the table employees from the database</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
+        public static List<int> GetSkillsOfAnEmployee(int id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            List<int> skills = new List<int>();
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", id);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+                SqlCommand getSkills = new SqlCommand("SELECT skill_id FROM skills WHERE employee_id = @EID", connection);
+                getSkills.Parameters.AddWithValue("@EID", id);
+                SqlDataReader s = getSkills.ExecuteReader();
+                while(s.Read())
+                    skills.Add(s.GetInt32(0));
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return skills;
+        }
+
+        /// <summary>
+        /// Returns a name of the skill that correesponds to the skillID
+        /// </summary>
+        /// <param name="skillID">A valid skill_id from the skills table from the database</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
+        public static string GetSkillByID(int skillID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            string sn = "";
+            try
+            {
+                
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", skillID);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+                SqlCommand getSkillName = new SqlCommand("SELECT skillname FROM skills WHERE skill_id = @ID", connection);
+                getSkillName.Parameters.AddWithValue("@ID", skillID);
+                SqlDataReader skillName = getSkillName.ExecuteReader();
+                while(skillName.Read())
+                    sn = skillName.GetString(0);
+                
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return sn;
+        }
+        /// <summary>
+        /// Returns a skill level of the skill with the skill ID in the digital format
+        /// </summary>
+        /// <param name="skillID">A valid skill_id from the skills table from the database</param>
+        /// <returns>An int between 1 and 4</returns>
+        /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
+        public static int GetSkillLevelByID(int skillID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            int level = 0;
+            try
+            {
+
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", skillID);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+                SqlCommand getLevel = new SqlCommand("SELECT skilllevel FROM skills WHERE skill_id = @ID", connection);
+                getLevel.Parameters.AddWithValue("@ID", skillID);
+                SqlDataReader l = getLevel.ExecuteReader();
+                while(l.Read())
+                    level = l.GetInt32(0);
+
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return level;
         }
 
     }

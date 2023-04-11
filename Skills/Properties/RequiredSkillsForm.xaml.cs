@@ -141,6 +141,14 @@ namespace Skills.Properties
                 MessageBox.Show("Mindestens 1 Kenntnis muss eingegeben werden");
                 return;
             }
+
+            if(addedSkillTextBoxes.Count > 0)
+                foreach(TextBox tbx in addedSkillTextBoxes)
+                    if(tbx.Text == "")
+                    {
+                        MessageBox.Show("Alle Felder müssen ausgefüllt sein!");
+                        return;
+                    }
             
             foreach (TextBox tb in addedSkillTextBoxes)
 

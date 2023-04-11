@@ -188,6 +188,13 @@ namespace Skills.Properties
                 return ;
             }
 
+            if (addedSkillTextBoxes.Count > 0)
+                foreach (TextBox tbx in addedSkillTextBoxes)
+                    if (tbx.Text == "")
+                    {
+                        MessageBox.Show("Alle Felder müssen ausgefüllt sein!");
+                        return;
+                    }
 
             if (DatabaseConnections.EmployeeExists(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)))
             {
