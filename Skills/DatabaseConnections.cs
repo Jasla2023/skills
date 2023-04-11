@@ -612,6 +612,45 @@ namespace Skills
             }
             return level;
         }
+        /// <summary>
+        /// Returns a skill id from the table skills by its name and the id of the employee who possesses it
+        /// </summary>
+        /// <param name="skillName">Name of the skill</param>
+        /// <param name="owner">Valid employee_id from the table employees from the database</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the owner does not represent a valid existing employee_id in the employees table</exception>
+        public static int GetSkillIDBySkillNameAndOwnerID(string skillName, int owner)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            int skillID = 0;
+            try
+            {
+
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", owner);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Owner is not a valid employee_id!");
+                SqlCommand getSkillID = new SqlCommand("SELECT skill_id FROM skills WHERE skillname LIKE '%@SN%' AND employee_id = @ID", connection);
+                getSkillID.Parameters.AddWithValue("@SN", skillName);
+                getSkillID.Parameters.AddWithValue("@ID", owner);
+                SqlDataReader id = getSkillID.ExecuteReader();
+                while(id.Read())
+                    skillID = id.GetInt32(0);
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return skillID;
+        }
 
     }
 }
