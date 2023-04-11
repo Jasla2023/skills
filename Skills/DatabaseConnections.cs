@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using System.Data.SqlTypes;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
-
+using System.Data;
 
 namespace Skills
 {
@@ -151,14 +151,14 @@ namespace Skills
             try
             {
                 connection.Open();
-                
+
                 SqlCommand getEmployeeIDs = new SqlCommand();
                 getEmployeeIDs.Connection = connection;
-                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname LIKE '%" + firstSkill + "%' AND skilllevel >= " + firstSkillLevel;
+                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname = '" + firstSkill + "' AND skilllevel >= " + firstSkillLevel;
 
-                foreach(string skill in s)
+                foreach (string skill in s)
                 {
-                    getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname LIKE '%" + skill + "%' AND skillevel >= " + l[s.IndexOf(skill)];
+                    getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname = '" + skill + "' AND skilllevel >= " + l[s.IndexOf(skill)];
                 }
 
                 SqlDataReader IDs = getEmployeeIDs.ExecuteReader();
@@ -166,7 +166,7 @@ namespace Skills
                     EmployeeIDs.Add(IDs.GetInt32(0));
 
             }
-            catch(SqlException)
+            catch (SqlException)
             {
                 throw;
             }
@@ -177,6 +177,13 @@ namespace Skills
 
             return EmployeeIDs;
         }
+
+
+
+
+
+
+
 
         /// <summary>
         /// Returns the first name of the employee with the specifies ID from the table employees in the database
@@ -258,7 +265,7 @@ namespace Skills
         public static int GetIDByFirstNameLastNameAndDateOfBirth(string fn, string ln, SqlDateTime bd)
         {
             SqlConnection connection = new SqlConnection(connectionString);
-            int id;
+            int id = 0;
 
             try
             {
@@ -307,7 +314,9 @@ namespace Skills
                 SqlCommand setFirstName = new SqlCommand("UPDATE employees SET firstname = @FN WHERE employee_id = @ID", connection);
                 setFirstName.Parameters.AddWithValue("@FN", newFN);
                 setFirstName.Parameters.AddWithValue("@ID", id);
+                c.Close();
                 setFirstName.ExecuteNonQuery();
+                
             }
             catch (SqlException)
             {
@@ -319,6 +328,7 @@ namespace Skills
             }
         }
 
+      
 
         /// <summary>
         /// Updates the last name of the employee with the given ID in the database in the employees table
@@ -342,11 +352,13 @@ namespace Skills
                 SqlCommand setLastName = new SqlCommand("UPDATE employees SET lastname = @LN WHERE employee_id = @ID", connection);
                 setLastName.Parameters.AddWithValue("@LN", newLN);
                 setLastName.Parameters.AddWithValue("@ID", id);
+                c.Close();
                 setLastName.ExecuteNonQuery();
+             
             }
-            catch (SqlException)
+            catch (ArgumentException)
             {
-                throw;
+                //throw;
             }
             finally
             {
@@ -375,7 +387,9 @@ namespace Skills
                 SqlCommand setDateOfBirth = new SqlCommand("UPDATE employees SET birthdate = CONVERT(DATE,@BD) WHERE employee_id = @ID", connection);
                 setDateOfBirth.Parameters.AddWithValue("@BD", newBD);
                 setDateOfBirth.Parameters.AddWithValue("@ID", id);
+                c.Close();
                 setDateOfBirth.ExecuteNonQuery();
+              
             }
             catch (SqlException)
             {
@@ -417,6 +431,7 @@ namespace Skills
                 updateSkill.Parameters.AddWithValue("@SN", newSkillName);
                 updateSkill.Parameters.AddWithValue("@SL", newLevel);
                 updateSkill.Parameters.AddWithValue("@ID", skillID);
+                c.Close();
                 updateSkill.ExecuteNonQuery();
             }
             catch (SqlException) 
@@ -456,6 +471,7 @@ namespace Skills
                 addSkill.Parameters.AddWithValue("@SN", skillName);
                 addSkill.Parameters.AddWithValue("@SL", skillLevel);
                 addSkill.Parameters.AddWithValue("@EID", owner);
+                c.Close();
                 addSkill.ExecuteNonQuery();
             }
             catch(SqlException)
@@ -489,6 +505,7 @@ namespace Skills
 
                 SqlCommand deleteSkill = new SqlCommand("DELETE FROM skills WHERE skill_id = @ID", connection);
                 check.Parameters.AddWithValue("@ID", skillID);
+                c.Close();
                 deleteSkill.ExecuteNonQuery();
             }
             catch (SqlException)
@@ -522,6 +539,7 @@ namespace Skills
                         throw new ArgumentException("Not a valid ID!");
                 SqlCommand getSkills = new SqlCommand("SELECT skill_id FROM skills WHERE employee_id = @EID", connection);
                 getSkills.Parameters.AddWithValue("@EID", id);
+                c.Close();
                 SqlDataReader s = getSkills.ExecuteReader();
                 while(s.Read())
                     skills.Add(s.GetInt32(0));
@@ -559,6 +577,7 @@ namespace Skills
                         throw new ArgumentException("Not a valid ID!");
                 SqlCommand getSkillName = new SqlCommand("SELECT skillname FROM skills WHERE skill_id = @ID", connection);
                 getSkillName.Parameters.AddWithValue("@ID", skillID);
+                c.Close();
                 SqlDataReader skillName = getSkillName.ExecuteReader();
                 while(skillName.Read())
                     sn = skillName.GetString(0);
@@ -597,6 +616,7 @@ namespace Skills
                         throw new ArgumentException("Not a valid ID!");
                 SqlCommand getLevel = new SqlCommand("SELECT skilllevel FROM skills WHERE skill_id = @ID", connection);
                 getLevel.Parameters.AddWithValue("@ID", skillID);
+                c.Close();
                 SqlDataReader l = getLevel.ExecuteReader();
                 while(l.Read())
                     level = l.GetInt32(0);
@@ -634,9 +654,10 @@ namespace Skills
                 while (c.Read())
                     if (c.GetInt32(0) == 0)
                         throw new ArgumentException("Owner is not a valid employee_id!");
-                SqlCommand getSkillID = new SqlCommand("SELECT skill_id FROM skills WHERE skillname LIKE '%@SN%' AND employee_id = @ID", connection);
-                getSkillID.Parameters.AddWithValue("@SN", skillName);
+                SqlCommand getSkillID = new SqlCommand("SELECT skill_id FROM skills WHERE skillname LIKE '%"+skillName+"%' AND employee_id = @ID", connection);
+                
                 getSkillID.Parameters.AddWithValue("@ID", owner);
+                c.Close();
                 SqlDataReader id = getSkillID.ExecuteReader();
                 while(id.Read())
                     skillID = id.GetInt32(0);
@@ -649,6 +670,7 @@ namespace Skills
             {
                 connection.Close();
             }
+         
             return skillID;
         }
 

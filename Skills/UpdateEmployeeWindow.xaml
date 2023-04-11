@@ -45,14 +45,15 @@
                 <Image Source="/Images/Minimize.png" Margin="325,-3,39,0" Style="{StaticResource iconApp}" MouseLeftButtonDown="MinimizeWindow" HorizontalAlignment="Stretch" RenderTransformOrigin="4.738,0.877" />
                 <Image Source="/Images/Close_Icons.png" Width="25" Margin="360,-7,0,0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click" HorizontalAlignment="Left" RenderTransformOrigin="1.407,0.636"/>
 
-                <Label Name="lblFirstName" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,47,0,0"/>
-                <TextBox Name="tbxFirstName"   Margin="101,94,59,0" Height="31" RenderTransformOrigin="-2.076,0.24" VerticalAlignment="Top"/>
+                <Label Name="lblFirstName" Content="Vorname:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,47,0,0"/>
+                
+                <TextBox Name="tbxLastName"   Margin="101,94,59,0" Height="37" RenderTransformOrigin="-2.076,0.24" VerticalAlignment="Top"/>
 
-                <Label Name="lblLastName" Content="Vorname:"  Margin="-5,97,0,174" HorizontalAlignment="Left" RenderTransformOrigin="0.475,1.704"/>
-                <TextBox Name="tbxLastName" Margin="101,44,59,0" VerticalAlignment="Top" Height="31"/>
+                <Label Name="lblLastName" Content="Nachname:"  Margin="-5,97,0,174" HorizontalAlignment="Left" RenderTransformOrigin="0.475,1.704"/>
+                <TextBox Name="tbxFirstName" Margin="101,44,59,0" VerticalAlignment="Top" Height="37"/>
 
                 <Label Name="lblDateOfBirth" Content="Geburtsdatum:"  HorizontalAlignment="Left" Margin="-4,146,0,136"/>
-                <DatePicker Name="dpcDateOfBirth"  Margin="101,144,60,0" VerticalAlignment="Top" Height="28"/>
+                <DatePicker Name="dpcDateOfBirth"  Margin="101,148,60,0" VerticalAlignment="Top" Height="22"/>
 
                 <ComboBox Name="cbxChooseUpdate" Margin="101,233,50,210" SelectionChanged="cbxChooseUpdate_SelectionChanged">
                     <ComboBoxItem Content="Vorname ändern" IsSelected="True">
@@ -74,7 +75,7 @@
 
                 </ComboBox>
 
-                <ComboBox Name="cbxUpdateLevel" Margin="101,428,60,17" Visibility="Hidden">
+                <ComboBox Name="cbxUpdateLevel" Margin="101,428,60,17" Visibility="Hidden" >
                     <ComboBoxItem Content="Grundkenntnisse" IsSelected="True">
 
                     </ComboBoxItem>
@@ -107,7 +108,7 @@
                     </ComboBoxItem>
                 </ComboBox>
 
-                <ComboBox Name="cbxActualLevel" Margin="101,346,60,99" Visibility="Hidden">
+                <ComboBox Name="cbxActualLevel" Margin="101,346,60,99" Visibility="Hidden" >
                     <ComboBoxItem Content="Grundkenntnisse" IsSelected="True">
 
                     </ComboBoxItem>
@@ -124,15 +125,15 @@
 
                 <Label Name="lblUpdate" Content="Daten ändern / Kenntnisse hinzufügen?" HorizontalAlignment="Left" Height="44" FontSize="20" VerticalAlignment="Top" Margin="15,185,0,0" Width="358" />
                 <Label Name="lblUpdateSkill" Content="Welche Kenntnis möchtest du ändern?" HorizontalAlignment="Left" Height="44" FontSize="18" VerticalAlignment="Top" Margin="17,259,0,0" Width="358" Visibility="Hidden" />
-                <TextBox Name="tbxUpdateFirstName" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="31" ></TextBox>
-                <TextBox x:Name="tbxUpdateLastName" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="31" Visibility="Hidden" ></TextBox>
-                <DatePicker x:Name="dpcUpdateBirthdate" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="31" Visibility="Hidden" ></DatePicker>
-                <TextBox x:Name="tbxUpdateSkillName" Margin="0,282,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden" ></TextBox>
-                <TextBox x:Name="tbxActualSkillName" Margin="0,307,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden"  ></TextBox>
-                <TextBox x:Name="tbxActualSkillNameChange" Margin="0,388,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden" ></TextBox>
-                <TextBox x:Name="tbxAddSkillName" Margin="0,282,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="31" Visibility="Hidden"></TextBox>
+                <TextBox Name="tbxUpdateFirstName" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="37" ></TextBox>
+                <TextBox x:Name="tbxUpdateLastName" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="37" Visibility="Hidden" ></TextBox>
+                <DatePicker x:Name="dpcUpdateBirthdate" Margin="0,282,59,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="224" Height="22" Visibility="Hidden" ></DatePicker>
+                <TextBox x:Name="tbxUpdateSkillName" Margin="0,282,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="37" Visibility="Hidden" ></TextBox>
+                <TextBox x:Name="tbxActualSkillName" Margin="0,307,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="37" Visibility="Hidden" ></TextBox>
+                <TextBox x:Name="tbxActualSkillNameChange" Margin="0,388,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="37" Visibility="Hidden"  ></TextBox>
+                <TextBox x:Name="tbxAddSkillName" Margin="0,282,60,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="223" Height="37" Visibility="Hidden"></TextBox>
                 <Label Name="lblUpdateSkillName_SkillLevel" Content="Kenntnis ändern:"  HorizontalAlignment="Left" Margin="-3,282,0,150" Visibility="Hidden" />
-                <Label Name="lblActualSkillName_SkillLevel" Content="Aktuelle Kenntnis:"  HorizontalAlignment="Left" Margin="-3,309,0,123" Visibility="Hidden" />
+                <Label Name="lblActualSkillName_SkillLevel" Content="Aktuelle Kenntnis:"  HorizontalAlignment="Left" Margin="-3,309,0,123" Visibility="Hidden"  />
                 <Label Name="lblActualSkillName_SkillLevel_Change" Content="Kenntnis ändern:"  HorizontalAlignment="Left" Margin="-4,389,0,47" Visibility="Hidden" />
                 <Label Name="lblAddSkillName_SkillLevel" Content="Kenntnis hinzufügen:"  HorizontalAlignment="Left" Margin="-20,282,0,150" Visibility="Hidden"/>
                 <Label Name="lblUpdateFirstName" Content="Vorname ändern:"  HorizontalAlignment="Left" Margin="-3,282,0,150"/>

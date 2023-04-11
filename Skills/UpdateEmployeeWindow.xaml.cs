@@ -22,7 +22,7 @@ namespace Skills
         public UpdateEmployeeWindow()
         {
             InitializeComponent();
-            
+
 
         }
 
@@ -71,27 +71,46 @@ namespace Skills
 
         private void btnUpdate_Click(object sender, RoutedEventArgs d)
         {
-            int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)); ;
-            switch((cbxChooseUpdate.SelectedItem as ComboBoxItem).Content.ToString())
+            if (tbxFirstName.Text == "" || tbxLastName.Text == "" || dpcDateOfBirth.SelectedDate == null)
             {
-                case "Vorname ändern":
-                    DatabaseConnections.SetFirstNameByID(empID, tbxUpdateFirstName.Text);
-                    break;
-                case "Nachname ändern":                   
-                    DatabaseConnections.SetLastNameByID(empID, tbxUpdateLastName.Text);
-                    break;
-                case "Geburtsdatum ändern":
-                    DatabaseConnections.SetBirthDateByID(empID, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcUpdateBirthdate.SelectedDate));
-                    break;
-                case "Kenntnisse/Kenntnisstufe ändern":
-                    DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(tbxActualSkillName.Text, empID), tbxActualSkillNameChange.Text, AssignSkillLevel(cbxUpdateLevel));
-                    break;
-                case "Kenntnisse/Kenntnisstufe hinzufügen":
-                    DatabaseConnections.AddSkill(tbxAddSkillName.Text, AssignSkillLevel(cbxAddLevel), empID);
-                    break;
+                MessageBox.Show("Alle Felder müssen ausgefüllt sein!");
+                return;
             }
-               
-               
+
+            try
+            {
+                int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)); ;
+                switch ((cbxChooseUpdate.SelectedItem as ComboBoxItem).Content.ToString())
+                {
+                    case "Vorname ändern":
+                        DatabaseConnections.SetFirstNameByID(empID, tbxUpdateFirstName.Text);
+                        MessageBox.Show("Der Vorname wurde erfolgreich geändert!");
+                        break;
+                    case "Nachname ändern":
+                        DatabaseConnections.SetLastNameByID(empID, tbxUpdateLastName.Text);
+                        MessageBox.Show("Der Nachname wurde erfolgreich geändert!");
+                        break;
+                    case "Geburtsdatum ändern":
+                        DatabaseConnections.SetBirthDateByID(empID, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcUpdateBirthdate.SelectedDate));
+                        MessageBox.Show("Geburtsdatum wurde erfolgreich geändert!");
+                        break;
+                    case "Kenntnisse/Kenntnisstufe ändern":
+                        DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(tbxActualSkillName.Text, empID), tbxActualSkillNameChange.Text, AssignSkillLevel(cbxUpdateLevel));
+                        MessageBox.Show("Kenntnis des Mitarbeiters wurde erfolgreich geändert!");
+                        break;
+                    case "Kenntnisse/Kenntnisstufe hinzufügen":
+                        DatabaseConnections.AddSkill(tbxAddSkillName.Text, AssignSkillLevel(cbxAddLevel), empID);
+                        MessageBox.Show("Kenntnis des Mitarbeiters wurde erfolgreich hinzugefügt!");
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            
+
+
         }
 
         //Sobald das Fenster UpdateEmployeeWindow geöffnet wird, werden die Felder initialisiert
@@ -111,11 +130,11 @@ namespace Skills
 
         private void cbxChooseUpdate_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            if (tbxUpdateFirstName == null || tbxUpdateLastName == null || dpcUpdateBirthdate == null || tbxUpdateSkillName == null || cbxUpdateLevel == null ||cbxAddLevel == null || tbxAddSkillName == null)
+            if (tbxUpdateFirstName == null || tbxUpdateLastName == null || dpcUpdateBirthdate == null || tbxUpdateSkillName == null || cbxUpdateLevel == null || cbxAddLevel == null || tbxAddSkillName == null)
             {
                 return;
             }
-         
+
 
             if (cbxChooseUpdate != null)
             {
@@ -216,7 +235,7 @@ namespace Skills
                         tbxActualSkillName.Visibility = Visibility.Visible;
                         tbxActualSkillNameChange.Visibility = Visibility.Visible;
                         cbxActualLevel.Visibility = Visibility.Visible;
-                        
+
                     }
 
                     else if (selectedValue == "Kenntnisse/Kenntnisstufe hinzufügen")
@@ -243,11 +262,11 @@ namespace Skills
 
                     }
                 }
-           
+
             }
         }
 
-      
+
 
     }
 

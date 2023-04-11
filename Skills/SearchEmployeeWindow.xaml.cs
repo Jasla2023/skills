@@ -50,11 +50,7 @@ namespace Skills
 
 
         /// <summary>
-        /// Event-Handler für den Klick auf den Suchen-Button im Fenster SearchEmployeeWindow.
-        /// Sucht nach Mitarbeitern mit dem angegebenen Vornamen, Nachnamen und Geburtsdatum in der Datenbank
-        /// und zeigt die Ergebnisse Vorname, Nachname, Skillnamen und Name des Skilllevels in der ListBox an.
-        ///Wenn ein Mitarbeiter mehrere Skills hat und in der Ergebnisliste mehr als einmal vorkommt,
-        ///wird er nur einmal mit seinem Vor- und Nachnamen angezeigt und die Liste seiner Skills wird untereinander aufgeführt.
+        ///When entering the first name, last name, and date of birth in the SearchEmployeeWindow, the employee with their name, skill and skill level will be displayed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="d"></param>

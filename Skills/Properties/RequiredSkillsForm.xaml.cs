@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -133,23 +134,24 @@ namespace Skills.Properties
         /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+
             List<string> skillNames = new List<string>();
             List<int> sls = new List<int>();
 
-            if(tbxSkill.Text == "")
+            if (tbxSkill.Text == "")
             {
                 MessageBox.Show("Mindestens 1 Kenntnis muss eingegeben werden");
                 return;
             }
 
-            if(addedSkillTextBoxes.Count > 0)
-                foreach(TextBox tbx in addedSkillTextBoxes)
-                    if(tbx.Text == "")
+            if (addedSkillTextBoxes.Count > 0)
+                foreach (TextBox tbx in addedSkillTextBoxes)
+                    if (tbx.Text == "")
                     {
                         MessageBox.Show("Alle Felder müssen ausgefüllt sein!");
                         return;
                     }
-            
+
             foreach (TextBox tb in addedSkillTextBoxes)
 
             {
@@ -163,8 +165,9 @@ namespace Skills.Properties
             try
             {
                 List<int> SearchResult = DatabaseConnections.SearchEmployeeBySkills(tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
-            }           
-            catch(Exception ex)
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -173,6 +176,8 @@ namespace Skills.Properties
 
             Close();
         }
+
+
 
         /// <summary>
         /// Converts a skill level ComboBox into a digit representing the skill level
