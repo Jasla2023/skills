@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -57,13 +58,19 @@ namespace Skills
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="d"></param>
-
-
-
+        ///<remarks></remarks>
         private void btnSearch_Click(object sender, RoutedEventArgs d)
         {
+            lbxOutput.Items.Clear();
+            if (tbxFirstName.Text == "" || tbxLastName.Text == "" || dpcDateOfBirth.SelectedDate == null)
+            {
+                MessageBox.Show("Alle Felder müssen ausgefüllt sein!");
+                return;
+            }
+
             using (var context = new EmployeeDb())
             {
+
                 var firstName = tbxFirstName.Text;
                 var lastName = tbxLastName.Text;
                 var dateOfBirth = dpcDateOfBirth.SelectedDate;

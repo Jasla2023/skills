@@ -193,6 +193,9 @@
       <DependentUpon>SearchEmployeeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Skill.cs" />
+    <Compile Include="UpdateEmployeeWindow.xaml.cs">
+      <DependentUpon>UpdateEmployeeWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -215,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchEmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateEmployeeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
