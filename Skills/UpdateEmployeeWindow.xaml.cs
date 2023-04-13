@@ -79,7 +79,7 @@ namespace Skills
 
             try
             {
-                int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)); ;
+                int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)); 
                 switch ((cbxChooseUpdate.SelectedItem as ComboBoxItem).Content.ToString())
                 {
                     case "Vorname ändern":

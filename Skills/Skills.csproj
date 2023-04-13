@@ -189,10 +189,16 @@
     <Compile Include="Properties\RequiredSkillsForm.xaml.cs">
       <DependentUpon>RequiredSkillsForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchAlter.xaml.cs">
+      <DependentUpon>SearchAlter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchEmployeeWindow.xaml.cs">
       <DependentUpon>SearchEmployeeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Skill.cs" />
+    <Compile Include="SuccessfullyFound.xaml.cs">
+      <DependentUpon>SuccessfullyFound.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UpdateEmployeeWindow.xaml.cs">
       <DependentUpon>UpdateEmployeeWindow.xaml</DependentUpon>
     </Compile>
@@ -217,7 +223,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SearchAlter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SearchEmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SuccessfullyFound.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

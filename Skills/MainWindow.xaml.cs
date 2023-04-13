@@ -82,5 +82,11 @@ namespace Skills
             UpdateEmployeeWindow updateEmployee = new UpdateEmployeeWindow();
             updateEmployee.Show();
         }
+
+        private void btnSearchAlter_Click(object sender, RoutedEventArgs e)
+        {
+            SearchAlter searchAlter = new SearchAlter();
+            searchAlter.Show();
+        }
     }
 }

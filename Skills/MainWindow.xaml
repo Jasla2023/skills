@@ -27,6 +27,8 @@
         <Button Name="btnSearchEmployeesBySkills" Content="Angeferderte Kenntnísse eingeben"    Grid.Row="2"    HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchEmployeesBySkills_Click" />
 
         <Button Name="btnUpdateEmployee" Content="Mitarbeiterdaten ändern"    Grid.Row="3"    HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnUpdateEmployee_Click" />
+
+        <Button Name="btnSearchAlter" Content="Mitarbeiter suchen/ändern"   Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchAlter_Click"/> 
     </Grid>
 
 
