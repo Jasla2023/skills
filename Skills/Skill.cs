@@ -14,12 +14,17 @@ namespace Skills
         string skillName;
         int skillLevel;
         int employee_Id;
+        string skillLevelString;
      
       public int Skill_Id { get; set; }
       public string SkillName { get; set; }
       public int SkillLevel { get; set; }
 
     public int Employee_Id { get; set;}
+
+        public string SkillLevelString { get; set; }
+
+       
 
     }
 }

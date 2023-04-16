@@ -504,7 +504,7 @@ namespace Skills
                         throw new ArgumentException("Not a valid ID!");
 
                 SqlCommand deleteSkill = new SqlCommand("DELETE FROM skills WHERE skill_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", skillID);
+                deleteSkill.Parameters.AddWithValue("@ID", skillID);
                 c.Close();
                 deleteSkill.ExecuteNonQuery();
             }
@@ -672,6 +672,73 @@ namespace Skills
             }
          
             return skillID;
+        }
+
+        /// <summary>
+        /// get all details from skill table and save it in skills list
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns>skills list</returns>
+        public static List<Skill> GetEmployeeSkills(int employeeId)
+        {
+            List<Skill> skills = new List<Skill>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@employee_Id", employeeId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Skill skill = new Skill();
+                        skill.Skill_Id = (int)reader["skill_id"];
+                        skill.SkillName = (string)reader["skillname"];
+
+
+
+                        skill.SkillLevelString = GetConvertedSkillLevelIntoString((int)reader["skilllevel"]);
+                        skill.Employee_Id = employeeId;
+
+                        skills.Add(skill);
+                    }
+                }
+            }
+
+            return skills;
+        }
+
+        public static string GetConvertedSkillLevelIntoString(int skillLevel)
+        {
+
+            string level;
+            switch (skillLevel)
+            {
+                case 1:
+                    level = "Grundkenntnisse";
+                    break;
+
+                case 2:
+                    level = "Fortgeschrittene Kenntnisse";
+                    break;
+
+                case 3:
+                    level = "Bereits in Projekt eingesetzt";
+                    break;
+
+
+                case 4:
+                    level = "Umfangreiche Projekterfahrungen";
+                    break;
+
+
+                default: throw new ArgumentException("Not a skilllevel!");
+            }
+            return level;
         }
 
     }

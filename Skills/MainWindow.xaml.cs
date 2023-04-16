@@ -88,5 +88,11 @@ namespace Skills
             SearchAlter searchAlter = new SearchAlter();
             searchAlter.Show();
         }
+
+        private void btnSearch1_Click(object sender, RoutedEventArgs e)
+        {
+            SearchEmployee1 searchEmployee1 = new SearchEmployee1();
+            searchEmployee1.Show();
+        }
     }
 }

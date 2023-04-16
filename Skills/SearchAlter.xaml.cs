@@ -24,6 +24,22 @@ namespace Skills
             InitializeComponent();
         }
 
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void MinimizeWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             try

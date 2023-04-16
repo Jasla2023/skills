@@ -40,7 +40,7 @@
 
         <!--Input Section-->
 
-        <Border Padding="30,30,30,30" Background="White" CornerRadius="0 25 25 0" MouseDown="Border_MouseDown"  BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue" Margin="30,12,69,0" Grid.Column="1">
+        <Border Padding="30,30,30,30" Background="White" CornerRadius="0 25 25 0" BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue" Margin="30,12,69,0" Grid.Column="1" MouseDown="Border_MouseDown">
             <Grid Name="grdAlter">
 
 

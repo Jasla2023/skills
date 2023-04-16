@@ -38,6 +38,8 @@ namespace Skills
         public SuccessfullyFound(int id, string vornameNachname)
         {
 
+            InitializeComponent();
+
             _id = id;
             
             tblWindowName.Text += "Kenntnisse von " + vornameNachname;
@@ -92,14 +94,15 @@ namespace Skills
                 Grid.SetColumn(EditSkill[i], 3);
 
                 EditLevel[i] = new Button { Content = "Ändern" };
+                EditLevel[i].Click += editLevel_Click;
                 Grid.SetRow(EditLevel[i], i * 2 + 1);
                 Grid.SetColumn(EditLevel[i], 3);
 
-                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Collapsed };
+                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Hidden };
                 Grid.SetRow(EditaleSkils[i], i * 2);
                 Grid.SetColumn(EditaleSkils[i], 1);
 
-                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Collapsed };
+                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Hidden };
                 ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" };
                 ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
                 ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };
@@ -121,7 +124,7 @@ namespace Skills
                         break;
                     case 4:
                         FourthLevel.IsSelected = true;
-                        continue;
+                        break;
                 }
                 Grid.SetRow(EditableLevls[i], i * 2 + 1);
                 Grid.SetColumn(EditableLevls[i], 1);
@@ -140,9 +143,13 @@ namespace Skills
 
 
             }
-            InitializeComponent();
+           
         }
 
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
 
         /// <summary>
         /// Converts a digit representing the skill level into its descriprion
@@ -171,21 +178,21 @@ namespace Skills
         {
             int orderWithinOneEmployee = Array.IndexOf(DeleteSkill, (Button)sender);
             DatabaseConnections.DeleteSkill(skills[orderWithinOneEmployee]);
-            LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
-            LabelsForLevels[orderWithinOneEmployee].Visibility= Visibility.Collapsed;
-            ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
-            ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
-            DeleteSkill[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
-            EditSkill[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
-            EditLevel[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
-            EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
-            EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
+            LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            LabelsForLevels[orderWithinOneEmployee].Visibility= Visibility.Hidden;
+            ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            DeleteSkill[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            EditSkill[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            EditLevel[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Hidden;
         }
 
         private void editSkill_Click(object sender, RoutedEventArgs e)
         {
             int orderWithinOneEmployee = Array.IndexOf(EditSkill, (Button)sender);
-            ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
+            ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
             EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Visible;
 
             /* foreach(Label ActSk in ActualSkills)
@@ -214,7 +221,7 @@ namespace Skills
         private void editLevel_Click(object sender, RoutedEventArgs e)
         {
             int orderWithinOneEmployee = Array.IndexOf(EditLevel, (Button)sender);
-            ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Collapsed;
+            ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
             EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Visible;
 
 
@@ -283,7 +290,10 @@ namespace Skills
             for(int i = 0; i < skills.Count; i++)
             {
                 DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+
             }
+            MessageBox.Show("Die Daten wurden erfolgreich geändert!");
+            Close();
         }
     }
 }

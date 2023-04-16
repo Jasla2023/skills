@@ -43,27 +43,29 @@
             </Style>
 
             <Style x:Key="text" TargetType="TextBox">
-                <Setter Property="Foreground" Value="#363636" />
+                <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontWeight" Value="SemiBold" />
-                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontSize" Value="18" />
                 <Setter Property="VerticalAlignment" Value="Center" />
 
             </Style>
 
             <Style x:Key="date" TargetType="DatePicker">
-                <Setter Property="Foreground" Value="#363636" />
+                <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontWeight" Value="SemiBold" />
-                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontSize" Value="18" />
                 <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
 
-            </Style>
+        </Style>
 
             <Style TargetType="TextBox">
                 <Setter Property="Background" Value="#f5f7f9" />
-                <Setter Property="Foreground" Value="#767676" />
+                <Setter Property="Foreground" Value="Black" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="BorderBrush" Value="#f5f7f9" />
-                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontSize" Value="16" />
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="Margin" Value="0 10" />
                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -154,5 +156,11 @@
                 </Style.Triggers>
 
             </Style>
-        </Application.Resources>
+
+        
+
+
+
+
+    </Application.Resources>
 </Application>
