@@ -165,6 +165,18 @@ namespace Skills.Properties
             try
             {
                 List<int> SearchResult = DatabaseConnections.SearchEmployeeBySkills(tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
+                string output = "";
+                if (SearchResult.Count > 0)
+                {
+                    output += "Die folgende Mitarbeiter erfüllen ALLE Anforderungen:";
+                    foreach (int result in SearchResult)
+                        output += ("\n" + DatabaseConnections.GetFirstNameByID(result) + " " + DatabaseConnections.GetLastNameByID(result));
+
+                }
+                else output += "Keine Mitarbeiter erfüllen ALLE Anforderungen.";
+
+                MessageBox.Show(output);
+
 
             }
             catch (Exception ex)

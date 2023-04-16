@@ -741,5 +741,46 @@ namespace Skills
             return level;
         }
 
+
+        public static bool SkillExists(string skill, int empID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            bool exists;
+
+            try
+            {
+                connection.Open();
+                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                check.Parameters.AddWithValue("@ID", empID);
+                SqlDataReader c = check.ExecuteReader();
+                while (c.Read())
+                    if (c.GetInt32(0) == 0)
+                        throw new ArgumentException("Not a valid ID!");
+                c.Close();
+
+
+                SqlCommand skillExists = new SqlCommand("SELECT COUNT(1) FROM skills WHERE employee_id = @ID", connection);
+                skillExists.Parameters.AddWithValue("@ID", empID);
+                SqlDataReader skillDuplicates = skillExists.ExecuteReader();
+                int numberOfDuplicates = -1;
+                while (skillDuplicates.Read())
+                    numberOfDuplicates = skillDuplicates.GetInt32(0);
+                if (numberOfDuplicates == -1)
+                    throw new Exception("Error in the SQL-query");
+                exists = numberOfDuplicates > 0;
+
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return exists;
+        }
     }
 }
