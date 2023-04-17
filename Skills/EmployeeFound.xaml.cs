@@ -36,11 +36,14 @@ namespace Skills
             tbxLastName.DataContext = employee;
             dpcDateOfBirth.DataContext = employee;
 
+
+
+
             //// Skills aus der Datenbank abrufen
-            //List<Skill> skills = DatabaseConnections.GetEmployeeSkills(employeeId);
+            List<Skill> skills = DatabaseConnections.GetEmployeeSkills(employeeId);
 
             //// DataContext des Views auf die Skills setzen
-            //DataContext = skills;
+            DataContext = skills;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -78,30 +81,30 @@ namespace Skills
             //}
 
             // Änderungen in der Datenbank speichern
-            using (var context = new EmployeeDb())
-            {
-                var employeeToUpdate = context.Employees.SingleOrDefault(x => x.Employee_Id == employee.Employee_Id);
-                if (employeeToUpdate != null)
-                {
-                    employeeToUpdate.FirstName = employee.FirstName;
-                    employeeToUpdate.LastName = employee.LastName;
-                    employeeToUpdate.BirthDate = employee.BirthDate;
+            //using (var context = new EmployeeDb())
+            //{
+            //    var employeeToUpdate = context.Employees.SingleOrDefault(x => x.Employee_Id == employee.Employee_Id);
+            //    if (employeeToUpdate != null)
+            //    {
+            //        employeeToUpdate.FirstName = employee.FirstName;
+            //        employeeToUpdate.LastName = employee.LastName;
+            //        employeeToUpdate.BirthDate = employee.BirthDate;
 
-                    var selectedSkill = listView.SelectedItem as Skill;
-                    if (selectedSkill != null)
-                    {
-                        var skillToUpdate = context.Skills.SingleOrDefault(x => x.Skill_Id == selectedSkill.Skill_Id);
-                        if (skillToUpdate != null)
-                        {
-                            skillToUpdate.SkillName = selectedSkill.SkillName;
-                            skillToUpdate.SkillLevel = selectedSkill.SkillLevel;
-                            context.SaveChanges(); // Hier die Änderungen an der Skill-Instanz speichern
-                        }
-                    }
+            //        var selectedSkill = listView.SelectedItem as Skill;
+            //        if (selectedSkill != null)
+            //        {
+            //            var skillToUpdate = context.Skills.SingleOrDefault(x => x.Skill_Id == selectedSkill.Skill_Id);
+            //            if (skillToUpdate != null)
+            //            {
+            //                skillToUpdate.SkillName = selectedSkill.SkillName;
+            //                skillToUpdate.SkillLevel = selectedSkill.SkillLevel;
+            //                context.SaveChanges(); // Hier die Änderungen an der Skill-Instanz speichern
+            //            }
+            //        }
 
-                    context.SaveChanges(); // Hier die Änderungen an der Employee-Instanz speichern
-                }
-            }
+            //        context.SaveChanges(); // Hier die Änderungen an der Employee-Instanz speichern
+            //    }
+            //}
 
             //using (var context = new EmployeeDb())
             //{

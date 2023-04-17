@@ -679,38 +679,38 @@ namespace Skills
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns>skills list</returns>
-        //public static List<Skill> GetEmployeeSkills(int employeeId)
-        //{
-        //    List<Skill> skills = new List<Skill>();
+        public static List<Skill> GetEmployeeSkills(int employeeId)
+        {
+            List<Skill> skills = new List<Skill>();
 
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        connection.Open();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
-        //        string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
-        //        SqlCommand command = new SqlCommand(query, connection);
-        //        command.Parameters.AddWithValue("@employee_Id", employeeId);
+                string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@employee_Id", employeeId);
 
-        //        using (SqlDataReader reader = command.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                Skill skill = new Skill();
-        //                skill.Skill_Id = (int)reader["skill_id"];
-        //                skill.SkillName = (string)reader["skillname"];
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Skill skill = new Skill();
+                        skill.Skill_Id = (int)reader["skill_id"];
+                        skill.SkillName = (string)reader["skillname"];
 
 
-        //                skill.SkillLevel = Level_DigitToString((int)reader["skilllevel"]);
-        //                //skill.SkillLevelString = GetConvertedSkillLevelIntoString((int)reader["skilllevel"]);
-        //                skill.Employee_Id = employeeId;
+                        skill.SkillLevel = Level_DigitToString((int)reader["skilllevel"]);
+                        //skill.SkillLevelString = GetConvertedSkillLevelIntoString((int)reader["skilllevel"]);
+                        skill.Employee_Id = employeeId;
 
-        //                skills.Add(skill);
-        //            }
-        //        }
-        //    }
+                        skills.Add(skill);
+                    }
+                }
+            }
 
-        //    return skills;
-        //}
+            return skills;
+        }
 
         public static string GetConvertedSkillLevelIntoString(int skillLevel)
         {

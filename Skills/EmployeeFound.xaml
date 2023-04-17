@@ -150,7 +150,7 @@
 
                 <ListView x:Name="listView" ItemsSource="{Binding}" Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
-                        <GridView>
+                        <GridView x:Name="grv1">
                             <GridView.ColumnHeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="Padding" Value="10,0,10,0"/>
@@ -161,7 +161,7 @@
                             <GridViewColumn Header="Kenntnis:" Width="200" >
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox x:Name="tbxSkillName" Text="SkillName" Margin="10,10,0,10" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="16"/>
+                                        <TextBox Name="tbxSkillName" Text="SkillName" Margin="10,10,0,10" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="16"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

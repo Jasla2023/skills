@@ -25,7 +25,7 @@ namespace Skills
         [Key]
         int skill_Id;
         string skillName;
-        int skillLevel;
+        string skillLevel;
         int employee_Id;
        
 
@@ -36,7 +36,7 @@ namespace Skills
         [Column("SkillName")]
         public string SkillName { get; set; }
         [Column("SkillLevel")]
-        public int SkillLevel
+        public string SkillLevel
         {
             get; set;
             //get { return skillLevel; }
