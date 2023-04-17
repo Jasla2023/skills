@@ -97,7 +97,7 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <TextBox Name="tbxFirstName" Text="{Binding FirstName, Mode=TwoWay}"  VerticalAlignment="Center" Margin="10" Height="40"/>
+                    <TextBox Name="tbxFirstName"   VerticalAlignment="Center" Margin="10" Height="40"/>
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="1">
@@ -105,7 +105,7 @@
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="2">
-                    <TextBox Name="tbxLastName" Text="{Binding LastName, Mode=TwoWay}"  VerticalAlignment="Center" Margin="10" Height="40"/>
+                    <TextBox Name="tbxLastName"   VerticalAlignment="Center" Margin="10" Height="40"/>
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.Column="1">
@@ -118,7 +118,7 @@
 
 
 
-                    <DatePicker Name="dpcDateOfBirth" SelectedDate="{Binding BirthDate,Mode=TwoWay}" VerticalAlignment="Center" Margin="10" Height="34">
+                    <DatePicker Name="dpcDateOfBirth"  VerticalAlignment="Center" Margin="10" Height="34">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type DatePickerTextBox}">
                                 <Setter Property="FontSize" Value="16"/>

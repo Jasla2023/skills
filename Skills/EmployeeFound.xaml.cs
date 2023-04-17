@@ -24,9 +24,7 @@ namespace Skills
         private Label[] LabelsForLevels;
         private Label[] ActualSkills;
         private Label[] ActualLevels;
-        private Button[] DeleteSkill;
-        private Button[] EditSkill;
-        private Button[] EditLevel;
+        
         private TextBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
         private Grid[] Grids;
@@ -58,9 +56,7 @@ namespace Skills
             LabelsForLevels = new Label[numberOfSkills];
             ActualSkills = new Label[numberOfSkills];
             ActualLevels = new Label[numberOfSkills];
-            DeleteSkill = new Button[numberOfSkills];
-            EditSkill = new Button[numberOfSkills];
-            EditLevel = new Button[numberOfSkills];
+            
 
             EditaleSkils = new TextBox[numberOfSkills];
             EditableLevls = new ComboBox[numberOfSkills];
@@ -97,7 +93,7 @@ namespace Skills
                 Grid.SetRow(ActualLevels[i], 1);
                 Grid.SetColumn(ActualLevels[i], 1);
 
-                DeleteSkill[i] = new Button { Content = "X", Width = 25, HorizontalContentAlignment = HorizontalAlignment.Center, Background = Brushes.Red, Foreground = Brushes.White };
+                /*DeleteSkill[i] = new Button { Content = "X", Width = 25, HorizontalContentAlignment = HorizontalAlignment.Center, Background = Brushes.Red, Foreground = Brushes.White };
                 DeleteSkill[i].Click += deleteSkill_Click;
                 Grid.SetRow(DeleteSkill[i], 0);
                 Grid.SetColumn(DeleteSkill[i], 2);
@@ -110,7 +106,7 @@ namespace Skills
                 EditLevel[i] = new Button { Content = "Ändern", Width = 60, HorizontalContentAlignment = HorizontalAlignment.Center };
                 EditLevel[i].Click += editLevel_Click;
                 Grid.SetRow(EditLevel[i], 1);
-                Grid.SetColumn(EditLevel[i], 6);
+                Grid.SetColumn(EditLevel[i], 6);*/
 
 
                 EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Hidden };
@@ -150,51 +146,54 @@ namespace Skills
                 Grids[i].Children.Add(LabelsForLevels[i]);
                 Grids[i].Children.Add(ActualSkills[i]);
                 Grids[i].Children.Add(ActualLevels[i]);
-                Grids[i].Children.Add(DeleteSkill[i]);
-                Grids[i].Children.Add(EditSkill[i]);
-                Grids[i].Children.Add(EditLevel[i]);
+                
                 Grids[i].Children.Add(EditaleSkils[i]);
                 Grids[i].Children.Add(EditableLevls[i]);
 
 
                 lvwOutput.Items.Add(Grids[i]);
+
+                tbxFirstName.Text = DatabaseConnections.GetFirstNameByID(id);
+                tbxLastName.Text = DatabaseConnections.GetLastNameByID(id);
+
+                dpcDateOfBirth.SelectedDate = DatabaseConnections.GetDateOfBirthByID(id);
             }
 
         }
 
-        private void deleteSkill_Click(object sender, RoutedEventArgs e)
-        {
-            int orderWithinOneEmployee = Array.IndexOf(DeleteSkill, (Button)sender);
-            DatabaseConnections.DeleteSkill(skills[orderWithinOneEmployee]);
-            LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            LabelsForLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            DeleteSkill[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            EditSkill[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            EditLevel[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            //Skills an der Stelle i löschen
-            //i ist ListView SelectedItem
-        }
+        //private void deleteSkill_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int orderWithinOneEmployee = Array.IndexOf(DeleteSkill, (Button)sender);
+        //    DatabaseConnections.DeleteSkill(skills[orderWithinOneEmployee]);
+        //    LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    LabelsForLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    DeleteSkill[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    EditSkill[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    EditLevel[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    //Skills an der Stelle i löschen
+        //    //i ist ListView SelectedItem
+        //}
 
 
-        private void editSkill_Click(object sender, RoutedEventArgs e)
-        {
-            int orderWithinOneEmployee = Array.IndexOf(EditSkill, (Button)sender);
-            ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Visible;
+        //private void editSkill_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int orderWithinOneEmployee = Array.IndexOf(EditSkill, (Button)sender);
+        //    ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Visible;
 
            
-        }
+        //}
 
-        private void editLevel_Click(object sender, RoutedEventArgs e)
-        {
-            int orderWithinOneEmployee = Array.IndexOf(EditLevel, (Button)sender);
-            ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-            EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Visible;
-        }
+        //private void editLevel_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int orderWithinOneEmployee = Array.IndexOf(EditLevel, (Button)sender);
+        //    ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+        //    EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Visible;
+        //}
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -269,17 +268,44 @@ namespace Skills
 
         private void btnAddSkill_Click(object sender, RoutedEventArgs e)
         {
-
+            AddASkill addASkill = new AddASkill();
+            addASkill.Show();
         }
 
         private void btnSkillChange_Click(object sender, RoutedEventArgs e)
         {
-
+            int orderWithinOneEmployee = lvwOutput.Items.IndexOf(lvwOutput.SelectedItem);
+            try
+            {
+                ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Visible;
+                ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Visible;
+            }
+            catch(IndexOutOfRangeException) 
+            {
+                MessageBox.Show("Was genau möchten Sie ändern?");
+            }
         }
 
         private void btnDeleteSkill_Click(object sender, RoutedEventArgs e)
         {
+            int orderWithinOneEmployee = lvwOutput.Items.IndexOf(lvwOutput.SelectedItem);
+            DatabaseConnections.DeleteSkill(skills[orderWithinOneEmployee]);
+            try
+            {
+                LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                LabelsForLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
 
+                EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("Was genau möchten Sie ändern?");
+            }
         }
     }
 }

@@ -184,6 +184,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddASkill.xaml.cs">
+      <DependentUpon>AddASkill.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseConnections.cs" />
     <Compile Include="EmployeeDb.cs" />
     <Compile Include="EmployeeFound.xaml.cs">
@@ -209,6 +212,10 @@
     <Compile Include="UpdateEmployeeWindow.xaml.cs">
       <DependentUpon>UpdateEmployeeWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddASkill.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EmployeeFound.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -24,7 +24,7 @@ namespace Skills
     {
 
 
-        private static string connectionString = "Data Source=LAPTOP-AI5QJL80\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private static string connectionString = "Data Source=DESKTOP-OMHKLOK\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False";
 
         /// <summary>
         /// Adds a new record into the employees table in the databese and a record into the skills table in the database for each skill
@@ -254,6 +254,37 @@ namespace Skills
 
             return LN;
         }
+
+        public static DateTime? GetDateOfBirthByID(int id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DateTime? DOB;
+
+            try
+            {
+                connection.Open();
+                SqlCommand getDateOfBirth = new SqlCommand("SELECT birthdate FROM employees WHERE employee_id = @EID", connection);
+                getDateOfBirth.Parameters.AddWithValue("@EID", id);
+                SqlDataReader dateOfBirth = getDateOfBirth.ExecuteReader();
+                DOB = null;
+                while (dateOfBirth.Read())
+                    DOB = dateOfBirth.GetDateTime(0);
+                if (DOB == null)
+                    throw new ArgumentException("Not a valid ID!");
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return DOB;
+        }
+
+
         /// <summary>
         /// Returns the id of an employee that has the specifies first name, last name and the date of birth
         /// </summary>
