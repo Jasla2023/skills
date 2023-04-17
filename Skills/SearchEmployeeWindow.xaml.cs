@@ -71,9 +71,9 @@ namespace Skills
                 var lastName = tbxLastName.Text;
                 var dateOfBirth = dpcDateOfBirth.SelectedDate;
 
-                // Der Query sucht in der Datenbank nach Mitarbeitern mit dem angegebenen Vornamen, Nachnamen und Geburtsdatum.
-                // Für jeden gefundenen Mitarbeiter wird eine anonyme Typ-Instanz erstellt, die den Vor- und Nachnamen, das Geburtsdatum und eine Liste der Fähigkeiten des Mitarbeiters enthält.
-                // Die Liste der Fähigkeiten wird durch eine Unterabfrage erstellt, die nach Fähigkeiten sucht, die dem Mitarbeiter zugeordnet sind, und eine anonyme Typ-Instanz mit dem Namen der Fähigkeit und Level zurückgibt.   
+                //Der Query sucht in der Datenbank nach Mitarbeitern mit dem angegebenen Vornamen, Nachnamen und Geburtsdatum.
+                // Für jeden gefundenen Mitarbeiter wird eine anonyme Typ-Instanz erstellt, die den Vor - und Nachnamen, das Geburtsdatum und eine Liste der Fähigkeiten des Mitarbeiters enthält.
+                // Die Liste der Fähigkeiten wird durch eine Unterabfrage erstellt, die nach Fähigkeiten sucht, die dem Mitarbeiter zugeordnet sind, und eine anonyme Typ - Instanz mit dem Namen der Fähigkeit und Level zurückgibt.   
                 var query = (from employee in context.Employees
                              where employee.FirstName.Contains(firstName) &&
                                    employee.LastName.Contains(lastName) &&
@@ -85,9 +85,11 @@ namespace Skills
                                  employee.BirthDate,
                                  Skills = (from skill in context.Skills
                                            where skill.Employee_Id == employee.Employee_Id
-                                           select new { SkillName = skill.SkillName, SkillLevel = skill.SkillLevel })
+                                           select new { SkillName = skill.SkillName, SkillLevel = Level_DigitToString(skill.SkillLevel)})
                                          .ToList()
                              }).ToList();
+
+
 
                 // Falls der Query mindestens einen Mitarbeiter gefunden hat:
                 // Die bestehenden Einträge werden aus der ListBox gelöscht
@@ -103,7 +105,7 @@ namespace Skills
                         var skillsText = "";
                         foreach (var skill in item.Skills)
                         {
-                            skillsText += $"{skill.SkillName} ({GetSkillLevelText.Compile()(skill.SkillLevel)})\n";
+                            skillsText += $"{skill.SkillName} ({skill.SkillLevel})\n";
                         }
 
                         lbxOutput.Items.Add($"{item.FirstName} {item.LastName}:");
@@ -125,6 +127,20 @@ namespace Skills
 
 
 
+        }
+
+
+
+        private static string Level_DigitToString(int l)
+        {
+            switch (l)
+            {
+                case 1: return "Grundkenntnisse";
+                case 2: return "Fortgeschrittene Kenntnisse";
+                case 3: return "Bereits in Projekt eingesetzt";
+                case 4: return "Umfangreiche Projekterfahrungen";
+                default: throw new ArgumentOutOfRangeException();
+            }
         }
 
 

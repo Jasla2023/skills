@@ -3,20 +3,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:Skills;assembly=Skills"
-    
-
+  xmlns:local="clr-namespace:Skills;assembly=Skills"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:uc1="clr-namespace:Skills"
 
     mc:Ignorable="d"
-    Title="Kenntnisse" Height="650" Width="1400" MinHeight="650" MinWidth="1400" ResizeMode="CanResize"
+    Title="Mitarbeiterdaten ändern" Height="650" Width="1200" MinHeight="650" MinWidth="1200" ResizeMode="CanResize"
     WindowStartupLocation="CenterScreen" MouseDown="Border_MouseDown" >
-   
+
+    
+
+
     <Grid>
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="45*" />
+            <ColumnDefinition Width="60*" />
 
             <ColumnDefinition Width="80*" />
 
@@ -27,8 +28,8 @@
         <!--Left Site-->
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="60*" />
-                <RowDefinition Height="40*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="50*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Column="0" Grid.Row="0" Name="brd" Background="AliceBlue">
@@ -37,7 +38,7 @@
                     <ColumnDefinition Width="130*" />
                     <ColumnDefinition Width="5*" />
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1" Name="logoBorder" Background="White" Margin="30" Height="150" Width="400">
+                <Grid Grid.Column="1" Name="logoBorder" Background="White" Margin="30" Height="150" Width="330">
                     <Grid.Effect>
                         <DropShadowEffect ShadowDepth="0" BlurRadius="5" Color="#80000000" Opacity="0.5"/>
                     </Grid.Effect>
@@ -48,7 +49,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0" Name="brd1" Background="AliceBlue">
-                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Text="Kenntnisse" FontSize="35" FontWeight="Bold" TextWrapping="Wrap">
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Text="Mitarbeiterdaten ändern" FontSize="40" FontWeight="Bold" TextWrapping="Wrap">
                     <TextBlock.Effect>
                         <DropShadowEffect ShadowDepth="0" BlurRadius="2" Color="#80000000" Opacity="0.5"/>
                     </TextBlock.Effect>
@@ -65,18 +66,73 @@
 
             <Grid.RowDefinitions>
 
+                <RowDefinition Height="60*" />
+
                 <RowDefinition Height="80*" />
 
-                <RowDefinition Height="50*" />
+                <RowDefinition Height="25*" />
 
             </Grid.RowDefinitions>
 
+            <Grid Grid.Column="1" Grid.Row="0" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="90*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="20*" />
+                 
+                    <RowDefinition Height="5*" />
+
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Label Name="lblFirstName" Content="Vorname:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" />
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <TextBox Name="tbxFirstName" Text="{Binding FirstName, Mode=TwoWay}"  VerticalAlignment="Center" Margin="10" Height="40"/>
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Label Name="lblLastName" Content="Nachname:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" />
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="2">
+                    <TextBox Name="tbxLastName" Text="{Binding LastName, Mode=TwoWay}"  VerticalAlignment="Center" Margin="10" Height="40"/>
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Label Name="lblDateOfBirth" Content="Geburtsdatum:"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Height="35"/>
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="2">
 
 
-            <Grid Grid.Column="1" Grid.Row="0" Background="white">
+
+
+
+                    <DatePicker Name="dpcDateOfBirth" SelectedDate="{Binding BirthDate,Mode=TwoWay}" VerticalAlignment="Center" Margin="10" Height="34">
+                        <DatePicker.Resources>
+                            <Style TargetType="{x:Type DatePickerTextBox}">
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+                </Grid>
+            </Grid>
+
+
+            <Grid Grid.Column="1" Grid.Row="1" Background="white">
                 
-
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="90*"/>
@@ -92,8 +148,7 @@
 
 
 
-                <ListView ItemsSource="{Binding}" Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
-
+                <ListView x:Name="listView" ItemsSource="{Binding}" Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
                         <GridView>
                             <GridView.ColumnHeaderContainerStyle>
@@ -103,33 +158,17 @@
                                     <Setter Property="FontWeight" Value="Bold"/>
                                 </Style>
                             </GridView.ColumnHeaderContainerStyle>
-                            <GridViewColumn Header="Kenntnis:" Width="Auto">
+                            <GridViewColumn Header="Kenntnis:" Width="200" >
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding SkillName}" Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center"  FontSize="16"/>
+                                        <TextBox x:Name="tbxSkillName" Text="SkillName" Margin="10,10,0,10" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="16"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Kenntnisstufe:" Width="Auto" >
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding SkillLevelString}" Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="16"/>
-                                    </DataTemplate>
-
-
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Width="180">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Kenntnis ändern" Click="EditSkillButton_Click" HorizontalAlignment="Center"  FontSize="16" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Width="180">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Kenntnisstufe ändern" Click="EditSkillButton_Click" HorizontalAlignment="Center"  FontSize="16" />
+                                        <TextBox x:Name="tbxSkillLevel" Text="SkillLevel" Margin="5,10,10,10" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="16"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -145,6 +184,31 @@
                 </ListView>
 
 
+                <!--<ListBox x:Name="listBox" ItemsSource="{Binding}" Grid.Column="1" Grid.Row="1">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="5"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="tbxSkillName" Text="{Binding SkillName}" Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="16" Grid.Column="0" VerticalAlignment="Center"/>
+                                <TextBlock Name="tblSkillLevelString" Text="{Binding SkillLevelString}" Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="16" Grid.Column="2" VerticalAlignment="Top"/>
+                                <Button Content="Kenntnis ändern" Click="EditSkillButton_Click" HorizontalAlignment="Center"  FontSize="16" Grid.Column="3"/>
+                                <Button Content="Kenntnisstufe ändern" Click="EditSkillButton_Click" HorizontalAlignment="Center"  FontSize="16" Grid.Column="4"/>
+                                <Button Content="X" Click="DeleteSkillButton_Click" Margin="10" Foreground="White" Background="Red" Width="15" BorderBrush="white" HorizontalAlignment="Center" Grid.Column="5"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>-->
+
+
+
+
+
+
 
             </Grid>
 
@@ -152,7 +216,7 @@
 
 
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="2">
 
                 <Grid.ColumnDefinitions>
 
@@ -160,7 +224,6 @@
 
                     <ColumnDefinition Width="*" />
                     
-                    <ColumnDefinition Width="*" />
                    
 
                 </Grid.ColumnDefinitions>
@@ -171,54 +234,37 @@
                     
                     Grid.Column="0"
 
-                    Margin="40"
+                    Margin="20"
 
                     HorizontalAlignment="Stretch"
 
                     Content="Beenden"
                     
-                    FontSize="20" MaxWidth="200" MaxHeight="80">
+                    Width="250"
+                    
+                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnClose_Click">
 
                     <Button.Effect>
                         <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
                     </Button.Effect>
                 </Button>
+
+               
 
                 <Button
 
                     Grid.Column="1"
 
-                    Margin="40"
+                    Margin="20"
 
                     HorizontalAlignment="Stretch"
 
                     VerticalAlignment="Stretch"
-
-                    Content="Daten ändern"
                     
-                    Width="300"
-                    
-                    FontSize="20" MaxWidth="200" MaxHeight="80">
+                    Width="250"
 
-                    <Button.Effect>
-                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
-                    </Button.Effect>
-
-
-                </Button>
-
-                <Button
-
-                    Grid.Column="2"
-
-                    Margin="40"
-
-                    HorizontalAlignment="Stretch"
-
-                    VerticalAlignment="Stretch"
-
-                    Content="Ändern" 
-                    FontSize="20" MaxWidth="200" MaxHeight="80">
+                    Content="Änderung speichern"
+                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="EditSkillButton_Click">
 
                     <Button.Effect>
                         <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />

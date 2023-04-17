@@ -162,8 +162,8 @@ namespace Skills.Properties
             {
                 sls.Add(AssignSkillLevel(cb));
             }
-            try
-            {
+            //try
+            //{
                 List<int> SearchResult = DatabaseConnections.SearchEmployeeBySkills(tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
                 string output = "";
                 if (SearchResult.Count > 0)
@@ -178,11 +178,11 @@ namespace Skills.Properties
                 MessageBox.Show(output);
 
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
 
 
 

@@ -679,38 +679,38 @@ namespace Skills
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns>skills list</returns>
-        public static List<Skill> GetEmployeeSkills(int employeeId)
-        {
-            List<Skill> skills = new List<Skill>();
+        //public static List<Skill> GetEmployeeSkills(int employeeId)
+        //{
+        //    List<Skill> skills = new List<Skill>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        connection.Open();
 
-                string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@employee_Id", employeeId);
+        //        string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
+        //        SqlCommand command = new SqlCommand(query, connection);
+        //        command.Parameters.AddWithValue("@employee_Id", employeeId);
 
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Skill skill = new Skill();
-                        skill.Skill_Id = (int)reader["skill_id"];
-                        skill.SkillName = (string)reader["skillname"];
+        //        using (SqlDataReader reader = command.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                Skill skill = new Skill();
+        //                skill.Skill_Id = (int)reader["skill_id"];
+        //                skill.SkillName = (string)reader["skillname"];
 
 
+        //                skill.SkillLevel = Level_DigitToString((int)reader["skilllevel"]);
+        //                //skill.SkillLevelString = GetConvertedSkillLevelIntoString((int)reader["skilllevel"]);
+        //                skill.Employee_Id = employeeId;
 
-                        skill.SkillLevelString = GetConvertedSkillLevelIntoString((int)reader["skilllevel"]);
-                        skill.Employee_Id = employeeId;
+        //                skills.Add(skill);
+        //            }
+        //        }
+        //    }
 
-                        skills.Add(skill);
-                    }
-                }
-            }
-
-            return skills;
-        }
+        //    return skills;
+        //}
 
         public static string GetConvertedSkillLevelIntoString(int skillLevel)
         {
@@ -782,5 +782,73 @@ namespace Skills
 
             return exists;
         }
+
+
+
+        public static Employee GetEmployeeByFirstNameLastNameAndDateOfBirth(string firstName, string lastName, DateTime birthdate)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM Employees WHERE FirstName=@firstName AND LastName=@lastName AND BirthDate=@birthdate", connection);
+                command.Parameters.AddWithValue("@firstName", firstName);
+                command.Parameters.AddWithValue("@lastName", lastName);
+                command.Parameters.AddWithValue("@birthdate", birthdate);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Employee employee = new Employee();
+                    employee.Employee_Id = reader.GetInt32(0);
+                    employee.FirstName = reader.GetString(1);
+                    employee.LastName = reader.GetString(2);
+                    employee.BirthDate = reader.GetDateTime(3);
+                    return employee;
+                }
+                else
+                {
+                    throw new Exception("Employee not found");
+                }
+            }
+        }
+
+        public static Employee GetEmployeeById(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT * FROM Employees WHERE Employee_Id = @id", connection);
+                command.Parameters.AddWithValue("@id", id);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Employee employee = new Employee()
+                    {
+                        Employee_Id = (int)reader["Employee_Id"],
+                        FirstName = (string)reader["FirstName"],
+                        LastName = (string)reader["LastName"],
+                        BirthDate = (DateTime)reader["BirthDate"]
+                    };
+                    return employee;
+                }
+                else
+                {
+                    throw new Exception("Employee not found");
+                }
+            }
+        }
+
+        private static string Level_DigitToString(int l)
+        {
+            switch (l)
+            {
+                case 1: return "Grundkenntnisse";
+                case 2: return "Fortgeschrittene Kenntnisse";
+                case 3: return "Bereits in Projekt eingesetzt";
+                case 4: return "Umfangreiche Projekterfahrungen";
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+
     }
 }

@@ -202,6 +202,7 @@
       <DependentUpon>SearchEmployeeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Skill.cs" />
+    <Compile Include="SkillLevelToStringConverter.cs" />
     <Compile Include="SuccessfullyFound.xaml.cs">
       <DependentUpon>SuccessfullyFound.xaml</DependentUpon>
     </Compile>

@@ -31,6 +31,7 @@ namespace Skills
 
         private void ButtonSearchEmployee1_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate));
