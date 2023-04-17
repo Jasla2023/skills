@@ -837,7 +837,7 @@ namespace Skills
             }
         }
 
-        private static string Level_DigitToString(int l)
+        public static string Level_DigitToString(int l)
         {
             switch (l)
             {

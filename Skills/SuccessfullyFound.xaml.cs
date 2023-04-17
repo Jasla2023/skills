@@ -66,6 +66,7 @@ namespace Skills
             
             for (int i = 0; i < numberOfSkills; i++)
             {
+                Grids[i] = new Grid();
                 Grids[i].ColumnDefinitions.Add(new ColumnDefinition());
                 Grids[i].ColumnDefinitions.Add(new ColumnDefinition());
                 Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25.0)});

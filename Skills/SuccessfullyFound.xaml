@@ -41,7 +41,7 @@
         <!--Input Section-->
 
         <Border Padding="30,30,30,30" Background="White" CornerRadius="0 25 25 0" BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue" Margin="30,12,69,0" Grid.Column="1" MouseDown="Border_MouseDown">
-            <ListView Name="lvwOutput">
+            <ListView x:Name="lvwOutput">
                 
             </ListView>
         </Border>

@@ -74,20 +74,20 @@ namespace Skills
                 //Der Query sucht in der Datenbank nach Mitarbeitern mit dem angegebenen Vornamen, Nachnamen und Geburtsdatum.
                 // Für jeden gefundenen Mitarbeiter wird eine anonyme Typ-Instanz erstellt, die den Vor - und Nachnamen, das Geburtsdatum und eine Liste der Fähigkeiten des Mitarbeiters enthält.
                 // Die Liste der Fähigkeiten wird durch eine Unterabfrage erstellt, die nach Fähigkeiten sucht, die dem Mitarbeiter zugeordnet sind, und eine anonyme Typ - Instanz mit dem Namen der Fähigkeit und Level zurückgibt.   
-                var query = (from employee in context.Employees
-                             where employee.FirstName.Contains(firstName) &&
-                                   employee.LastName.Contains(lastName) &&
-                                   employee.BirthDate == dateOfBirth
-                             select new
-                             {
-                                 employee.FirstName,
-                                 employee.LastName,
-                                 employee.BirthDate,
-                                 Skills = (from skill in context.Skills
-                                           where skill.Employee_Id == employee.Employee_Id
-                                           select new { SkillName = skill.SkillName, SkillLevel = Level_DigitToString(skill.SkillLevel)})
-                                         .ToList()
-                             }).ToList();
+                //var query = (from employee in context.Employees
+                //             where employee.FirstName.Contains(firstName) &&
+                //                   employee.LastName.Contains(lastName) &&
+                //                   employee.BirthDate == dateOfBirth
+                //             select new
+                //             {
+                //                 employee.FirstName,
+                //                 employee.LastName,
+                //                 employee.BirthDate,
+                //                 Skills = (from skill in context.Skills
+                //                           where skill.Employee_Id == employee.Employee_Id
+                //                           select new { SkillName = skill.SkillName, SkillLevel = Level_DigitToString(skill.SkillLevel)})
+                //                         .ToList()
+                //             }).ToList();
 
 
 
@@ -96,31 +96,31 @@ namespace Skills
                 // - ListBox zurück auf null     
                 // - Erstellt einen Text, der die Fähigkeiten des Mitarbeiters auflistet
                 // - Fügt den Namen des Mitarbeiters und die Fähigkeiten in die ListBox ein
-                if (query.Any())
-                {
-                    lbxOutput.Items.Clear();
-                    lbxOutput.ItemsSource = null;
-                    foreach (var item in query)
-                    {
-                        var skillsText = "";
-                        foreach (var skill in item.Skills)
-                        {
-                            skillsText += $"{skill.SkillName} ({skill.SkillLevel})\n";
-                        }
+                //if (query.Any())
+                //{
+                //    lbxOutput.Items.Clear();
+                //    lbxOutput.ItemsSource = null;
+                //    foreach (var item in query)
+                //    {
+                //        var skillsText = "";
+                //        foreach (var skill in item.Skills)
+                //        {
+                //            skillsText += $"{skill.SkillName} ({skill.SkillLevel})\n";
+                //        }
 
-                        lbxOutput.Items.Add($"{item.FirstName} {item.LastName}:");
-                        lbxOutput.Items.Add(skillsText);
+                //        lbxOutput.Items.Add($"{item.FirstName} {item.LastName}:");
+                //        lbxOutput.Items.Add(skillsText);
 
-                    }
-                }
-                // Falls der Query keinen Mitarbeiter gefunden hat:
-                // - Füge eine Meldung hinzu, dass keine Mitarbeiter gefunden wurden
-                // - ListBox zurück auf null
-                else
-                {
-                    lbxOutput.Items.Add("Keine Mitarbeiter gefunden.");
-                    lbxOutput.ItemsSource = null;
-                }
+                //    }
+                //}
+                //// Falls der Query keinen Mitarbeiter gefunden hat:
+                //// - Füge eine Meldung hinzu, dass keine Mitarbeiter gefunden wurden
+                //// - ListBox zurück auf null
+                //else
+                //{
+                //    lbxOutput.Items.Add("Keine Mitarbeiter gefunden.");
+                //    lbxOutput.ItemsSource = null;
+                //}
             }
 
 

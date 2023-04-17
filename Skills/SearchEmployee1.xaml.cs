@@ -35,7 +35,7 @@ namespace Skills
             try
             {
                 int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate));
-                EmployeeFound employeeFound = new EmployeeFound(empID);
+                EmployeeFound employeeFound = new EmployeeFound(empID, tbxFirstName.Text + " " + tbxLastName.Text);
                 employeeFound.Show();
             }
             catch (Exception ex)
