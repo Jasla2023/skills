@@ -29,6 +29,7 @@ namespace Skills
         private Button[] EditLevel;
         private TextBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
+        private Grid[] Grids;
 
         private List<int> skills;
 
@@ -48,6 +49,8 @@ namespace Skills
             skills = DatabaseConnections.GetSkillsOfAnEmployee(id);
             int numberOfSkills = skills.Count;
 
+            Grids = new Grid[numberOfSkills];
+            
             LabelsForSkills = new Label[numberOfSkills];
             LabelsForLevels = new Label[numberOfSkills];
             ActualSkills = new Label[numberOfSkills];
@@ -59,47 +62,52 @@ namespace Skills
             EditaleSkils = new TextBox[numberOfSkills];
             EditableLevls = new ComboBox[numberOfSkills];
 
-            int rowsAdded = 0;
+            //int rowsAdded = 0;
             
             for (int i = 0; i < numberOfSkills; i++)
             {
-                grdAlter.RowDefinitions.Add(new RowDefinition());
-                grdAlter.RowDefinitions.Add(new RowDefinition());
-                rowsAdded += 2;
+                Grids[i].ColumnDefinitions.Add(new ColumnDefinition());
+                Grids[i].ColumnDefinitions.Add(new ColumnDefinition());
+                Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25.0)});
+                Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(70.0)});
+
+                Grids[i].RowDefinitions.Add(new RowDefinition());
+                Grids[i].RowDefinitions.Add(new RowDefinition());
+                //rowsAdded += 2;
 
                 LabelsForSkills[i] = new Label { Content = "Kenntnisse: ", HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
-                Grid.SetRow(LabelsForSkills[i], i * 2);
+                Grid.SetRow(LabelsForSkills[i], 0);
                 Grid.SetColumn(LabelsForSkills[i], 0);
 
                 LabelsForLevels[i] = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
-                Grid.SetRow(LabelsForLevels[i], i * 2 + 1);
+                Grid.SetRow(LabelsForLevels[i], 1);
                 Grid.SetColumn(LabelsForLevels[i], 0);
 
                 ActualSkills[i] = new Label { Content = DatabaseConnections.GetSkillByID(skills[i]), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
-                Grid.SetRow(ActualSkills[i], i * 2);
+                Grid.SetRow(ActualSkills[i], 0);
                 Grid.SetColumn(ActualSkills[i], 1);
 
                 ActualLevels[i] = new Label { Content = Level_DigitToString(DatabaseConnections.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
-                Grid.SetRow(ActualLevels[i], i * 2 + 1);
+                Grid.SetRow(ActualLevels[i],  1);
                 Grid.SetColumn(ActualLevels[i], 1);
 
                 DeleteSkill[i] = new Button { Content = "X"};
                 DeleteSkill[i].Click += deleteSkill_Click;
-                Grid.SetRow(DeleteSkill[i], i * 2);
+                Grid.SetRow(DeleteSkill[i], 0);
                 Grid.SetColumn(DeleteSkill[i], 2);
 
                 EditSkill[i] = new Button { Content = "Ändern"};
                 EditSkill[i].Click += editSkill_Click;
-                Grid.SetRow(EditSkill[i], i * 2);
+                Grid.SetRow(EditSkill[i], 0);
                 Grid.SetColumn(EditSkill[i], 3);
 
                 EditLevel[i] = new Button { Content = "Ändern" };
                 EditLevel[i].Click += editLevel_Click;
-                Grid.SetRow(EditLevel[i], i * 2 + 1);
+                Grid.SetRow(EditLevel[i], 1);
                 Grid.SetColumn(EditLevel[i], 3);
 
                 EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Hidden };
-                Grid.SetRow(EditaleSkils[i], i * 2);
+                Grid.SetRow(EditaleSkils[i], 0);
                 Grid.SetColumn(EditaleSkils[i], 1);
 
                 EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Hidden };
@@ -131,17 +139,17 @@ namespace Skills
 
 
 
-                grdAlter.Children.Add(LabelsForSkills[i]);
-                grdAlter.Children.Add(LabelsForLevels[i]);
-                grdAlter.Children.Add(ActualSkills[i]);
-                grdAlter.Children.Add(ActualLevels[i]);
-                grdAlter.Children.Add(DeleteSkill[i]);
-                grdAlter.Children.Add(EditSkill[i]);
-                grdAlter.Children.Add(EditLevel[i]);
-                grdAlter.Children.Add(EditaleSkils[i]);
-                grdAlter.Children.Add(EditableLevls[i]);
+                Grids[i].Children.Add(LabelsForSkills[i]);
+                Grids[i].Children.Add(LabelsForLevels[i]);
+                Grids[i].Children.Add(ActualSkills[i]);
+                Grids[i].Children.Add(ActualLevels[i]);
+                Grids[i].Children.Add(DeleteSkill[i]);
+                Grids[i].Children.Add(EditSkill[i]);
+                Grids[i].Children.Add(EditLevel[i]);
+                Grids[i].Children.Add(EditaleSkils[i]);
+                Grids[i].Children.Add(EditableLevls[i]);
 
-
+                lvwOutput.Items.Add(Grids[i]);
             }
            
         }
