@@ -29,8 +29,8 @@ namespace Skills
         private TextBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
 
-        private TextBox AddSkils;
-        private ComboBox AddtableLevls;
+        private TextBox newSkill;
+        private ComboBox newLevel;
 
         private Grid[] Grids;
 
@@ -271,11 +271,20 @@ namespace Skills
                
             }
            
+
+
                 for (int i = 0; i < skills.Count; i++)
                 {
                     DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
                 }
-              
+
+            if (newLevel != null)
+            {
+                if (DatabaseConnections.SkillExists(newSkill.Text, _id))
+                    MessageBox.Show("Dieser Mitarbeiter hat schohn diese Kenntnis. Wenn Sie die Stufe aktualisieren möchten, klicken Sie, bitte, auf \"Ändern\".");
+                else
+                    DatabaseConnections.AddSkill(newSkill.Text, AssignSkillLevel(newLevel), _id);
+            }
             
 
             
@@ -323,8 +332,26 @@ namespace Skills
             Grid.SetRow(newLabel2, 1);
             Grid.SetColumn(newLabel2, 0);
 
+            newSkill = new TextBox {  HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 45 };
+            Grid.SetRow(newSkill, 0);
+            Grid.SetColumn(newSkill, 1);
+
+            newLevel = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
+            ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" , IsSelected = true};
+            ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
+            ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };
+            ComboBoxItem FourthLevel = new ComboBoxItem { Content = "Umfangreiche Projekterfahrungen" };
+            newLevel.Items.Add(FirstLevel);
+            newLevel.Items.Add(SecondLevel);
+            newLevel.Items.Add(ThirdLevel);
+            newLevel.Items.Add(FourthLevel);
+            Grid.SetRow(newLevel, 1);
+            Grid.SetColumn(newLevel, 1);
+
             newGrid.Children.Add(newLabel1);
             newGrid.Children.Add(newLabel2);
+            newGrid.Children.Add(newSkill);
+            newGrid.Children.Add(newLevel);
 
             lvwOutput.Items.Insert(rowNumber, newGrid);
 

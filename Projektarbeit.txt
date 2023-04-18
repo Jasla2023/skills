@@ -1,0 +1,11 @@
+14.04.2023
+
+1. Creating the method for hecking for skill dublicates in the database - 30m
+2. Working on the search/modify window design - 7h
+
+17.04.2023
+
+1. Teams-Videocall with PO - 1h
+2. Installing MS SQL Server on the new computer - 30m
+3. Installing MS Visual Studio - 1h30m
+4. Writing the logic for search/modify window - 2h
