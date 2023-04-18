@@ -24,7 +24,7 @@ namespace Skills
     {
 
 
-        private static string connectionString = "Data Source=DESKTOP-OMHKLOK\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
+        private static string connectionString = "Data Source=LAPTOP-AI5QJL80\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30";
 
         /// <summary>
         /// Adds a new record into the employees table in the databese and a record into the skills table in the database for each skill

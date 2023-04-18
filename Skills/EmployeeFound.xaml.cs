@@ -275,13 +275,25 @@ namespace Skills
 
                 for (int i = 0; i < skills.Count; i++)
                 {
+
+                if (DatabaseConnections.SkillExists(EditaleSkils[i].Text, _id) && EditaleSkils[i].Text != DatabaseConnections.GetSkillByID(DatabaseConnections.GetSkillsOfAnEmployee(_id)[i]))
+                {
+                    MessageBox.Show("Dieser Mitarbeiter hat bereits diesen Kenntnis.");
+                    return;
+                }
+                else
                     DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
                 }
 
             if (newLevel != null)
             {
+
+
                 if (DatabaseConnections.SkillExists(newSkill.Text, _id))
-                    MessageBox.Show("Dieser Mitarbeiter hat schohn diese Kenntnis. Wenn Sie die Stufe aktualisieren möchten, klicken Sie, bitte, auf \"Ändern\".");
+                {
+                    MessageBox.Show("Dieser Mitarbeiter hat bereits diesen Kenntnis.");
+                    return;
+                }
                 else
                     DatabaseConnections.AddSkill(newSkill.Text, AssignSkillLevel(newLevel), _id);
             }
