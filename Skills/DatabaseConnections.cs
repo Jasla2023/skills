@@ -791,8 +791,9 @@ namespace Skills
                 c.Close();
 
 
-                SqlCommand skillExists = new SqlCommand("SELECT COUNT(1) FROM skills WHERE employee_id = @ID", connection);
+                SqlCommand skillExists = new SqlCommand("SELECT COUNT(1) FROM skills WHERE employee_id = @ID AND skillname = @SN", connection);
                 skillExists.Parameters.AddWithValue("@ID", empID);
+                skillExists.Parameters.AddWithValue("@SN", skill);
                 SqlDataReader skillDuplicates = skillExists.ExecuteReader();
                 int numberOfDuplicates = -1;
                 while (skillDuplicates.Read())
