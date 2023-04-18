@@ -24,7 +24,7 @@ namespace Skills
     {
 
 
-        private static string connectionString = "Data Source=DESKTOP-OMHKLOK\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False";
+        private static string connectionString = "Data Source=LAPTOP-AI5QJL80\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False";
 
         /// <summary>
         /// Adds a new record into the employees table in the databese and a record into the skills table in the database for each skill
@@ -879,6 +879,82 @@ namespace Skills
                 default: throw new ArgumentOutOfRangeException();
             }
         }
+
+        /// <summary>
+        /// Update Firstname, Lastname, Birthdate of the employee in the database
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="dateOfBirth"></param>
+        public static void UpdateEmployee(int employeeId, string firstName, string lastName, DateTime dateOfBirth)
+        {
+            //Vorname, Nachname und Geburtsdatum akualisieren
+            string sql = "UPDATE employees SET firstname = @FirstName, lastname = @LastName, birthdate = @Birthdate WHERE employee_id = @EmployeeId";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@FirstName", firstName);
+                command.Parameters.AddWithValue("@LastName", lastName);
+                command.Parameters.AddWithValue("@Birthdate", dateOfBirth);
+                command.Parameters.AddWithValue("@EmployeeId", employeeId);
+
+                try
+                {
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Die Daten wurden erfolgreich aktualisiert!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mitarbeiter wurde nicht gefunden.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error updating employee: " + ex.Message);
+                }
+            }
+        }
+        /// <summary>
+        /// delete the employee from the database
+        /// </summary>
+        /// <param name="employeeId"></param>
+        public static void DeleteEmployee(int employeeId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Alle Skills des Mitarbeiters löschen, da Beziehung gelöscht werden muss
+                    using (SqlCommand command = new SqlCommand("DELETE FROM Skills WHERE Employee_Id = @employeeId", connection))
+                    {
+                        command.Parameters.AddWithValue("@employeeId", employeeId);
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Mitarbeiter löschen
+                    using (SqlCommand command = new SqlCommand("DELETE FROM Employees WHERE Employee_Id = @employeeId", connection))
+                    {
+                        command.Parameters.AddWithValue("@employeeId", employeeId);
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Mitarbeiter wurde erfolgreich gelöscht.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+
+
 
 
     }

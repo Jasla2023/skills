@@ -8,7 +8,7 @@
     xmlns:uc1="clr-namespace:Skills"
 
     mc:Ignorable="d"
-    Title="Mitarbeiterdaten ändern" Height="650" Width="1200" MinHeight="650" MinWidth="1200" ResizeMode="CanResize"
+    Title="Mitarbeiterdaten ändern" Height="650" Width="1200" MinHeight="750" MinWidth="1200" ResizeMode="CanResize"
     WindowStartupLocation="CenterScreen" MouseDown="Border_MouseDown" >
 
     
@@ -17,7 +17,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="60*" />
+            <ColumnDefinition Width="62*" />
 
             <ColumnDefinition Width="80*" />
 
@@ -38,7 +38,7 @@
                     <ColumnDefinition Width="130*" />
                     <ColumnDefinition Width="5*" />
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1" Name="logoBorder" Background="White" Margin="30" Height="150" Width="330">
+                <Grid Grid.Column="1" Name="logoBorder" Background="White" Margin="30" Height="150" Width="390">
                     <Grid.Effect>
                         <DropShadowEffect ShadowDepth="0" BlurRadius="5" Color="#80000000" Opacity="0.5"/>
                     </Grid.Effect>
@@ -49,7 +49,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0" Name="brd1" Background="AliceBlue">
-                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Text="Mitarbeiterdaten ändern" FontSize="40" FontWeight="Bold" TextWrapping="Wrap">
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="25" Text="Mitarbeiterdaten ändern" FontSize="40" FontWeight="Bold" TextWrapping="Wrap">
                     <TextBlock.Effect>
                         <DropShadowEffect ShadowDepth="0" BlurRadius="2" Color="#80000000" Opacity="0.5"/>
                     </TextBlock.Effect>
@@ -66,11 +66,13 @@
 
             <Grid.RowDefinitions>
 
-                <RowDefinition Height="60*" />
+                <RowDefinition Height="70*" />
 
-                <RowDefinition Height="80*" />
+                <RowDefinition Height="20*" />
 
-                <RowDefinition Height="25*" />
+                <RowDefinition Height="100*" />
+
+                <RowDefinition Height="35*" />
 
             </Grid.RowDefinitions>
 
@@ -118,7 +120,7 @@
 
 
 
-                    <DatePicker Name="dpcDateOfBirth"  VerticalAlignment="Center" Margin="10" Height="34">
+                    <DatePicker Name="dpcDateOfBirth"  VerticalAlignment="Center" Margin="10,0,10,0" Height="34">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type DatePickerTextBox}">
                                 <Setter Property="FontSize" Value="16"/>
@@ -130,8 +132,35 @@
                 </Grid>
             </Grid>
 
+            <Grid Grid.Row="1">
 
-            <Grid Grid.Column="1" Grid.Row="1" Background="white">
+                <Button
+                    
+                    Grid.Row="0"
+
+                    Margin="10"
+
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+
+                    Content="Mitarbeiter löschen"
+                    
+                    Background="OrangeRed"
+                    Foreground="White"
+                    
+                    Width="250"
+                    
+                    FontSize="19" MaxWidth="200" MaxHeight="80" Click="btnDeleteEmployee_Click">
+
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                    </Button.Effect>
+                </Button>
+
+            </Grid>
+
+
+            <Grid Grid.Column="1" Grid.Row="2" Background="white">
                 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
@@ -165,13 +194,14 @@
                     
                     Grid.Row="0"
 
-                    Margin="30"
+                    Margin="20"
 
                     HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
 
                     Content="Hinzufügen"
                     
-                    Width="190"
+                    Width="120"
                     
                     FontSize="19" MaxWidth="200" MaxHeight="80" Click="btnAddSkill_Click">
 
@@ -184,13 +214,14 @@
                     
                     Grid.Row="1"
 
-                    Margin="30"
+                    Margin="20"
 
                     HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
 
                     Content="Ändern"
                     
-                    Width="190"
+                    Width="120"
                     
                     FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnSkillChange_Click">
 
@@ -204,13 +235,14 @@
                     
                     Grid.Row="2"
 
-                    Margin="30"
+                    Margin="20"
 
                     HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
 
                     Content="Löschen"
                     
-                    Width="190"
+                    Width="120"
                     
                     FontSize="20" MaxWidth="200" MaxHeight="80" Background="OrangeRed" Foreground="White" Click="btnDeleteSkill_Click">
 
@@ -301,7 +333,7 @@
 
 
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="3">
 
                 <Grid.ColumnDefinitions>
 
@@ -319,7 +351,7 @@
                     
                     Grid.Column="0"
 
-                    Margin="20"
+                    Margin="35"
 
                     HorizontalAlignment="Stretch"
 
@@ -340,22 +372,22 @@
 
                     Grid.Column="1"
 
-                    Margin="20"
+                    Margin="35"
 
                     HorizontalAlignment="Stretch"
 
                     VerticalAlignment="Stretch"
                     
                     Width="250"
-
                     Content="Änderung speichern"
+                    
                     FontSize="20" MaxWidth="200" MaxHeight="80" Click="SaveButton_Click">
 
                     <Button.Effect>
                         <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
                     </Button.Effect>
 
-
+                   
                 </Button>
 
                 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,28 +28,40 @@ namespace Skills
         
         private TextBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
+
+        private TextBox AddSkils;
+        private ComboBox AddtableLevls;
+
         private Grid[] Grids;
 
         private List<int> skills;
 
         private int _id;
-
-
+        private string firstName;
+        private string lastName;
+        private DateTime birthDate;
 
         private int employeeId;
         private Employee employee; // Instanzvariable für das Employee-Objekt
 
+        private int numberOfSkills;
 
-        public EmployeeFound(int id, string vornameNachname)
+
+        public EmployeeFound(int id, string firstName, string lastName, SqlDateTime birthDate)
         {
 
             InitializeComponent();
 
             _id = id;
+            
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.birthDate = (DateTime)birthDate;
+
 
          
             skills = DatabaseConnections.GetSkillsOfAnEmployee(id);
-            int numberOfSkills = skills.Count;
+            numberOfSkills = skills.Count;
 
             Grids = new Grid[numberOfSkills];
 
@@ -61,9 +74,11 @@ namespace Skills
             EditaleSkils = new TextBox[numberOfSkills];
             EditableLevls = new ComboBox[numberOfSkills];
 
+            
+
             //int rowsAdded = 0;
 
-             
+
 
             for (int i = 0; i < numberOfSkills; i++)
             {
@@ -77,11 +92,11 @@ namespace Skills
                 Grids[i].RowDefinitions.Add(new RowDefinition());
                 //rowsAdded += 2;
 
-                LabelsForSkills[i] = new Label { Content = "Kenntnisse: ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
+                LabelsForSkills[i] = new Label { Content = "Kenntnisse: ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Height = 25, FontWeight = FontWeights.Bold };
                 Grid.SetRow(LabelsForSkills[i], 0);
                 Grid.SetColumn(LabelsForSkills[i], 0);
 
-                LabelsForLevels[i] = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
+                LabelsForLevels[i] = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, FontWeight = FontWeights.Bold };
                 Grid.SetRow(LabelsForLevels[i], 1);
                 Grid.SetColumn(LabelsForLevels[i], 0);
 
@@ -109,7 +124,7 @@ namespace Skills
                 Grid.SetColumn(EditLevel[i], 6);*/
 
 
-                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, Visibility = Visibility.Hidden };
+                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 45, Visibility = Visibility.Hidden };
                 Grid.SetRow(EditaleSkils[i], 0);
                 Grid.SetColumn(EditaleSkils[i], 1);
 
@@ -245,14 +260,34 @@ namespace Skills
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            string actualFirstName = tbxFirstName.Text;
+            string actualLastName = tbxLastName.Text;
+            DateTime actualDateOfBirth = (DateTime)dpcDateOfBirth.SelectedDate;
 
-            for (int i = 0; i < skills.Count; i++)
+
+            if (DatabaseConnections.GetFirstNameByID(_id) != actualFirstName || DatabaseConnections.GetLastNameByID(_id) != actualLastName || DatabaseConnections.GetDateOfBirthByID(_id) != actualDateOfBirth)
             {
-                DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
-
+                DatabaseConnections.UpdateEmployee(_id, actualFirstName, actualLastName, actualDateOfBirth);
+               
             }
-            MessageBox.Show("Die Daten wurden erfolgreich geändert!");
+           
+                for (int i = 0; i < skills.Count; i++)
+                {
+                    DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+                }
+              
+            
+
+            
             Close();
+
+            //for (int i = 0; i < skills.Count; i++)
+            //{
+            //    DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+
+            //}
+            //MessageBox.Show("Die Daten wurden erfolgreich geändert!");
+            //Close();
 
 
 
@@ -268,12 +303,48 @@ namespace Skills
 
         private void btnAddSkill_Click(object sender, RoutedEventArgs e)
         {
-            AddASkill addASkill = new AddASkill();
-            addASkill.Show();
+            // Zähle die Anzahl der vorhandenen Zeilen im ListView
+            int rowNumber = lvwOutput.Items.Count;
+
+            // Erstelle eine neue Grid-Zeile und füge sie hinzu
+            Grid newGrid = new Grid();
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(25.0) });
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(70.0) });
+            newGrid.RowDefinitions.Add(new RowDefinition());
+            newGrid.RowDefinitions.Add(new RowDefinition());
+
+            Label newLabel1 = new Label { Content = "Kenntnisse: ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Height = 25, FontWeight = FontWeights.Bold };
+            Grid.SetRow(newLabel1, 0);
+            Grid.SetColumn(newLabel1, 0);
+
+            Label newLabel2 = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25, FontWeight = FontWeights.Bold };
+            Grid.SetRow(newLabel2, 1);
+            Grid.SetColumn(newLabel2, 0);
+
+            newGrid.Children.Add(newLabel1);
+            newGrid.Children.Add(newLabel2);
+
+            lvwOutput.Items.Insert(rowNumber, newGrid);
+
+
+
+
+
+
+
+
+
+
+
+            //AddASkill addASkill = new AddASkill();
+            //addASkill.Show();
         }
 
         private void btnSkillChange_Click(object sender, RoutedEventArgs e)
         {
+
             int orderWithinOneEmployee = lvwOutput.Items.IndexOf(lvwOutput.SelectedItem);
             try
             {
@@ -306,6 +377,12 @@ namespace Skills
             {
                 MessageBox.Show("Was genau möchten Sie ändern?");
             }
+        }
+
+        private void btnDeleteEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseConnections.DeleteEmployee(_id);
+            
         }
     }
 }
