@@ -184,42 +184,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddASkill.xaml.cs">
-      <DependentUpon>AddASkill.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DatabaseConnections.cs" />
     <Compile Include="EmployeeDb.cs" />
-    <Compile Include="EmployeeFound.xaml.cs">
+    <Compile Include="Views\EmployeeFound.xaml.cs">
       <DependentUpon>EmployeeFound.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\RequiredSkillsForm.xaml.cs">
       <DependentUpon>RequiredSkillsForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchAlter.xaml.cs">
-      <DependentUpon>SearchAlter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SearchEmployee1.xaml.cs">
+    <Compile Include="Views\SearchEmployee1.xaml.cs">
       <DependentUpon>SearchEmployee1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchEmployee2.xaml.cs">
+    <Compile Include="Views\SearchEmployee2.xaml.cs">
       <DependentUpon>SearchEmployee2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SearchEmployeeWindow.xaml.cs">
-      <DependentUpon>SearchEmployeeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Skill.cs" />
     <Compile Include="SkillLevelToStringConverter.cs" />
-    <Compile Include="SuccessfullyFound.xaml.cs">
+    <Compile Include="Views\SuccessfullyFound.xaml.cs">
       <DependentUpon>SuccessfullyFound.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UpdateEmployeeWindow.xaml.cs">
-      <DependentUpon>UpdateEmployeeWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="AddASkill.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EmployeeFound.xaml">
+    <Page Include="Views\EmployeeFound.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -244,27 +228,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchAlter.xaml">
+    <Page Include="Views\SearchEmployee1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchEmployee1.xaml">
+    <Page Include="Views\SearchEmployee2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchEmployee2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SearchEmployeeWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SuccessfullyFound.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UpdateEmployeeWindow.xaml">
+    <Page Include="Views\SuccessfullyFound.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

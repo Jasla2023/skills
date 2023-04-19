@@ -60,7 +60,7 @@
 
             <Grid.RowDefinitions>
 
-              
+
 
                 <RowDefinition Height="20*" />
 
@@ -74,7 +74,7 @@
             <Grid Grid.Column="1" Grid.Row="0" Background="white">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*" />
-                    
+
                     <ColumnDefinition Width="70*"/>
 
                     <ColumnDefinition Width="20*"/>
@@ -85,58 +85,58 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="5*" />
-                   
-                
-                   
+
+
+
 
 
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="1" Grid.Column="1">
-                    <TextBox Name="tbxName"  VerticalAlignment="Center" Margin="10"/>
+                    <TextBox Name="tbxName"  VerticalAlignment="Center" Margin="10" KeyUp="btnSearchEmployee_Click"/>
                 </Grid>
 
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <Button x:Name="btnSearchEmployee" Content="Suchen"  VerticalAlignment="Center" Margin="10" Height="35" Click="btnSearchEmployee_Click">
+                    <!--<Button x:Name="btnSearchEmployee" Content="Suchen"  VerticalAlignment="Center" Margin="10" Height="35" Click="btnSearchEmployee_Click">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
                         </Button.Effect>
 
-                    </Button>
+                    </Button>-->
                 </Grid>
 
             </Grid>
-            
-            
+
+
             <Grid Grid.Row="1" >
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition />
 
-                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="591.549"/>
 
-                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
 
-                
-                <DataGrid x:Name="dataGrid" Grid.Column="1" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged">
+
+                <DataGrid x:Name="dataGrid" Grid.Column="1" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" CanUserAddRows="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Vorname" Binding="{Binding FirstName}" Width="*" />
                         <DataGridTextColumn Header="Nachname" Binding="{Binding LastName}" Width="*" />
-                        <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding BirthDate, StringFormat=d}" Width="*" />
+                        <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding BirthDate, StringFormat=dd.MM.yyyy}" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
 
 
 
             </Grid>
-               
+
 
             <Grid Grid.Row="2">
 
-              
+
                 <Button
                     
                     Grid.Column="0"
@@ -158,7 +158,7 @@
                     </Button.Effect>
                 </Button>
 
-               
+
 
             </Grid>
 

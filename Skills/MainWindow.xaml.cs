@@ -36,58 +36,14 @@ namespace Skills
             cew.Show();
         }
 
-        private void btnSearchEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            SearchEmployeeWindow sew = new SearchEmployeeWindow();
-            sew.Show();
-
-            //using (var db = new EmployeeDb())
-            //{
-            //    StringBuilder sb = new StringBuilder();
-            //    foreach (var employee in db.Employees)
-            //    {
-            //        string birthDate = employee.BirthDate.ToString("dd.MM.yyyy");
-            //        sb.AppendLine($"{employee.Employee_Id} {employee.FirstName} {employee.LastName} {birthDate}");
-            //    }
-            //    MessageBox.Show(sb.ToString(), "Alle Mitarbeiter");
-            //}
-
-
-            //string[] skillNames = { "Java", "C#" };
-
-            //using (var db = new EmployeeDb())
-            //{
-            //    var employeesWithSkills = from e in db.Employees
-            //                              join s in db.Skills on e.employee_id equals s.employee_id
-            //                              where skillNames.Contains(s.skillName)
-            //                              select new { e.firstname, e.lastname };
-
-            //    var uniqueEmployees = employeesWithSkills.Distinct();
-
-            //    foreach (var employee in uniqueEmployees)
-            //    {
-            //        Console.WriteLine("{0} {1}", employee.firstname, employee.lastname);
-            //    }
-            //}
-        }
-
+      
         private void btnSearchEmployeesBySkills_Click(object sender, RoutedEventArgs e)
         {
             RequiredSkillsForm requiredSkillsForm = new RequiredSkillsForm();
             requiredSkillsForm.Show();
         }
 
-        private void btnUpdateEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateEmployeeWindow updateEmployee = new UpdateEmployeeWindow();
-            updateEmployee.Show();
-        }
-
-        private void btnSearchAlter_Click(object sender, RoutedEventArgs e)
-        {
-            SearchAlter searchAlter = new SearchAlter();
-            searchAlter.Show();
-        }
+    
 
         private void btnSearch1_Click(object sender, RoutedEventArgs e)
         {

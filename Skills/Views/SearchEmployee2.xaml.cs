@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Data.SqlTypes;
+using System.Runtime.Remoting.Contexts;
 
 namespace Skills
 {
@@ -22,10 +23,20 @@ namespace Skills
     /// </summary>
     public partial class SearchEmployee2 : Window
     {
+
+        private EmployeeDb context;
+
+        private List<Employee> employees;   
         public SearchEmployee2()
         {
             InitializeComponent();
-           
+
+            context = new EmployeeDb();
+            employees =context.Employees.ToList();
+           dataGrid.DataContext = employees;
+
+          
+
         }
 
 
@@ -46,18 +57,7 @@ namespace Skills
 
         }
 
-        private void btnSearchEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            var searchNames = tbxName.Text.Split(' ');
-            using (var context = new EmployeeDb())
-            {
-                var employees = context.Employees
-                    .AsEnumerable()
-                    .Where(emp => searchNames.All(name => emp.FirstName.ToLower().Contains(name.ToLower()) || emp.LastName.ToLower().Contains(name.ToLower())))
-                    .ToList();
-                dataGrid.ItemsSource = employees;
-            }
-        }
+        
 
 
 
@@ -66,13 +66,11 @@ namespace Skills
             var tbxName = sender as TextBox;
             var searchTerm = tbxName.Text;
 
-            using (var context = new EmployeeDb())
-            {
-                var employees = context.Employees
-                    .Where(emp => emp.FirstName.Contains(searchTerm) || emp.LastName.Contains(searchTerm))
-                    .ToList();
-                dataGrid.ItemsSource = employees;
-            }
+            var emps = employees
+                   .Where(emp => emp.FirstName.Contains(searchTerm) || emp.LastName.Contains(searchTerm))
+                   .ToList();
+            //dataGrid.ItemsSource = emps;
+
         }
 
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,6 +83,19 @@ namespace Skills
             ef.Show();
             
             
+        }
+
+        private void btnSearchEmployee_Click(object sender, KeyEventArgs e)
+        {
+            var searchNames = tbxName.Text.Split(' ');
+            using (var context = new EmployeeDb())
+            {
+                var employees = context.Employees
+                    .AsEnumerable()
+                    .Where(emp => searchNames.All(name => emp.FirstName.ToLower().Contains(name.ToLower()) || emp.LastName.ToLower().Contains(name.ToLower())))
+                    .ToList();
+                dataGrid.ItemsSource = employees;
+            }
         }
     }
 }
