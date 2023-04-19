@@ -1,0 +1,168 @@
+﻿<Window x:Class="Skills.SearchEmployee2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Skills"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:uc1="clr-namespace:Skills"
+        mc:Ignorable="d"
+        Title="Mitarbeiter suchen" Height="650" Width="1200" MinHeight="750" MinWidth="1200" ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen" MouseDown="Border_MouseDown" >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="62*" />
+
+            <ColumnDefinition Width="80*" />
+
+
+        </Grid.ColumnDefinitions>
+
+
+        <!--Left Site-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="50*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Column="0" Grid.Row="0" Name="brd" Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="130*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" Name="logoBorder" Background="White" Margin="30" Height="150" Width="390">
+                    <Grid.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="5" Color="#80000000" Opacity="0.5"/>
+                    </Grid.Effect>
+                    <Image Source="/Images/logo.jpg" Width="Auto" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform">
+
+                    </Image>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0" Name="brd1" Background="AliceBlue">
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="25" Text="Mitarbeitersuche" FontSize="50" FontWeight="Bold" TextWrapping="Wrap">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="2" Color="#80000000" Opacity="0.5"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Grid>
+        </Grid>
+
+
+        <!--Right Site-->
+
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+
+
+
+                <RowDefinition Height="20*" />
+
+                <RowDefinition Height="70*" />
+
+                <RowDefinition Height="100" />
+
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Column="1" Grid.Row="0" Background="white">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+
+                    <ColumnDefinition Width="70*"/>
+
+                    <ColumnDefinition Width="20*"/>
+
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="5*" />
+
+
+
+
+
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBox Name="tbxName"  VerticalAlignment="Center" Margin="10" KeyUp="btnSearchEmployee_Click"/>
+                </Grid>
+
+
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <!--<Button x:Name="btnSearchEmployee" Content="Suchen"  VerticalAlignment="Center" Margin="10" Height="35" Click="btnSearchEmployee_Click">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+
+                    </Button>-->
+                </Grid>
+
+            </Grid>
+
+
+            <Grid Grid.Row="1" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+
+                    <ColumnDefinition Width="591.549"/>
+
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+
+
+                <DataGrid x:Name="dataGrid" Grid.Column="1" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" CanUserAddRows="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Vorname" Binding="{Binding FirstName}" Width="*" />
+                        <DataGridTextColumn Header="Nachname" Binding="{Binding LastName}" Width="*" />
+                        <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding BirthDate, StringFormat=dd.MM.yyyy}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+
+            </Grid>
+
+
+            <Grid Grid.Row="2">
+
+
+                <Button
+                    
+                    Grid.Column="0"
+
+                    
+
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+
+                    Content="Beenden"
+                    Width="200"
+                    Margin="20"
+                    Height="60"
+                    
+                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnClose_Click">
+
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                    </Button.Effect>
+                </Button>
+
+
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Window>

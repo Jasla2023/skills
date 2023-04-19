@@ -31,7 +31,30 @@ namespace Skills
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
             CreateEmployeeWindow cew = new CreateEmployeeWindow();
+            
+
             cew.Show();
+        }
+
+      
+        private void btnSearchEmployeesBySkills_Click(object sender, RoutedEventArgs e)
+        {
+            RequiredSkillsForm requiredSkillsForm = new RequiredSkillsForm();
+            requiredSkillsForm.Show();
+        }
+
+    
+
+        private void btnSearch1_Click(object sender, RoutedEventArgs e)
+        {
+            SearchEmployee1 searchEmployee2 = new SearchEmployee1();
+            searchEmployee2.Show();
+        }
+
+        private void btnSearch2_Click(object sender, RoutedEventArgs e)
+        {
+            SearchEmployee2 searchEmployee2 = new SearchEmployee2();
+            searchEmployee2.Show();
         }
     }
 }

@@ -1,0 +1,66 @@
+﻿<Window x:Class="Skills.SuccessfullyFound"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Skills"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:uc1="clr-namespace:Skills"
+    mc:Ignorable="d" Background="Transparent" WindowStyle="None"
+    WindowStartupLocation="CenterScreen" AllowsTransparency="True" Height="558" Width="980">
+
+
+    <Grid Margin="0,0,42,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="0,40,547,-40" Grid.ColumnSpan="2"></StackPanel>
+
+        <!--Left Section-->
+
+        <Border Grid.Column="0" Name="brd" Background="AliceBlue" Padding="30" CornerRadius="25 0 0 25" BorderThickness="4,4,0,4" BorderBrush="DarkSlateBlue" Margin="0,12,469,0" Grid.ColumnSpan="2">
+            <StackPanel VerticalAlignment="Center" Margin="0,0,25,0">
+                <Image Source="/Images/logo.jpg" Width="312" Height="250" Margin="0 0 0 40"/>
+                <TextBlock Name="tblWindowName" Text="" TextAlignment="Center" FontWeight="SemiBold" FontSize="30" Foreground="#363636" Width="378" Height="50" />
+
+                <Button Name="btnClose" Content="Beenden" Click="btnClose_Click"/>
+                <Button Name="btnChangeCredentials" Content="Name oder Geburtsdatum ändern"/>
+                <Button Name="btnSave" Content="Änderungen speichern" Click="btnSave_Click"/>
+
+
+
+            </StackPanel>
+
+
+
+        </Border>
+
+
+        <!--Input Section-->
+
+        <Border Padding="30,30,30,30" Background="White" CornerRadius="0 25 25 0" BorderThickness="0,4,4,4" BorderBrush="DarkSlateBlue" Margin="30,12,69,0" Grid.Column="1" MouseDown="Border_MouseDown">
+            <ListView x:Name="lvwOutput">
+                
+            </ListView>
+        </Border>
+
+
+
+
+
+
+    </Grid>
+
+
+
+
+
+
+
+
+
+
+</Window>
+

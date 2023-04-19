@@ -22,8 +22,19 @@
 
         <Button Name="btnAddEmployee" Content="Mitarbeiter hinzufügen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddEmployee_Click"/>
 
+       
+
+        <Button Name="btnSearchEmployeesBySkills" Content="Angeferderte Kenntnísse eingeben"    Grid.Row="2"    HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchEmployeesBySkills_Click" />
+
+        
+
+       
+
+        <Button Name="btnSearch1" Content="Mitarbeiter suchen1"   Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch1_Click"/>
+
+        <Button Name="btnSearch2" Content="Mitarbeiter suchen2"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch2_Click"/>
     </Grid>
 
-    
+
 
 </Window>
