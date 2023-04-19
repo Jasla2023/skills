@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Data.SqlTypes;
 
 namespace Skills
 {
@@ -73,6 +75,16 @@ namespace Skills
             }
         }
 
-
+        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Employee sr = (Employee)((DataGrid)dataGrid).SelectedItem;
+            EmployeeFound ef = new EmployeeFound(DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(sr.FirstName, sr.LastName, new SqlDateTime(sr.BirthDate)), sr.FirstName, sr.LastName, new SqlDateTime(sr.BirthDate));
+            Close();
+            //SearchEmployee2 se = new SearchEmployee2();
+            //se.Show();
+            ef.Show();
+            
+            
+        }
     }
 }

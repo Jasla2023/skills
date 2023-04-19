@@ -17,9 +17,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="62*" />
+            <ColumnDefinition Width="65*" />
 
-            <ColumnDefinition Width="80*" />
+            <ColumnDefinition Width="95*" />
 
 
         </Grid.ColumnDefinitions>
@@ -49,7 +49,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0" Name="brd1" Background="AliceBlue">
-                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="25" Text="Mitarbeiterdaten ändern" FontSize="40" FontWeight="Bold" TextWrapping="Wrap">
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="2" Text="Mitarbeiterdaten ändern" FontSize="40" FontWeight="Bold" TextWrapping="Wrap">
                     <TextBlock.Effect>
                         <DropShadowEffect ShadowDepth="0" BlurRadius="2" Color="#80000000" Opacity="0.5"/>
                     </TextBlock.Effect>
@@ -86,9 +86,9 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15*" />
-                    <RowDefinition Height="20*" />
-                    <RowDefinition Height="20*" />
-                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="35*" />
+                    <RowDefinition Height="35*" />
+                    <RowDefinition Height="30*" />
                  
                     <RowDefinition Height="5*" />
 
@@ -99,7 +99,7 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <TextBox Name="tbxFirstName"   VerticalAlignment="Center" Margin="10" Height="40"/>
+                    <TextBox Name="tbxFirstName"   VerticalAlignment="Center" Margin="10" />
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="1">
@@ -107,7 +107,7 @@
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="2">
-                    <TextBox Name="tbxLastName"   VerticalAlignment="Center" Margin="10" Height="40"/>
+                    <TextBox Name="tbxLastName"   VerticalAlignment="Center" Margin="10" />
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.Column="1">
@@ -164,7 +164,7 @@
                 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="85*"/>
                     <ColumnDefinition Width="40*"/>
 
                     <ColumnDefinition Width="5*"/>

@@ -121,7 +121,7 @@
 
 
                 
-                <DataGrid x:Name="dataGrid" Grid.Column="1" AutoGenerateColumns="False">
+                <DataGrid x:Name="dataGrid" Grid.Column="1" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Vorname" Binding="{Binding FirstName}" Width="*" />
                         <DataGridTextColumn Header="Nachname" Binding="{Binding LastName}" Width="*" />
@@ -136,16 +136,7 @@
 
             <Grid Grid.Row="2">
 
-                <Grid.ColumnDefinitions>
-
-                    <ColumnDefinition Width="*" />
-
-                    <ColumnDefinition Width="*" />
-
-                </Grid.ColumnDefinitions>
-
-
-
+              
                 <Button
                     
                     Grid.Column="0"
@@ -156,7 +147,7 @@
                     VerticalAlignment="Center"
 
                     Content="Beenden"
-                    Width="150"
+                    Width="200"
                     Margin="20"
                     Height="60"
                     
@@ -167,28 +158,7 @@
                     </Button.Effect>
                 </Button>
 
-                <Button
-
-                    Grid.Column="1"
-
-                    
-
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-
-                    Content="Weiter"
-                    Width="150"
-                    Margin="20"
-                    Height="60"
-                    
-                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="ButtonSearchEmployee2_Click">
-
-                    <Button.Effect>
-                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
-                    </Button.Effect>
-
-
-                </Button>
+               
 
             </Grid>
 
