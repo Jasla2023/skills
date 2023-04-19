@@ -91,8 +91,8 @@ namespace Skills
 
         private void btnSearch1_Click(object sender, RoutedEventArgs e)
         {
-            SearchEmployee1 searchEmployee1 = new SearchEmployee1();
-            searchEmployee1.Show();
+            SearchEmployee2 searchEmployee2 = new SearchEmployee2();
+            searchEmployee2.Show();
         }
     }
 }

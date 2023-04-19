@@ -278,7 +278,7 @@ namespace Skills
 
                 if (DatabaseConnections.SkillExists(EditaleSkils[i].Text, _id) && EditaleSkils[i].Text != DatabaseConnections.GetSkillByID(DatabaseConnections.GetSkillsOfAnEmployee(_id)[i]))
                 {
-                    MessageBox.Show("Dieser Mitarbeiter hat bereits diesen Kenntnis.");
+                    MessageBox.Show("Kenntnis ist bereits vorhanden.");
                     return;
                 }
                 else
@@ -291,7 +291,7 @@ namespace Skills
 
                 if (DatabaseConnections.SkillExists(newSkill.Text, _id))
                 {
-                    MessageBox.Show("Dieser Mitarbeiter hat bereits diesen Kenntnis.");
+                    MessageBox.Show("Kenntnis ist bereits vorhanden.");
                     return;
                 }
                 else
@@ -394,7 +394,7 @@ namespace Skills
             }
             catch(IndexOutOfRangeException) 
             {
-                MessageBox.Show("Was genau möchten Sie ändern?");
+                MessageBox.Show("Sie haben nichts ausgewählt?!");
             }
         }
 
@@ -414,7 +414,7 @@ namespace Skills
             }
             catch (IndexOutOfRangeException)
             {
-                MessageBox.Show("Was genau möchten Sie ändern?");
+                MessageBox.Show("Sie haben nichts ausgewählt?!");
             }
         }
 

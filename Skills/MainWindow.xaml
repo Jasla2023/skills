@@ -31,6 +31,8 @@
         <Button Name="btnSearchAlter" Content="Mitarbeiter suchen/ändern"   Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchAlter_Click"/>
 
         <Button Name="btnSearch1" Content="Mitarbeiter suchen1"   Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch1_Click"/>
+
+        <Button Name="btnSearch2" Content="Mitarbeiter suchen2"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch1_Click"/>
     </Grid>
 
 

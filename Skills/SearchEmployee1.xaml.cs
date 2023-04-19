@@ -32,6 +32,12 @@ namespace Skills
         private void ButtonSearchEmployee1_Click(object sender, RoutedEventArgs e)
         {
 
+            if (tbxFirstName.Text == "" || tbxLastName.Text == "" || dpcDateOfBirth.SelectedDate == null)
+            {
+                MessageBox.Show("Alle Felder müssen ausgefüllt sein!");
+                return;
+            }
+
             try
             {
                 int empID = DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(tbxFirstName.Text, tbxLastName.Text, new System.Data.SqlTypes.SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate));
