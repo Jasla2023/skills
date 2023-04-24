@@ -1,7 +1,9 @@
 ﻿using Skills.Properties;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -45,16 +47,22 @@ namespace Skills
 
     
 
-        private void btnSearch1_Click(object sender, RoutedEventArgs e)
-        {
-            SearchEmployee1 searchEmployee2 = new SearchEmployee1();
-            searchEmployee2.Show();
-        }
+        //private void btnSearch1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SearchEmployee1 searchEmployee2 = new SearchEmployee1();
+        //    searchEmployee2.Show();
+        //}
 
         private void btnSearch2_Click(object sender, RoutedEventArgs e)
         {
-            SearchEmployee2 searchEmployee2 = new SearchEmployee2();
-            searchEmployee2.Show();
+            SearchEmployee2 se = new SearchEmployee2();
+            se.Show();
+        }
+
+        private void btnSearch3_Click(object sender, RoutedEventArgs e)
+        {
+            RequiredSkills re = new RequiredSkills();
+            re.Show();
         }
     }
 }

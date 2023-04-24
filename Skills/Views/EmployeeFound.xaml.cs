@@ -26,7 +26,7 @@ namespace Skills
         private Label[] ActualSkills;
         private Label[] ActualLevels;
         private Label[] Doppelpunkt;
-        
+
         private TextBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
 
@@ -54,13 +54,13 @@ namespace Skills
             InitializeComponent();
 
             _id = id;
-            
+
             this.firstName = firstName;
             this.lastName = lastName;
             this.birthDate = (DateTime)birthDate;
 
 
-         
+
             skills = DatabaseConnections.GetSkillsOfAnEmployee(id);
             numberOfSkills = skills.Count;
 
@@ -71,12 +71,12 @@ namespace Skills
             Doppelpunkt = new Label[numberOfSkills];
             ActualSkills = new Label[numberOfSkills];
             ActualLevels = new Label[numberOfSkills];
-            
+
 
             EditaleSkils = new TextBox[numberOfSkills];
             EditableLevls = new ComboBox[numberOfSkills];
 
-            
+
 
             //int rowsAdded = 0;
 
@@ -107,7 +107,8 @@ namespace Skills
                 Grid.SetRow(ActualSkills[i], 0);
                 Grid.SetColumn(ActualSkills[i], 0);
 
-                Doppelpunkt[i] = new Label { Content = ":", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment= VerticalAlignment.Center };
+                Doppelpunkt[i] = new Label { Content = ":", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+
                 Grid.SetColumn(Doppelpunkt[i], 1);
 
                 ActualLevels[i] = new Label { Content = DatabaseConnections.Level_DigitToString(DatabaseConnections.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
@@ -130,11 +131,11 @@ namespace Skills
                 Grid.SetColumn(EditLevel[i], 6);*/
 
 
-                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center,  Visibility = Visibility.Hidden };
+                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden };
                 Grid.SetRow(EditaleSkils[i], 0);
                 Grid.SetColumn(EditaleSkils[i], 0);
 
-                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center,  Visibility = Visibility.Hidden };
+                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden };
                 ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" };
                 ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
                 ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };
@@ -168,7 +169,7 @@ namespace Skills
                 Grids[i].Children.Add(ActualSkills[i]);
                 Grids[i].Children.Add(ActualLevels[i]);
                 Grids[i].Children.Add(Doppelpunkt[i]);
-                
+
                 Grids[i].Children.Add(EditaleSkils[i]);
                 Grids[i].Children.Add(EditableLevls[i]);
 
@@ -207,7 +208,7 @@ namespace Skills
         //    ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
         //    EditaleSkils[orderWithinOneEmployee].Visibility = Visibility.Visible;
 
-           
+
         //}
 
         //private void editLevel_Click(object sender, RoutedEventArgs e)
@@ -222,9 +223,9 @@ namespace Skills
             this.DragMove();
         }
 
-    
 
-        
+
+
         private void DeleteSkillButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -275,13 +276,13 @@ namespace Skills
             if (DatabaseConnections.GetFirstNameByID(_id) != actualFirstName || DatabaseConnections.GetLastNameByID(_id) != actualLastName || DatabaseConnections.GetDateOfBirthByID(_id) != actualDateOfBirth)
             {
                 DatabaseConnections.UpdateEmployee(_id, actualFirstName, actualLastName, actualDateOfBirth);
-               
+
             }
-           
 
 
-                for (int i = 0; i < skills.Count; i++)
-                {
+
+            for (int i = 0; i < skills.Count; i++)
+            {
 
                 if (DatabaseConnections.SkillExists(EditaleSkils[i].Text, _id) && EditaleSkils[i].Text != DatabaseConnections.GetSkillByID(DatabaseConnections.GetSkillsOfAnEmployee(_id)[i]))
                 {
@@ -290,7 +291,7 @@ namespace Skills
                 }
                 else
                     DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
-                }
+            }
 
             if (newLevel != null)
             {
@@ -304,9 +305,9 @@ namespace Skills
                 else
                     DatabaseConnections.AddSkill(newSkill.Text, AssignSkillLevel(newLevel), _id);
             }
-            
 
-            
+
+
             Close();
 
             EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.GetFirstNameByID(_id), DatabaseConnections.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.GetDateOfBirthByID(_id)));
@@ -350,16 +351,16 @@ namespace Skills
             Grid.SetRow(newLabel1, 0);
             Grid.SetColumn(newLabel1, 0);
 
-            Label newLabel2 = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center,  FontWeight = FontWeights.Bold };
+            Label newLabel2 = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, FontWeight = FontWeights.Bold };
             Grid.SetRow(newLabel2, 1);
             Grid.SetColumn(newLabel2, 0);
 
-            newSkill = new TextBox {  HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+            newSkill = new TextBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
             Grid.SetRow(newSkill, 0);
             Grid.SetColumn(newSkill, 1);
 
-            newLevel = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center};
-            ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" , IsSelected = true};
+            newLevel = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+            ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse", IsSelected = true };
             ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
             ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };
             ComboBoxItem FourthLevel = new ComboBoxItem { Content = "Umfangreiche Projekterfahrungen" };
@@ -402,7 +403,7 @@ namespace Skills
                 ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
                 EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Visible;
             }
-            catch(IndexOutOfRangeException) 
+            catch (IndexOutOfRangeException)
             {
                 MessageBox.Show("Sie haben nichts ausgewählt?!");
             }
@@ -437,7 +438,7 @@ namespace Skills
         {
             DatabaseConnections.DeleteEmployee(_id);
             Close();
-            
+
         }
     }
 }

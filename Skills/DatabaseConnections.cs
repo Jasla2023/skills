@@ -158,6 +158,8 @@ namespace Skills
 
                 foreach (string skill in s)
                 {
+                    if (s.IndexOf(skill) == 0)
+                        continue;
                     getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname = '" + skill + "' AND skilllevel >= " + l[s.IndexOf(skill)];
                 }
 

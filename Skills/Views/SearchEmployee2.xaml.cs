@@ -33,7 +33,7 @@ namespace Skills
 
             context = new EmployeeDb();
             employees =context.Employees.ToList();
-           dataGrid.DataContext = employees;
+            dataGrid.DataContext = employees;
 
           
 
