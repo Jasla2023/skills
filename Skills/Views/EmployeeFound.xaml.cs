@@ -21,10 +21,11 @@ namespace Skills
     /// </summary>
     public partial class EmployeeFound : Window
     {
-        private Label[] LabelsForSkills;
-        private Label[] LabelsForLevels;
+        //private Label[] LabelsForSkills;
+        //private Label[] LabelsForLevels;
         private Label[] ActualSkills;
         private Label[] ActualLevels;
+        private Label[] Doppelpunkt;
         
         private TextBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
@@ -65,8 +66,9 @@ namespace Skills
 
             Grids = new Grid[numberOfSkills];
 
-            LabelsForSkills = new Label[numberOfSkills];
-            LabelsForLevels = new Label[numberOfSkills];
+            //LabelsForSkills = new Label[numberOfSkills];
+            //LabelsForLevels = new Label[numberOfSkills];
+            Doppelpunkt = new Label[numberOfSkills];
             ActualSkills = new Label[numberOfSkills];
             ActualLevels = new Label[numberOfSkills];
             
@@ -84,29 +86,33 @@ namespace Skills
             {
                 Grids[i] = new Grid();
                 Grids[i].ColumnDefinitions.Add(new ColumnDefinition());
+                Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(15.0) });
                 Grids[i].ColumnDefinitions.Add(new ColumnDefinition());
-                Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25.0) });
-                Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(70.0) });
+                //Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25.0) });
+                //Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(70.0) });
 
                 Grids[i].RowDefinitions.Add(new RowDefinition());
-                Grids[i].RowDefinitions.Add(new RowDefinition());
+                //Grids[i].RowDefinitions.Add(new RowDefinition());
                 //rowsAdded += 2;
 
-                LabelsForSkills[i] = new Label { Content = "Kenntnisse: ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center,  FontWeight = FontWeights.Bold };
-                Grid.SetRow(LabelsForSkills[i], 0);
-                Grid.SetColumn(LabelsForSkills[i], 0);
+                //LabelsForSkills[i] = new Label { Content = "Kenntnisse: ", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center,  FontWeight = FontWeights.Bold };
+                //Grid.SetRow(LabelsForSkills[i], 0);
+                //Grid.SetColumn(LabelsForSkills[i], 0);
 
-                LabelsForLevels[i] = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, FontWeight = FontWeights.Bold };
-                Grid.SetRow(LabelsForLevels[i], 1);
-                Grid.SetColumn(LabelsForLevels[i], 0);
+                //LabelsForLevels[i] = new Label { Content = "Stufe: ", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, FontWeight = FontWeights.Bold };
+                //Grid.SetRow(LabelsForLevels[i], 1);
+                //Grid.SetColumn(LabelsForLevels[i], 0);
 
                 ActualSkills[i] = new Label { Content = DatabaseConnections.GetSkillByID(skills[i]), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
                 Grid.SetRow(ActualSkills[i], 0);
-                Grid.SetColumn(ActualSkills[i], 1);
+                Grid.SetColumn(ActualSkills[i], 0);
+
+                Doppelpunkt[i] = new Label { Content = ":", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment= VerticalAlignment.Center };
+                Grid.SetColumn(Doppelpunkt[i], 1);
 
                 ActualLevels[i] = new Label { Content = DatabaseConnections.Level_DigitToString(DatabaseConnections.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
-                Grid.SetRow(ActualLevels[i], 1);
-                Grid.SetColumn(ActualLevels[i], 1);
+                Grid.SetRow(ActualLevels[i], 0);
+                Grid.SetColumn(ActualLevels[i], 2);
 
                 /*DeleteSkill[i] = new Button { Content = "X", Width = 25, HorizontalContentAlignment = HorizontalAlignment.Center, Background = Brushes.Red, Foreground = Brushes.White };
                 DeleteSkill[i].Click += deleteSkill_Click;
@@ -126,7 +132,7 @@ namespace Skills
 
                 EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center,  Visibility = Visibility.Hidden };
                 Grid.SetRow(EditaleSkils[i], 0);
-                Grid.SetColumn(EditaleSkils[i], 1);
+                Grid.SetColumn(EditaleSkils[i], 0);
 
                 EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center,  Visibility = Visibility.Hidden };
                 ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" };
@@ -152,15 +158,16 @@ namespace Skills
                         FourthLevel.IsSelected = true;
                         break;
                 }
-                Grid.SetRow(EditableLevls[i], i * 2 + 1);
-                Grid.SetColumn(EditableLevls[i], 1);
+                Grid.SetRow(EditableLevls[i], 0);
+                Grid.SetColumn(EditableLevls[i], 2);
 
 
 
-                Grids[i].Children.Add(LabelsForSkills[i]);
-                Grids[i].Children.Add(LabelsForLevels[i]);
+                //Grids[i].Children.Add(LabelsForSkills[i]);
+                //Grids[i].Children.Add(LabelsForLevels[i]);
                 Grids[i].Children.Add(ActualSkills[i]);
                 Grids[i].Children.Add(ActualLevels[i]);
+                Grids[i].Children.Add(Doppelpunkt[i]);
                 
                 Grids[i].Children.Add(EditaleSkils[i]);
                 Grids[i].Children.Add(EditableLevls[i]);
@@ -407,8 +414,9 @@ namespace Skills
             DatabaseConnections.DeleteSkill(skills[orderWithinOneEmployee]);
             try
             {
-                LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
-                LabelsForLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                //LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                //LabelsForLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
+                Doppelpunkt[orderWithinOneEmployee].Visibility = Visibility.Hidden;
                 ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
                 ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
 
