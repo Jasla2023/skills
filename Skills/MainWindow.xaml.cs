@@ -1,7 +1,9 @@
 ﻿using Skills.Properties;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,7 +55,7 @@ namespace Skills
 
         private void btnSearch2_Click(object sender, RoutedEventArgs e)
         {
-            SearchEmployee2 searchEmployee2 = new SearchEmployee2();
+            RequiredSkills searchEmployee2 = new RequiredSkills(30, "Jasmila", "Sivabalan", new SqlDateTime((DateTime)DatabaseConnections.GetDateOfBirthByID(30)));
             searchEmployee2.Show();
         }
     }

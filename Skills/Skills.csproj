@@ -186,6 +186,9 @@
     </ApplicationDefinition>
     <Compile Include="DatabaseConnections.cs" />
     <Compile Include="EmployeeDb.cs" />
+    <Compile Include="Views\RequiredSkills.xaml.cs">
+      <DependentUpon>RequiredSkills.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EmployeeFound.xaml.cs">
       <DependentUpon>EmployeeFound.xaml</DependentUpon>
     </Compile>
@@ -203,6 +206,10 @@
     <Compile Include="Views\SuccessfullyFound.xaml.cs">
       <DependentUpon>SuccessfullyFound.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\RequiredSkills.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EmployeeFound.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
