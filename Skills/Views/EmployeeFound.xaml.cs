@@ -108,6 +108,7 @@ namespace Skills
                 Grid.SetColumn(ActualSkills[i], 0);
 
                 Doppelpunkt[i] = new Label { Content = ":", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+
                 Grid.SetColumn(Doppelpunkt[i], 1);
 
                 ActualLevels[i] = new Label { Content = DatabaseConnections.Level_DigitToString(DatabaseConnections.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
