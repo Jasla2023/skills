@@ -47,16 +47,22 @@ namespace Skills
 
     
 
-        private void btnSearch1_Click(object sender, RoutedEventArgs e)
-        {
-            SearchEmployee1 searchEmployee2 = new SearchEmployee1();
-            searchEmployee2.Show();
-        }
+        //private void btnSearch1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SearchEmployee1 searchEmployee2 = new SearchEmployee1();
+        //    searchEmployee2.Show();
+        //}
 
         private void btnSearch2_Click(object sender, RoutedEventArgs e)
         {
-            RequiredSkills searchEmployee2 = new RequiredSkills(30, "Jasmila", "Sivabalan", new SqlDateTime((DateTime)DatabaseConnections.GetDateOfBirthByID(30)));
-            searchEmployee2.Show();
+            SearchEmployee2 se = new SearchEmployee2();
+            se.Show();
+        }
+
+        private void btnSearch3_Click(object sender, RoutedEventArgs e)
+        {
+            RequiredSkills re = new RequiredSkills();
+            re.Show();
         }
     }
 }
