@@ -37,10 +37,10 @@ namespace Skills
 
             requiredSkills.Add(new StackPanel { Orientation = Orientation.Horizontal});
 
-            requiredSkillsTextBoxes.Add(new TextBox { MinWidth = 200.0 });
+            requiredSkillsTextBoxes.Add(new TextBox { MinWidth = 260.0, Margin = new Thickness(20.0), HorizontalAlignment = HorizontalAlignment.Left });
             requiredSkills[0].Children.Add(requiredSkillsTextBoxes[0]);
 
-            requiredSkillsLevels.Add(new ComboBox());
+            requiredSkillsLevels.Add(new ComboBox() {Height = 30.0 , Margin = new Thickness(20.0), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center  });
             ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" , IsSelected = true };
             ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
             ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };
@@ -128,10 +128,10 @@ namespace Skills
             }
             requiredSkills.Add(new StackPanel { Orientation = Orientation.Horizontal });
 
-            requiredSkillsTextBoxes.Add(new TextBox { MinWidth = 200.0});
+            requiredSkillsTextBoxes.Add(new TextBox { MinWidth = 260.0, Margin = new Thickness(20.0), HorizontalAlignment = HorizontalAlignment.Left });
             requiredSkills[numOfSkills].Children.Add(requiredSkillsTextBoxes[numOfSkills]);
 
-            requiredSkillsLevels.Add(new ComboBox());
+            requiredSkillsLevels.Add(new ComboBox() { Height = 30.0, Margin = new Thickness(20.0), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center });
             ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse", IsSelected = true};
             ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
             ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };

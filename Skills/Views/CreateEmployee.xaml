@@ -68,7 +68,7 @@
 
                 <RowDefinition Height="70*" />
 
-                <RowDefinition Height="15*" />
+                <RowDefinition Height="20*" />
 
                 <RowDefinition Height="100*" />
 
@@ -141,7 +141,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="1" Grid.Row="0" Background="White">
-                    <Label Name="lblSkills" Content="Kenntnisse:"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Height="35"/>
+                    <Label Name="lblSkills" Content="Kenntnisse eingeben:"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Height="35.0" />
                 </Grid>
             </Grid>
 
@@ -149,8 +149,8 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="90*"/>
-                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="85*"/>
+                    <ColumnDefinition Width="30*"/>
 
                     <ColumnDefinition Width="5*"/>
 
@@ -161,9 +161,12 @@
                     <RowDefinition Height="90*"/>
                 </Grid.RowDefinitions>
 
-                <ListView x:Name="lvwSkillInput" Grid.Column="1" Grid.Row="1">
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <ListView x:Name="lvwSkillInput" >
 
-                </ListView>
+                    </ListView>
+                </Grid>
+                
 
                 <Grid x:Name="Buttons" Grid.Column="2" Grid.Row="1">
                     <Grid.RowDefinitions>
