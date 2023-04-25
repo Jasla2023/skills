@@ -9,3 +9,13 @@
 2. Installing MS SQL Server on the new computer - 30m
 3. Installing MS Visual Studio - 1h30m
 4. Writing the logic for search/modify window - 2h
+
+24.04.2023
+
+1. Changing the output of skills of an employee - 2h
+2. Re-writing the search engine (input and output) - 4h
+3. Videocall with Jochen Scamell - 2h
+
+25.04.2023
+
+1. Re-writing the input form for creating an employee - 3h
