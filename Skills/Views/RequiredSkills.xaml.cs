@@ -31,6 +31,8 @@ namespace Skills
 
             InitializeComponent();
 
+            MessageBox.Show("Bitte sortieren Sie die Kenntnisse absteigend nach Wichtigkeit beim Eingeben");
+
             requiredSkills = new List<StackPanel>();
             requiredSkillsTextBoxes = new List<TextBox>();
             requiredSkillsLevels = new List<ComboBox>();
@@ -209,7 +211,81 @@ namespace Skills
                         lvwOutput.Items.Add(empGrids[SearchResult.IndexOf(emp)]);
                         
                     }
-                    
+
+                }
+                else
+                {
+                    if (s.Count == 1)
+                    {
+                        MessageBox.Show("Leider gibt es bei Neox keine Mitarbeiter, der passt");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Leider gibt es bei Neox keine Mitarbeiter, der alle Kenntnise hat. Jetzt werden angezeigt die Mitarbeiter, die am besten zu die Anforderungen passen");
+                        for(int i = s.Count; i > 0; i--)
+                        {
+                            if (s.Count == 1)
+                                break;
+                            else
+                            {
+                                s.Remove(s.Last());
+
+
+                                SearchResult = DatabaseConnections.SearchEmployeeBySkills(s[0], l[0], s, l);
+                                if (SearchResult.Count > 0)
+                                {
+                                    List<Grid> empGrids = new List<Grid>();
+
+
+
+                                    foreach (int emp in SearchResult)
+                                    {
+                                        empGrids.Add(new Grid());
+                                        empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
+                                        empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
+                                        empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
+                                        empGrids[SearchResult.IndexOf(emp)].RowDefinitions.Add(new RowDefinition());
+
+                                        Label fn = new Label { Content = DatabaseConnections.GetFirstNameByID(emp) };
+                                        Grid.SetRow(fn, 0);
+                                        Grid.SetColumn(fn, 0);
+                                        empGrids[SearchResult.IndexOf(emp)].Children.Add(fn);
+
+                                        Label ln = new Label { Content = DatabaseConnections.GetLastNameByID(emp) };
+                                        Grid.SetRow(ln, 0);
+                                        Grid.SetColumn(ln, 1);
+                                        empGrids[SearchResult.IndexOf(emp)].Children.Add(ln);
+
+                                        List<Skill> skills = DatabaseConnections.GetEmployeeSkills(emp);
+
+                                        foreach (Skill skill in skills)
+                                        {
+                                            empGrids[SearchResult.IndexOf(emp)].RowDefinitions.Add(new RowDefinition());
+
+                                            Label minus = new Label { Content = "-" };
+                                            Grid.SetRow(minus, skills.IndexOf(skill) + 1);
+                                            Grid.SetColumn(minus, 0);
+                                            empGrids[SearchResult.IndexOf(emp)].Children.Add(minus);
+
+                                            Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
+                                            Grid.SetRow(sn, skills.IndexOf(skill) + 1);
+                                            Grid.SetColumn(sn, 1);
+                                            empGrids[SearchResult.IndexOf(emp)].Children.Add(sn);
+
+                                            Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
+                                            Grid.SetRow(sl, skills.IndexOf(skill) + 1);
+                                            Grid.SetColumn(sl, 2);
+                                            empGrids[SearchResult.IndexOf(emp)].Children.Add(sl);
+                                        }
+                                        lvwOutput.Items.Add(empGrids[SearchResult.IndexOf(emp)]);
+
+                                    }
+
+                                }
+                            }
+                            
+                        }
+                    }
                 }
             }
             catch (ArgumentOutOfRangeException ex)
