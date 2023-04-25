@@ -64,6 +64,9 @@ namespace Skills
                 command2.Parameters.AddWithValue("@birthdate", bd);
                 command2.ExecuteNonQuery();
 
+                
+
+
 
                 int row = 0;
 

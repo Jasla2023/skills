@@ -35,7 +35,11 @@
         <Button Name="btnSearch2" Content="Mitarbeiter suchen2"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch2_Click"/>
 
         <Button Name="btnSearch3" Content="Mitarbeiter suchen anhand Kenntnisse"   Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch2_Click"/>
+
+        <Button Name="btncreateEmployee2" Content="Mitarbeiter erfassen 2"   Grid.Column="2" Grid.Row="2"    HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnCreateEmployee2_Click" />
     </Grid>
+    
+    
 
 
 

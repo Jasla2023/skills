@@ -190,7 +190,7 @@
                     
                     Width="120"
                     
-                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnSkillChange_Click">
+                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnSkillAdd_Click">
 
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />

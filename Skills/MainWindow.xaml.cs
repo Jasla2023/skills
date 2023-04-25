@@ -1,4 +1,5 @@
 ﻿using Skills.Properties;
+using Skills.Views;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -57,6 +58,13 @@ namespace Skills
         {
             RequiredSkills searchEmployee2 = new RequiredSkills(30, "Jasmila", "Sivabalan", new SqlDateTime((DateTime)DatabaseConnections.GetDateOfBirthByID(30)));
             searchEmployee2.Show();
+        }
+
+        private void btnCreateEmployee2_Click(object sender, RoutedEventArgs e)
+        {
+
+            CreateEmployeeWindow1 requiredSkillsForm = new CreateEmployeeWindow1();
+            requiredSkillsForm.Show();
         }
     }
 }
