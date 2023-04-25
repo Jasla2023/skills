@@ -107,6 +107,7 @@ namespace Skills
                 Grid.SetRow(ActualSkills[i], 0);
                 Grid.SetColumn(ActualSkills[i], 0);
 
+
                 Doppelpunkt[i] = new Label { Content = ":", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
 
                 Grid.SetColumn(Doppelpunkt[i], 1);
