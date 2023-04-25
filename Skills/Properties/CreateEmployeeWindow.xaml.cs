@@ -220,7 +220,7 @@ namespace Skills.Properties
 
             try
             {
-                DatabaseConnections.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate), tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
+                //DatabaseConnections.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate), tbxSkill.Text, AssignSkillLevel(cbxLevel), skillNames, sls);
             }
             catch (SqlException exception)
             {

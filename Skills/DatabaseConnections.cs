@@ -36,7 +36,7 @@ namespace Skills
         /// <param name="firstSkillLevel">Level of the first skill of the employee</param>
         /// <param name="s">List of all the additional skills of the employee</param>
         /// <param name="l">List of all the levels corresponding to the additional skills of the employee</param>
-        public static void SaveEmployeeIntoDatabase(string firstName, string lastName, SqlDateTime bd, string firstSkill, int firstSkillLevel, List<string> s, List<int> l)
+        public static void SaveEmployeeIntoDatabase(string firstName, string lastName, SqlDateTime bd,  List<string> s, List<int> l)
         {
             //Connection with Sql using ConnectionString
             SqlConnection connection = new SqlConnection(connectionString);
@@ -50,19 +50,19 @@ namespace Skills
 
 
 
-                SqlCommand command2 = new SqlCommand("Insert into Skills (SkillName,SkillLevel,Employee_Id) values (@Skill,@SkillLevel,(SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
+                //SqlCommand command2 = new SqlCommand("Insert into Skills (SkillName,SkillLevel,Employee_Id) values (@Skill,@SkillLevel,(SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
 
                 command.Parameters.AddWithValue("@FirstName", firstName);
                 command.Parameters.AddWithValue("@LastName", lastName);
                 command.Parameters.AddWithValue("@birthdate", bd);
                 command.ExecuteNonQuery();
 
-                command2.Parameters.AddWithValue("@Skill", firstSkill);
-                command2.Parameters.AddWithValue("@SkillLevel", firstSkillLevel);
-                command2.Parameters.AddWithValue("@FN", firstName);
-                command2.Parameters.AddWithValue("@LN", lastName);
-                command2.Parameters.AddWithValue("@birthdate", bd);
-                command2.ExecuteNonQuery();
+                //command2.Parameters.AddWithValue("@Skill", firstSkill);
+                //command2.Parameters.AddWithValue("@SkillLevel", firstSkillLevel);
+                //command2.Parameters.AddWithValue("@FN", firstName);
+                //command2.Parameters.AddWithValue("@LN", lastName);
+                //command2.Parameters.AddWithValue("@birthdate", bd);
+                //command2.ExecuteNonQuery();
 
 
                 int row = 0;

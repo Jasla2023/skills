@@ -32,7 +32,7 @@ namespace Skills
 
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            CreateEmployeeWindow cew = new CreateEmployeeWindow();
+            Views.CreateEmployee cew = new Views.CreateEmployee();
             
 
             cew.Show();
