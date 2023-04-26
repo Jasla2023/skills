@@ -213,6 +213,22 @@ namespace Skills.Views
                 MessageBox.Show("Mitarbeiter existiert schon!");
                 return;
             }
+            
+            foreach(string skill1 in s)
+            {
+                foreach(string skill2 in s)
+                {
+                    if (s.IndexOf(skill1) != s.IndexOf(skill2))
+                    {
+                        if(skill1 == skill2)
+                        {
+                            MessageBox.Show("Geben Sie bitte nicht dieselbe Kenntnis mehrmals!");
+                            return;
+                        }
+                    }
+                }
+            }
+            
             try
             {
                 DatabaseConnections.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate), s, l);
