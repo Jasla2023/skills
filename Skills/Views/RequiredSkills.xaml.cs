@@ -301,6 +301,7 @@ namespace Skills
             {
                 MessageBox.Show(ex.Message);
             }
+            Suchen.Visibility = Visibility.Hidden;
         }
     }
 }

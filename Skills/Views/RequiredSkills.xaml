@@ -243,6 +243,7 @@
 
                 <Button
                     
+                    
                     Grid.Column="0"
 
                     Margin="35"
@@ -274,6 +275,7 @@
                     
                     Width="250"
                     Content="Suchen"
+                    Name="Suchen"
                    
                     
                     FontSize="20" MaxWidth="200" MaxHeight="80" Click="SaveButton_Click">
