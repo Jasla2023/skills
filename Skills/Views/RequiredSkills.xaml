@@ -10,12 +10,12 @@
     mc:Ignorable="d"
     Title="Kenntnisbasierte Mitarbeitersuche" Height="650" Width="1300" MinHeight="750" MinWidth="1300" ResizeMode="CanResize"
     WindowStartupLocation="CenterScreen" MouseDown="Border_MouseDown" >
-    <Window.Resources>
+    <!--<Window.Resources>
         <Style TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         </Style>
-    </Window.Resources>
+    </Window.Resources>-->
 
 
 

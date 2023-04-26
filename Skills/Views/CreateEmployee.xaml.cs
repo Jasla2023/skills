@@ -218,11 +218,11 @@ namespace Skills.Views
             {
                 foreach(string skill2 in s)
                 {
-                    if (s.IndexOf(skill1) != s.IndexOf(skill2))
+                    if (!Object.ReferenceEquals(skill1,skill2))
                     {
                         if(skill1 == skill2)
                         {
-                            MessageBox.Show("Geben Sie bitte nicht dieselbe Kenntnis mehrmals!");
+                            MessageBox.Show("Dieselbe Kenntnis kann nicht mehrfach eingegeben werden!");
                             return;
                         }
                     }
