@@ -31,7 +31,7 @@ namespace Skills
 
             InitializeComponent();
 
-            MessageBox.Show("Bitte sortieren Sie die Kenntnisse absteigend nach Wichtigkeit beim Eingeben");
+            //MessageBox.Show("Bitte sortieren Sie die Kenntnisse absteigend nach Wichtigkeit beim Eingeben");
 
             requiredSkills = new List<StackPanel>();
             requiredSkillsTextBoxes = new List<TextBox>();
@@ -217,11 +217,11 @@ namespace Skills
                 {
                     if (s.Count == 1)
                     {
-                        MessageBox.Show("Leider gibt es bei Neox keine Mitarbeiter, der passt");
+                        MessageBox.Show("Leider konnte bei Neox keine Mitarbeiter gefunden werden, der den angegebenen Anforderungen exakt entspricht.");
                     }
                     else
                     {
-                        MessageBox.Show("Leider gibt es bei Neox keine Mitarbeiter, der alle Kenntnise hat. Jetzt werden angezeigt die Mitarbeiter, die am besten zu die Anforderungen passen");
+                        MessageBox.Show("Leider verfügen bei Neox keine Mitarbeiter über alle erforderlichen Kenntnisse. Es werden jedoch die Mitarbeiter angezeigt, die am besten zu den Anforderungen passen.");
                         for(int i = s.Count; i > 0; i--)
                         {
                             if (s.Count == 1)

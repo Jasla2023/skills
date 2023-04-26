@@ -134,7 +134,7 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5*"/>
-                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="30*"/>
                     <RowDefinition Height="90*"/>
                 </Grid.RowDefinitions>
 
@@ -146,8 +146,9 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="1">
-                    <Label Content="Die gewünschten Kenntnisse bitte eingeben: " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"></Label>
+                    <TextBlock Text="Bitte geben Sie die erforderlichen Kenntnisse in absteigender Reihenfolge der Wichtigkeit ein: " TextWrapping="Wrap"  FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"></TextBlock>
                 </Grid>
+                
 
                 <Grid x:Name="Buttons" Grid.Column="2" Grid.Row="2">
                  
@@ -198,12 +199,24 @@
 
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
+                
+             
                 <Grid Grid.Row="1" Grid.Column="1">
                     <ListView x:Name="lvwOutput" Grid.Column="1">
 
                     </ListView>
                 </Grid>
-               
+
+                <!--<DataGrid x:Name="lvwOutput" AutoGenerateColumns="False" Grid.Column="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Vorname" Width="*" Binding="{x:Null}" />
+                        <DataGridTextColumn Header="Nachname" Width="*" Binding="{x:Null}" />
+                        <DataGridTextColumn Header="Kenntnisse" Width="*" Binding="{x:Null}" />
+                        <DataGridTextColumn Header="Kenntnissstufe" Width="*" Binding="{x:Null}" />
+                    </DataGrid.Columns>
+                   
+                </DataGrid>-->
+
 
             </Grid>
           
