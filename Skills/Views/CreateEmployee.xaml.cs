@@ -49,6 +49,8 @@ namespace Skills.Views
         public CreateEmployee()
         {
             InitializeComponent();
+            newSkill = new List<TextBox>();
+            newLevel = new List<ComboBox>();
         }
 
 
@@ -57,8 +59,7 @@ namespace Skills.Views
 
         private void btnSkillAdd_Click(object sender, RoutedEventArgs e)
         {
-            newSkill = new List<TextBox>();
-            newLevel = new List<ComboBox>();
+            
 
             // Zähle die Anzahl der vorhandenen Zeilen im ListView
             int rowNumber = lvwSkillInput.Items.Count;
@@ -160,7 +161,7 @@ namespace Skills.Views
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
 
-
+            
             List<string> s = new List<string>();
             List<int> l = new List<int>();
 
@@ -193,7 +194,7 @@ namespace Skills.Views
                 s.Add(sk.Text);
                 l.Add(AssignSkillLevel(newLevel[newSkill.IndexOf(sk)]));
             }
-
+            
             //if (s.Contains(""))
             //{
             //    MessageBox.Show("Eine oder mehrere Kenntnisse sind leer");
