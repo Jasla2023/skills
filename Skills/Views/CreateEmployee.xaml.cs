@@ -164,36 +164,43 @@ namespace Skills.Views
             List<string> s = new List<string>();
             List<int> l = new List<int>();
 
+            if (tbxFirstName.Text == "" || tbxLastName.Text == "" || dpcDateOfBirth.SelectedDate == null)
+            {
+                MessageBox.Show("Die oberen Felder müssen ausgefüllt werden!");
+                return;
+            }
+
+            //if (tbxLastName.Text == "")
+            //{
+            //    MessageBox.Show("Geben Sie bitte Nachname ein!");
+            //    return;
+            //}
+
+            //if (dpcDateOfBirth.SelectedDate == null)
+            //{
+            //    MessageBox.Show("Geben Sie bitte Geburtsdatum ein!");
+            //    return;
+            //}
+
+
             foreach (TextBox sk in newSkill)
             {
+                if (sk.Text == "")
+                {
+                    MessageBox.Show("Es wurde kein Skill angegeben");
+                    return;
+                }
                 s.Add(sk.Text);
                 l.Add(AssignSkillLevel(newLevel[newSkill.IndexOf(sk)]));
             }
 
-            if (s.Contains(""))
-            {
-                MessageBox.Show("Eine oder mehrere Kenntnisse sind leer");
-                return;
-            }
+            //if (s.Contains(""))
+            //{
+            //    MessageBox.Show("Eine oder mehrere Kenntnisse sind leer");
+            //    return;
+            //}
 
-            if (tbxFirstName.Text == "")
-            {
-                MessageBox.Show("Geben Sie bitte Vorname ein!");
-                return;
-            }
-
-            if (tbxLastName.Text == "")
-            {
-                MessageBox.Show("Geben Sie bitte Nachname ein!");
-                return;
-            }
-
-            if (dpcDateOfBirth.SelectedDate == null)
-            {
-                MessageBox.Show("Geben Sie bitte Geburtsdatum ein!");
-                return;
-            }
-
+           
             if(lvwSkillInput.Items.Count == 0)
             {
                 MessageBox.Show("Mindestens eine Kenntnis muss eingegeben werden!");
