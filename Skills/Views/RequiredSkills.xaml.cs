@@ -200,10 +200,10 @@ namespace Skills
                         {
                             empGrids[SearchResult.IndexOf(emp)].RowDefinitions.Add(new RowDefinition());
 
-                            //Label minus = new Label { Content = "*" };
-                            //Grid.SetRow(minus, skills.IndexOf(skill) + 1);
-                            //Grid.SetColumn(minus, 0);
-                            //empGrids[SearchResult.IndexOf(emp)].Children.Add(minus);
+                            Label minus = new Label { Content = "*" };
+                            Grid.SetRow(minus, skills.IndexOf(skill) + 1);
+                            Grid.SetColumn(minus, 0);
+                            empGrids[SearchResult.IndexOf(emp)].Children.Add(minus);
 
                             Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold  : FontWeights.Normal };
                             Grid.SetRow(sn, skills.IndexOf(skill) + 1);
@@ -225,7 +225,7 @@ namespace Skills
                 {
                     if (s.Count == 1)
                     {
-                        MessageBox.Show("Leider konnte bei Neox keine Mitarbeiter gefunden werden, der den angegebenen Anforderungen exakt entspricht.");
+                        MessageBox.Show("Leider konnte bei Neox keine Mitarbeiter gefunden werden, die den angegebenen Anforderungen exakt entsprechen.");
                     }
                     else
                     {
@@ -252,14 +252,15 @@ namespace Skills
                                         empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
                                         empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
                                         empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
+                                        empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
                                         empGrids[SearchResult.IndexOf(emp)].RowDefinitions.Add(new RowDefinition());
 
-                                        Label fn = new Label { Content = DatabaseConnections.GetFirstNameByID(emp) };
+                                        Label fn = new Label { Content = DatabaseConnections.GetFirstNameByID(emp), FontWeight = FontWeights.Bold };
                                         Grid.SetRow(fn, 0);
                                         Grid.SetColumn(fn, 0);
                                         empGrids[SearchResult.IndexOf(emp)].Children.Add(fn);
 
-                                        Label ln = new Label { Content = DatabaseConnections.GetLastNameByID(emp) };
+                                        Label ln = new Label { Content = DatabaseConnections.GetLastNameByID(emp), FontWeight = FontWeights.Bold };
                                         Grid.SetRow(ln, 0);
                                         Grid.SetColumn(ln, 1);
                                         empGrids[SearchResult.IndexOf(emp)].Children.Add(ln);
@@ -270,19 +271,19 @@ namespace Skills
                                         {
                                             empGrids[SearchResult.IndexOf(emp)].RowDefinitions.Add(new RowDefinition());
 
-                                            Label minus = new Label { Content = "-" };
+                                            Label minus = new Label { Content = "*" };
                                             Grid.SetRow(minus, skills.IndexOf(skill) + 1);
                                             Grid.SetColumn(minus, 0);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(minus);
 
                                             Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
                                             Grid.SetRow(sn, skills.IndexOf(skill) + 1);
-                                            Grid.SetColumn(sn, 1);
+                                            Grid.SetColumn(sn, 2);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sn);
 
                                             Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
                                             Grid.SetRow(sl, skills.IndexOf(skill) + 1);
-                                            Grid.SetColumn(sl, 2);
+                                            Grid.SetColumn(sl, 3);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sl);
                                         }
                                         lvwOutput.Items.Add(empGrids[SearchResult.IndexOf(emp)]);
@@ -300,6 +301,7 @@ namespace Skills
             {
                 MessageBox.Show(ex.Message);
             }
+            Suchen.Visibility = Visibility.Hidden;
         }
     }
 }
