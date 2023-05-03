@@ -19,3 +19,20 @@
 25.04.2023
 
 1. Re-writing the input form for creating an employee - 3h
+2. Adding ordered search engine - 1h
+
+26.04.2023
+
+1. Debugging creating an employee - 2h
+2. Teams-Videocall with PO - 1h
+3. Researching Entity-Framework - 2h
+
+27.04.2023
+
+1. Researching Entity-Framework - 3h
+2. Writing a conceptual model, mapping and the database migration of the initial model of the database - 3h
+
+28.04.2023
+
+1.  Researching Entity-Framework - 3h
+2.  Writing the database update methods - 2h

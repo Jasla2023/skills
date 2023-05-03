@@ -182,6 +182,9 @@ namespace Skills
                 dpcDateOfBirth.SelectedDate = DatabaseConnections.GetDateOfBirthByID(id);
             }
 
+            tbxFirstName.PreviewKeyDown += MainWindow.SpecialCharacterHandler;
+            tbxLastName.PreviewKeyDown += MainWindow.SpecialCharacterHandler;
+
         }
 
         //private void deleteSkill_Click(object sender, RoutedEventArgs e)
@@ -275,6 +278,16 @@ namespace Skills
 
             if (DatabaseConnections.GetFirstNameByID(_id) != actualFirstName || DatabaseConnections.GetLastNameByID(_id) != actualLastName || DatabaseConnections.GetDateOfBirthByID(_id) != actualDateOfBirth)
             {
+                if(actualFirstName == "")
+                {
+                    MessageBox.Show("Vorname muss nicht leer sein");
+                    return;
+                }
+                if(actualLastName == "")
+                {
+                    MessageBox.Show("Nachname muss nicht leer sein");
+                    return;
+                }
                 DatabaseConnections.UpdateEmployee(_id, actualFirstName, actualLastName, actualDateOfBirth);
 
             }
@@ -291,6 +304,11 @@ namespace Skills
                 }
                 else
                     DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+                if (EditaleSkils[i].Text == "")
+                {
+                    MessageBox.Show("Kenntnis muss nicht leer sein.");
+                    return;
+                }
             }
 
             if (newLevel != null)

@@ -51,6 +51,8 @@ namespace Skills.Views
             InitializeComponent();
             newSkill = new List<TextBox>();
             newLevel = new List<ComboBox>();
+            tbxFirstName.PreviewKeyDown += MainWindow.SpecialCharacterHandler;
+            tbxLastName.PreviewKeyDown += MainWindow.SpecialCharacterHandler;
         }
 
 

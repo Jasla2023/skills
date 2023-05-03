@@ -30,6 +30,17 @@ namespace Skills
             
         }
 
+        public static void SpecialCharacterHandler(object sender, KeyEventArgs e)
+        {
+            Key[] forbiddenKeys = { Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.Decimal, Key.Divide, Key.OemBackslash, Key.OemOpenBrackets,
+                                    Key.OemCloseBrackets, Key.OemCloseBrackets, Key.OemComma, Key.OemPlus, Key.OemMinus, Key.OemQuestion, Key.OemPeriod, Key.OemQuotes,
+                                    Key.OemSemicolon, Key.OemTilde, Key.Separator, Key.Add, Key.Subtract, Key.Multiply};
+            if (forbiddenKeys.Contains(e.Key))
+            {
+                e.Handled = true;
+            }
+        }
+
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
             Views.CreateEmployee cew = new Views.CreateEmployee();
