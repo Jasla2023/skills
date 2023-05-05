@@ -47,13 +47,23 @@ namespace Skills
 
         private int numberOfSkills;
 
+        private bool skillAdded;
 
+        /// <summary>
+        /// Initializes the employee editing window
+        /// </summary>
+        /// <param name="id">Employee_id of the employee from the employees table</param>
+        /// <param name="firstName">First name of the employee</param>
+        /// <param name="lastName">Last name of the employee</param>
+        /// <param name="birthDate">Date of birth of the employee</param>
         public EmployeeFound(int id, string firstName, string lastName, SqlDateTime birthDate)
         {
 
             InitializeComponent();
 
             _id = id;
+
+            skillAdded = false;
 
             this.firstName = firstName;
             this.lastName = lastName;
@@ -220,7 +230,11 @@ namespace Skills
         //    ActualLevels[orderWithinOneEmployee].Visibility = Visibility.Hidden;
         //    EditableLevls[orderWithinOneEmployee].Visibility = Visibility.Visible;
         //}
-
+        /// <summary>
+        /// Evemt, happening upon clicking on the border
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -229,10 +243,7 @@ namespace Skills
 
 
 
-        private void DeleteSkillButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         /// <summary>
         /// Converts a skill level ComboBox into a digit representing the skill level
@@ -268,7 +279,12 @@ namespace Skills
             }
             return level;
         }
-
+        /// <summary>
+        /// Checks if the entries are not empty, if so, checks for the skill and employee duplicates, if they exist, shows an error message and stops, otherwise saves the employee
+        /// and skills changes into the database and reinitializes the window with new data, otherwise shows an error message and stops
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             string actualFirstName = tbxFirstName.Text;
@@ -286,6 +302,16 @@ namespace Skills
                 if(actualLastName == "")
                 {
                     MessageBox.Show("Nachname muss nicht leer sein");
+                    return;
+                }
+                if(actualDateOfBirth == null)
+                {
+                    MessageBox.Show("Geburtsdatum muss nicht leer sein");
+                    return;
+                }
+                if(DatabaseConnections.EmployeeExists(actualFirstName,actualLastName, new SqlDateTime(actualDateOfBirth)))
+                {
+                    MessageBox.Show("Mitarbeiter existiert schon");
                     return;
                 }
                 DatabaseConnections.UpdateEmployee(_id, actualFirstName, actualLastName, actualDateOfBirth);
@@ -345,14 +371,25 @@ namespace Skills
 
         }
 
-
+        /// <summary>
+        /// Closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
+        /// <summary>
+        /// Upon the first click adds an editable amnd savable form for adding a new skill to the employee into the list view, upon further clicks does nothing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddSkill_Click(object sender, RoutedEventArgs e)
         {
+            if (skillAdded)
+                return;
+            
             // Zähle die Anzahl der vorhandenen Zeilen im ListView
             int rowNumber = lvwOutput.Items.Count;
 
@@ -394,6 +431,8 @@ namespace Skills
             newGrid.Children.Add(newSkill);
             newGrid.Children.Add(newLevel);
 
+            skillAdded = true;
+
             lvwOutput.Items.Insert(rowNumber, newGrid);
 
 
@@ -409,7 +448,11 @@ namespace Skills
             //AddASkill addASkill = new AddASkill();
             //addASkill.Show();
         }
-
+        /// <summary>
+        /// Makes the selected skill in the list view editable or shows an error message if no skill is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSkillChange_Click(object sender, RoutedEventArgs e)
         {
 
@@ -426,7 +469,11 @@ namespace Skills
                 MessageBox.Show("Sie haben nichts ausgewählt?!");
             }
         }
-
+        /// <summary>
+        /// Deletes the selected skill from the database, then reinitializes the window, or shows an error message if no skill is selected in the list view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDeleteSkill_Click(object sender, RoutedEventArgs e)
         {
             int orderWithinOneEmployee = lvwOutput.Items.IndexOf(lvwOutput.SelectedItem);
@@ -451,7 +498,11 @@ namespace Skills
             EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.GetFirstNameByID(_id), DatabaseConnections.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.GetDateOfBirthByID(_id)));
             newWindow.Show();
         }
-
+        /// <summary>
+        /// Deletes the employee in the database and closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
             DatabaseConnections.DeleteEmployee(_id);

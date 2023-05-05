@@ -25,7 +25,9 @@ namespace Skills
         private List<TextBox> requiredSkillsTextBoxes;
         private List<ComboBox> requiredSkillsLevels;
         private int numOfSkills;
-
+        /// <summary>
+        /// Initializes the window 
+        /// </summary>
         public RequiredSkills()
         {
 
@@ -116,12 +118,20 @@ namespace Skills
 
             
 
-
+        /// <summary>
+        /// Closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
+        /// <summary>
+        /// Adds a new skill entry into the list view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSkillChange_Click(object sender, RoutedEventArgs e)
         {
             if(numOfSkills >= 5)
@@ -149,7 +159,14 @@ namespace Skills
 
             numOfSkills++;
         }
-
+        /// <summary>
+        /// Searches for employees that have all of the entered skills in the database. If some of the skill text boxes are empty, shows an error message and stops.
+        /// If the employees having all of the skills are found, shows them in the lower list view with all the skills they have with the skills that were entered highlihted
+        /// in bold. If the employees having all of the skills are not found, the corresponging message is shown, the last entered skill is discarded, and the operation continues
+        /// again. If all of the skill have been discarded and no employee has been found, the corresponding message is shown. After the search tzhe search button becomes hidden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             List<string> s = new List<string>();

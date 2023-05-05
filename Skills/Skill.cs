@@ -55,7 +55,12 @@ namespace Skills
         [Column("Employee_Id")]
         public int Employee_Id { get; set;}
 
-
+        // <summary>
+        /// Converts a digit-based level to its description
+        /// </summary>
+        /// <param name="l">A digit within the range [1;4] representing the skill level</param>
+        /// <returns>A skill description of the corresponding skill level</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thtows an ArgumentOutOfRangeException if l is not within the range [1;4]</exception>
         private string Level_DigitToString(int l)
         {
             switch (l)

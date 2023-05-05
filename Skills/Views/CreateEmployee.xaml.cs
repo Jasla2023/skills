@@ -45,7 +45,9 @@ namespace Skills.Views
         private Employee employee; // Instanzvariable für das Employee-Objekt
 
         private int numberOfSkills;
-
+        /// <summary>
+        /// Constructor initializing the window
+        /// </summary>
         public CreateEmployee()
         {
             InitializeComponent();
@@ -58,7 +60,11 @@ namespace Skills.Views
 
 
 
-
+        /// <summary>
+        /// Adds a new skill entry to the list view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSkillAdd_Click(object sender, RoutedEventArgs e)
         {
             
@@ -119,7 +125,11 @@ namespace Skills.Views
             //AddASkill addASkill = new AddASkill();
             //addASkill.Show();
         }
-
+        /// <summary>
+        /// Evemt, happening upon clicking on the border
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -160,6 +170,12 @@ namespace Skills.Views
             }
             return level;
         }
+        /// <summary>
+        /// Checks if all skill entries are filled, if so, then saves the employee into the database, shows a success message and closes the window, otherwise shows an error
+        /// message and stops
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -260,7 +276,11 @@ namespace Skills.Views
 
 
         }
-
+        /// <summary>
+        /// Closes the window 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();

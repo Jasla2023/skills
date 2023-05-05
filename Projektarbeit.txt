@@ -36,3 +36,9 @@
 
 1.  Researching Entity-Framework - 3h
 2.  Writing the database update methods - 2h
+
+03.05.2023
+
+1. Debugging the application - 2h
+2. Teams-Videocall with PO - 1h
+3. Videocall with Jochen Scamell - 2h30m

@@ -258,7 +258,12 @@ namespace Skills
 
             return LN;
         }
-
+        /// <summary>
+        /// Returns the date of birth of the employee with the specifies ID from the table employees in the database
+        /// </summary>
+        /// <param name="id">A valid existing employee_id</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
         public static DateTime? GetDateOfBirthByID(int id)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -746,7 +751,12 @@ namespace Skills
 
             return skills;
         }
-
+        /// <summary>
+        /// Converts digit-based skill level into inst description
+        /// </summary>
+        /// <param name="skillLevel">An integer in the range [1;4]</param>
+        /// <returns>A string, representing the skill level description</returns>
+        /// <exception cref="ArgumentException">Throws an Argument exception if skillLevel is outside of the range [1;4]</exception>
         public static string GetConvertedSkillLevelIntoString(int skillLevel)
         {
 
@@ -776,7 +786,14 @@ namespace Skills
             return level;
         }
 
-
+        /// <summary>
+        /// Checks if the given skill with the given name and the given owner ID exists in the skills table
+        /// </summary>
+        /// <param name="skill">The name of the skill</param>
+        /// <param name="empID">A valid employee_id from the skills table</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Throws an argument exception if empID is not a valid employee_id from the skills table</exception>
+        /// <exception cref="Exception">For internal use only</exception>
         public static bool SkillExists(string skill, int empID)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -820,7 +837,14 @@ namespace Skills
         }
 
 
-
+        /// <summary>
+        /// Returns an employee with the given first name, last name and date of birth
+        /// </summary>
+        /// <param name="firstName">First name of the employee</param>
+        /// <param name="lastName">Last name of the employee</param>
+        /// <param name="birthdate">Date of birth of the employe</param>
+        /// <returns>An employee object based on the data in the employees table</returns>
+        /// <exception cref="Exception">Throws an exception if the employee with the specified first name, last name and date of birth does not exist in the employees table of the database</exception>
         public static Employee GetEmployeeByFirstNameLastNameAndDateOfBirth(string firstName, string lastName, DateTime birthdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -846,7 +870,12 @@ namespace Skills
                 }
             }
         }
-
+        /// <summary>
+        /// Returns employee with the given id
+        /// </summary>
+        /// <param name="id">A valid existing employee_id from the employees table</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Throws an exception if the specified id does not represent a valid existing employee_id in the employees table of the database</exception>
         public static Employee GetEmployeeById(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -872,7 +901,12 @@ namespace Skills
                 }
             }
         }
-
+        /// <summary>
+        /// Converts a digit-based level to its description
+        /// </summary>
+        /// <param name="l">A digit within the range [1;4] representing the skill level</param>
+        /// <returns>A skill description of the corresponding skill level</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thtows an ArgumentOutOfRangeException if l is not within the range [1;4]</exception>
         public static string Level_DigitToString(int l)
         {
             switch (l)

@@ -29,12 +29,20 @@ namespace Skills
 
             
         }
-
+        /// <summary>
+        /// Evemt, happening upon clicking on the border
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
-
+        /// <summary>
+        /// The method restricting the special characters upon entry into the first and last name text boxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static void SpecialCharacterHandler(object sender, KeyEventArgs e)
         {
             Key[] forbiddenKeys = { Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.Decimal, Key.Divide, Key.OemBackslash, Key.OemOpenBrackets,
@@ -45,7 +53,11 @@ namespace Skills
                 e.Handled = true;
             }
         }
-
+        /// <summary>
+        /// Opens an employee adding prompt window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
             Views.CreateEmployee cew = new Views.CreateEmployee();
@@ -54,27 +66,27 @@ namespace Skills
             cew.Show();
         }
 
-      
-        private void btnSearchEmployeesBySkills_Click(object sender, RoutedEventArgs e)
-        {
-            RequiredSkillsForm requiredSkillsForm = new RequiredSkillsForm();
-            requiredSkillsForm.Show();
-        }
+        
+        
 
     
 
-        //private void btnSearch1_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SearchEmployee1 searchEmployee2 = new SearchEmployee1();
-        //    searchEmployee2.Show();
-        //}
-
+        
+        /// <summary>
+        /// Opens the employee search form window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSearch2_Click(object sender, RoutedEventArgs e)
         {
             SearchEmployee2 se = new SearchEmployee2();
             se.Show();
         }
-
+        /// <summary>
+        /// Opens the required skills entry form window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSearch3_Click(object sender, RoutedEventArgs e)
         {
             RequiredSkills re = new RequiredSkills();
