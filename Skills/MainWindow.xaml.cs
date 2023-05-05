@@ -30,6 +30,11 @@ namespace Skills
             
         }
 
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
         public static void SpecialCharacterHandler(object sender, KeyEventArgs e)
         {
             Key[] forbiddenKeys = { Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.Decimal, Key.Divide, Key.OemBackslash, Key.OemOpenBrackets,

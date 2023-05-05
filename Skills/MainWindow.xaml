@@ -4,9 +4,161 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Skills"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:uc1="clr-namespace:Skills"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Neox Auswahlmenü" Height="650" Width="1200" MinHeight="750" MinWidth="1200" ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen" MouseDown="Border_MouseDown" >
+
     <Grid>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="70*" />
+
+            <ColumnDefinition Width="55*" />
+
+
+        </Grid.ColumnDefinitions>
+
+        
+
+        <!--Left Site-->
+        <Grid>
+            
+
+            <!--<Grid Grid.Column="0" Grid.Row="0" Name="brd" Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="130*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" Name="logoBorder" Background="White" Margin="0" Height="200" Width="500">
+                    <Grid.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#FF000000" Opacity="0.8"/>
+                    </Grid.Effect>
+                    <Image Source="/Images/logo.jpg" Width="Auto" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" />
+                </Grid>
+            </Grid>-->
+
+
+
+            <Grid Grid.Column="0" Name="brd1" Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="130*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" Name="logobord1" Height="300" Width="300">
+                    <Grid.Clip>
+                        <EllipseGeometry Center="150,150" RadiusX="150" RadiusY="150" />
+                    </Grid.Clip>
+                    <Image Source="/Images/Whatsapp Image 2023-05-04 at 23.57.03.jpeg" Width="Auto" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform">
+                        <Image.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="Transparent" Offset="0" />
+                                <GradientStop Color="White" Offset="0.1" />
+                                <GradientStop Color="White" Offset="0.9" />
+                                <GradientStop Color="Transparent" Offset="1" />
+                            </LinearGradientBrush>
+                        </Image.OpacityMask>
+                    </Image>
+                </Grid>
+            </Grid>
+
+
+        </Grid>
+
+        <Grid Grid.Column="1" Background="AliceBlue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+
+            <Button Name="btnAddEmployee" Content="Mitarbeiter erfassen" Grid.Column="1" Grid.Row="1" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnAddEmployee_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.7"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+            <Button Name="btnSearch3" Content="Kenntnisbasierte Mitarbeitersuche" Grid.Column="1" Grid.Row="4" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnSearch3_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.7"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+            <Button Name="btnSearch2" Content="Mitarbeiter suchen" Grid.Column="1" Grid.Row="7" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnSearch2_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.7"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+
+        </Grid>
+
+    </Grid>
+
+   
+
+
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -24,18 +176,18 @@
 
        
 
-        <!--<Button Name="btnSearchEmployeesBySkills" Content="Angeferderte Kenntnísse eingeben"    Grid.Row="2"    HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchEmployeesBySkills_Click" />-->
+        --><!--<Button Name="btnSearchEmployeesBySkills" Content="Angeferderte Kenntnísse eingeben"    Grid.Row="2"    HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearchEmployeesBySkills_Click" />-->
 
         
 
        
 
-        <!--<Button Name="btnSearch1" Content="Mitarbeiter suchen1"   Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch1_Click"/>-->
+        <!--<Button Name="btnSearch1" Content="Mitarbeiter suchen1"   Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch1_Click"/>--><!--
 
         <Button Name="btnSearch2" Content="Mitarbeiter suchen2"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch2_Click"/>
 
         <Button Name="btnSearch3" Content="Mitarbeiter suchen anhand Kenntnisse"   Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSearch3_Click" />
-    </Grid>
+    </Grid>-->
 
 
 
