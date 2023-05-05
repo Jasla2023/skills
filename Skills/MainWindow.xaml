@@ -13,7 +13,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="55*" />
 
             <ColumnDefinition Width="55*" />
 
@@ -44,9 +44,9 @@
 
             <Grid Grid.Column="0" Name="brd1" Background="AliceBlue">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="130*" />
-                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="50*" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1" Name="logobord1" Height="300" Width="300">
                     <Grid.Clip>
@@ -69,6 +69,7 @@
         </Grid>
 
         <Grid Grid.Column="1" Background="AliceBlue">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="20*"/>
@@ -81,73 +82,98 @@
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
 
-            <Button Name="btnAddEmployee" Content="Mitarbeiter erfassen" Grid.Column="1" Grid.Row="1" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnAddEmployee_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Opacity" Value="1"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Opacity" Value="0.7"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                            </Border>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*"></ColumnDefinition>
+                    <ColumnDefinition Width="100*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Name="btnAddEmployee" Grid.Column="1" Content="Mitarbeiter erfassen" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnAddEmployee_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.7"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*"></ColumnDefinition>
+                    <ColumnDefinition Width="100*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Button Name="btnSearch3" Grid.Column="1" Content="Kenntnisbasierte Mitarbeitersuche" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnSearch3_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.7"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
 
 
-            <Button Name="btnSearch3" Content="Kenntnisbasierte Mitarbeitersuche" Grid.Column="1" Grid.Row="4" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnSearch3_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Opacity" Value="1"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Opacity" Value="0.7"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                            </Border>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <Grid Grid.Column="1" Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*"></ColumnDefinition>
+                    <ColumnDefinition Width="100*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Button Name="btnSearch2" Grid.Column="1" Content="Mitarbeiterdaten ändern" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnSearch2_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.7"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
 
 
-            <Button Name="btnSearch2" Content="Mitarbeiter suchen" Grid.Column="1" Grid.Row="7" Background="LightSlateGray" Foreground="White" BorderBrush="AliceBlue" BorderThickness="2" Margin="50" Padding="20" FontSize="20" FontWeight="Bold" Click="btnSearch2_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Opacity" Value="1"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Opacity" Value="0.7"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                            </Border>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+          
 
 
 
