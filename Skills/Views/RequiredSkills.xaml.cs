@@ -182,9 +182,10 @@ namespace Skills
                 s.Add(sk.Text);
                 l.Add(AssignSkillLevel(requiredSkillsLevels[requiredSkillsTextBoxes.IndexOf(sk)]));
             }
-
+            lvwOutput.Items.Clear();
             try
             {
+                
                 List<int> SearchResult = DatabaseConnections.SearchEmployeeBySkills(s[0], l[0],s, l);
                 if (SearchResult.Count > 0)
                 {
@@ -318,7 +319,7 @@ namespace Skills
             {
                 MessageBox.Show(ex.Message);
             }
-            Suchen.Visibility = Visibility.Hidden;
+            
         }
     }
 }
