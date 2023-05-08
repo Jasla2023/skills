@@ -289,6 +289,11 @@ namespace Skills
         {
             string actualFirstName = tbxFirstName.Text;
             string actualLastName = tbxLastName.Text;
+            if (dpcDateOfBirth.SelectedDate == null)
+            {
+                MessageBox.Show("Eingabefeld \"Geburtsdatum\" ist leer");
+                return;
+            }
             DateTime actualDateOfBirth = (DateTime)dpcDateOfBirth.SelectedDate;
 
 
@@ -304,11 +309,7 @@ namespace Skills
                     MessageBox.Show("Nachname muss nicht leer sein");
                     return;
                 }
-                if(actualDateOfBirth == null)
-                {
-                    MessageBox.Show("Geburtsdatum muss nicht leer sein");
-                    return;
-                }
+               
                 if(DatabaseConnections.EmployeeExists(actualFirstName,actualLastName, new SqlDateTime(actualDateOfBirth)))
                 {
                     MessageBox.Show("Mitarbeiter existiert schon");

@@ -40,7 +40,7 @@ namespace Skills
         }
 
         /// <summary>
-        /// Evemt, happening upon clicking on the border
+        /// Event, happening upon clicking on the border
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
