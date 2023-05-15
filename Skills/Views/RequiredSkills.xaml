@@ -8,7 +8,7 @@
     xmlns:uc1="clr-namespace:Skills"
 
     mc:Ignorable="d"
-    Title="Kenntnisbasierte Mitarbeitersuche" Height="650" Width="1300" MinHeight="750" MinWidth="1300" ResizeMode="CanResize"
+    Title="Kenntnisbasierte Mitarbeitersuche" Height="750" Width="1700" MinHeight="750" MinWidth="1300" ResizeMode="CanResize"
     WindowStartupLocation="CenterScreen" MouseDown="Border_MouseDown" >
     <!--<Window.Resources>
         <Style TargetType="Label">
@@ -24,7 +24,9 @@
 
             <ColumnDefinition Width="65*" />
 
-            <ColumnDefinition Width="95*" />
+            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="60*" />
 
 
         </Grid.ColumnDefinitions>
@@ -64,109 +66,136 @@
 
 
         <!--Right Site-->
+        
 
+        <Grid Grid.Column="3">
+            <Grid.RowDefinitions>
 
+                <RowDefinition Height="15*" />
+
+                <RowDefinition Height="90*" />
+
+                <RowDefinition Height="5*" />
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="90*"/>
+
+                    <ColumnDefinition Width="5*"/>
+
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Trefferliste:"
+           Grid.Column="1"
+           FontSize="20"
+           FontWeight="Bold"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           TextWrapping="Wrap" />
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="90*"/>
+                    <ColumnDefinition Width="5*"/>
+
+                </Grid.ColumnDefinitions>
+
+               
+                <ListView x:Name="lvwOutput" Grid.Column="1" >
+
+                </ListView>
+            </Grid>
+        </Grid>
 
         <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="15*" />
+
+                <RowDefinition Height="90*" />
+
+                <RowDefinition Height="5*" />
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="90*"/>
+
+                    <ColumnDefinition Width="5*"/>
+
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Bitte geben Sie die erforderlichen Kenntnisse in absteigender Reihenfolge der Wichtigkeit ein:"
+           Grid.Column="1"
+           FontSize="20"
+           FontWeight="Bold"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           TextWrapping="Wrap" />
+
+            </Grid>
+            
+
+            <Grid Grid.Row="1" Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="90*"/>
+                    <ColumnDefinition Width="5*"/>
+
+                </Grid.ColumnDefinitions>
+
+
+                <ListView x:Name="lvwInput" Grid.Column="1" >
+
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="2">
 
             <Grid.RowDefinitions>
 
-                <RowDefinition Height="100*" />
 
-                <RowDefinition Height="20*" />
+                <RowDefinition Height="15*" />
+
                 <RowDefinition Height="90*" />
 
-                <RowDefinition Height="35*" />
+                <RowDefinition Height="5*" />
 
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="90*"/>
-                    <ColumnDefinition Width="30*"/>
-
-                    <ColumnDefinition Width="5*"/>
-
-                </Grid.ColumnDefinitions>
-                <Label Content="Trefferliste: " Grid.Column="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-            </Grid>
-
-            <Grid Grid.Column="1" Grid.Row="0" Background="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="40*" />
-                   
-                    <ColumnDefinition Width="5*" />
-                </Grid.ColumnDefinitions>
-
                 <Grid.RowDefinitions>
+
+
                     <RowDefinition Height="20*" />
-                    <RowDefinition Height="35*" />
-                    <RowDefinition Height="35*" />
-                    <RowDefinition Height="30*" />
 
-                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="20*" />
+
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="20*" />
+
+                    <RowDefinition Height="20*" />
+
+                    <RowDefinition Height="20*" />
 
                 </Grid.RowDefinitions>
 
-              
+                <Grid x:Name="Buttons" Grid.Row="1">
 
-               
-
-               
-
-               
-                
-
-              
-            </Grid>
-
-           
-
-           
-
-            <Grid Grid.Column="1" Grid.Row="0" Background="white">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="90*"/>
-                    <ColumnDefinition Width="30*"/>
-
-                    <ColumnDefinition Width="5*"/>
-
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="90*"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="2" Grid.Column="1">
-                    <ListView x:Name="lvwInput">
-
-
-                    </ListView>
-                </Grid>
-
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <TextBlock Text="Bitte geben Sie die erforderlichen Kenntnisse in absteigender Reihenfolge der Wichtigkeit ein: " TextWrapping="Wrap"  FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"></TextBlock>
-                </Grid>
-                
-
-                <Grid x:Name="Buttons" Grid.Column="2" Grid.Row="2">
-                 
 
                     <Button Name="btnAdd"
                     
                     Margin="20"
 
-                    HorizontalAlignment="Right"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
 
                     Content="Hinzufügen"
-                
+                    Width="150"
                     
                     FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnSkillChange_Click">
 
@@ -174,125 +203,84 @@
                             <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
                         </Button.Effect>
                     </Button>
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </Grid>
 
-              
-
-            </Grid>
-
-            <Grid Grid.Column="1" Grid.Row="2" Background="white">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="90*"/>
-                    <ColumnDefinition Width="30*"/>
-
-                    <ColumnDefinition Width="5*"/>
-                </Grid.ColumnDefinitions>
-                
-             
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <ListView x:Name="lvwOutput" Grid.Column="1">
-
-                    </ListView>
-                </Grid>
-
-                <!--<DataGrid x:Name="lvwOutput" AutoGenerateColumns="False" Grid.Column="1">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Vorname" Width="*" Binding="{x:Null}" />
-                        <DataGridTextColumn Header="Nachname" Width="*" Binding="{x:Null}" />
-                        <DataGridTextColumn Header="Kenntnisse" Width="*" Binding="{x:Null}" />
-                        <DataGridTextColumn Header="Kenntnissstufe" Width="*" Binding="{x:Null}" />
-                    </DataGrid.Columns>
-                   
-                </DataGrid>-->
+                <Grid x:Name="Buttons3" Grid.Row="3">
 
 
-            </Grid>
-          
-
-
-            <Grid Grid.Row="3">
-
-                <Grid.ColumnDefinitions>
-
-                    <ColumnDefinition Width="*" />
-
-                    <ColumnDefinition Width="*" />
-
-
-
-                </Grid.ColumnDefinitions>
-
-
-
-                <Button
+                    <Button Name="btnAdd3"
                     
-                    
-                    Grid.Column="0"
+                    Margin="20"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
 
-                    Margin="35"
-
-                    HorizontalAlignment="Left"
-
-                    Content="Beenden"
-                    
-                    Width="250"
-                    
-                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnClose_Click">
-
-                    <Button.Effect>
-                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
-                    </Button.Effect>
-                </Button>
-
-
-
-                <Button
-
-                    Grid.Column="1"
-
-                    Margin="35"
-
-                    HorizontalAlignment="Right"
-
-                    VerticalAlignment="Stretch"
-                    
-                    Width="250"
                     Content="Suchen"
-                    Name="Suchen"
-                   
+                
                     
                     FontSize="20" MaxWidth="200" MaxHeight="80" Click="SaveButton_Click">
 
-                    <Button.Effect>
-                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
-                    </Button.Effect>
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+                    </Button>
+                </Grid>
+
+                <Grid x:Name="Buttons4" Grid.Row="4">
 
 
-                </Button>
+                    <Button Name="btnAdd4"
+                    
+                    Margin="20"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+
+                    Content="Beenden"
+                
+                    
+                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnClose_Click">
+
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+                    </Button>
+                </Grid>
+
+                <Grid x:Name="Buttons2" Grid.Row="2">
+
+
+                    <Button Name="btnAdd2"
+                    
+                    Margin="20"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+
+                    Content="Löschen"
+                    Background="OrangeRed"
+                    Foreground="White"
+                
+                    
+                    FontSize="20" MaxWidth="200" MaxHeight="80" >
+
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+                    </Button>
+                </Grid>
+
+
 
 
             </Grid>
 
+          
+
+           
+
+           
         </Grid>
-
-
 
     </Grid>
 
