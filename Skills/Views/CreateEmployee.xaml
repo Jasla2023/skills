@@ -70,9 +70,9 @@
 
                 <RowDefinition Height="20*" />
 
-                <RowDefinition Height="100*" />
+                <RowDefinition Height="110*" />
 
-                <RowDefinition Height="35*" />
+                <RowDefinition Height="10*" />
 
             </Grid.RowDefinitions>
 
@@ -99,15 +99,16 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <TextBox Name="tbxFirstName"   VerticalAlignment="Center" Margin="10" />
+                    <TextBox x:Uid="tbxFirstName"  Name="tbxFirstName"   VerticalAlignment="Center" Margin="10" />
                 </Grid>
+                
 
                 <Grid Grid.Row="2" Grid.Column="1">
                     <Label Name="lblLastName" Content="Nachname:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" />
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="2">
-                    <TextBox Name="tbxLastName"   VerticalAlignment="Center" Margin="10" />
+                    <TextBox x:Uid="tbxLastName" Name="tbxLastName"   VerticalAlignment="Center" Margin="10" />
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.Column="1">
@@ -120,7 +121,7 @@
 
 
 
-                    <DatePicker Name="dpcDateOfBirth"  VerticalAlignment="Center" Margin="10,0,10,0" Height="34">
+                    <DatePicker AutomationProperties.AutomationId="dpcDateOfBirth" x:Name="dpcDateOfBirth" SelectedDate="{x:Null}"   VerticalAlignment="Center" Margin="10,0,10,0" Height="34">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type DatePickerTextBox}">
                                 <Setter Property="FontSize" Value="16"/>
@@ -141,7 +142,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="1" Grid.Row="0" Background="White">
-                    <Label Name="lblSkills" Content="Kenntnisse eingeben:"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Height="35.0" />
+                    <Label Name="lblSkills" Content="Kenntnisse eingeben:"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Height="36.0" />
                 </Grid>
             </Grid>
 
@@ -182,7 +183,7 @@
 
                     <Button
                     
-                    Grid.Row="1"
+                    Grid.Row="0"
 
                     Margin="20"
 
@@ -198,6 +199,51 @@
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
                         </Button.Effect>
+                        
+                    </Button>
+
+
+                    <Button
+                    
+                     Grid.Row="2"
+
+                    Margin="20"
+
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+
+                    Content="Beenden"
+                    
+                    Width="120"
+                    
+                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnClose_Click">
+
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+                    </Button>
+
+
+                    <Button
+
+                    Grid.Row="1"
+
+                    Margin="20"
+
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+
+                    Content="Speichern"
+                    
+                    Width="120"
+                    
+                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="SaveButton_Click">
+
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
+                        </Button.Effect>
+
+
                     </Button>
 
 
@@ -242,48 +288,10 @@
 
 
 
-                <Button
-                    
-                    Grid.Column="0"
-
-                    Margin="35"
-
-                    HorizontalAlignment="Stretch"
-
-                    Content="Beenden"
-                    
-                    Width="250"
-                    
-                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="btnClose_Click">
-
-                    <Button.Effect>
-                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
-                    </Button.Effect>
-                </Button>
+                
 
 
-
-                <Button
-
-                    Grid.Column="1"
-
-                    Margin="35"
-
-                    HorizontalAlignment="Stretch"
-
-                    VerticalAlignment="Stretch"
-                    
-                    Width="250"
-                    Content="Mitarbeiter erfassen"
-                    
-                    FontSize="20" MaxWidth="200" MaxHeight="80" Click="SaveButton_Click">
-
-                    <Button.Effect>
-                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="5" Color="Gray" Opacity="0.5" />
-                    </Button.Effect>
-
-
-                </Button>
+              
 
 
             </Grid>

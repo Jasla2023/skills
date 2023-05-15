@@ -97,7 +97,7 @@ namespace Skills
                 Grids[i] = new Grid();
                 Grids[i].ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(140.0) });
                 Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(15.0) });
-                Grids[i].ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(180.0) });
+                Grids[i].ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190.0) });
                 //Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25.0) });
                 //Grids[i].ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(70.0) });
 
@@ -301,18 +301,18 @@ namespace Skills
             {
                 if(actualFirstName == "")
                 {
-                    MessageBox.Show("Vorname muss nicht leer sein");
+                    MessageBox.Show("Eingabefeld \"Vorname\" ist leer!");
                     return;
                 }
                 if(actualLastName == "")
                 {
-                    MessageBox.Show("Nachname muss nicht leer sein");
+                    MessageBox.Show("Eingabefeld \"Nachname\" ist leer!");
                     return;
                 }
                
                 if(DatabaseConnections.EmployeeExists(actualFirstName,actualLastName, new SqlDateTime(actualDateOfBirth)))
                 {
-                    MessageBox.Show("Mitarbeiter existiert schon");
+                    MessageBox.Show("Mitarbeiter existiert schon!");
                     return;
                 }
                 DatabaseConnections.UpdateEmployee(_id, actualFirstName, actualLastName, actualDateOfBirth);
@@ -333,7 +333,7 @@ namespace Skills
                     DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
                 if (EditaleSkils[i].Text == "")
                 {
-                    MessageBox.Show("Kenntnis muss nicht leer sein.");
+                    MessageBox.Show("Eingabefeld \"Kenntnis\" ist leer!");
                     return;
                 }
             }
