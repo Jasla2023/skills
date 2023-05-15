@@ -470,6 +470,7 @@ namespace Skills
             catch (IndexOutOfRangeException)
             {
                 MessageBox.Show("Sie haben nichts ausgewählt?!");
+                return;
             }
             btnAddSkill.Visibility = Visibility.Hidden;
         }
