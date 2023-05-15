@@ -390,7 +390,9 @@ namespace Skills
         {
             if (skillAdded)
                 return;
-            
+
+            btnSkillChange.Visibility = Visibility.Hidden;
+
             // Zähle die Anzahl der vorhandenen Zeilen im ListView
             int rowNumber = lvwOutput.Items.Count;
 
@@ -469,6 +471,7 @@ namespace Skills
             {
                 MessageBox.Show("Sie haben nichts ausgewählt?!");
             }
+            btnAddSkill.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// Deletes the selected skill from the database, then reinitializes the window, or shows an error message if no skill is selected in the list view

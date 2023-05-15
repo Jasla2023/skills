@@ -321,5 +321,12 @@ namespace Skills
             }
             
         }
+
+        private void btnAdd2_Click(object sender, RoutedEventArgs e)
+        {
+            requiredSkillsTextBoxes.Remove(requiredSkillsTextBoxes[lvwInput.Items.IndexOf(lvwInput.SelectedItem)]);
+            requiredSkillsLevels.Remove(requiredSkillsLevels[lvwInput.Items.IndexOf(lvwInput.SelectedItem)]);
+            lvwInput.Items.Remove(lvwInput.SelectedItem);
+        }
     }
 }

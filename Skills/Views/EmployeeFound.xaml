@@ -190,7 +190,7 @@
 
                     </Grid.RowDefinitions>
 
-                    <Button
+                    <Button Name="btnAddSkill"
                     
                     Grid.Row="0"
 
@@ -210,7 +210,7 @@
                         </Button.Effect>
                     </Button>
 
-                    <Button
+                    <Button Name="btnSkillChange"
                     
                     Grid.Row="1"
 
