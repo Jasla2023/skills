@@ -163,7 +163,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Column="1" Grid.Row="1">
-                    <ListView x:Name="lvwSkillInput" >
+                    <ListView x:Name="lvwSkillInput" AutomationProperties.AutomationId="lvwSkillInput1" >
 
                     </ListView>
                 </Grid>
