@@ -71,7 +71,7 @@ namespace Skills
 
 
 
-            skills = DatabaseConnections.GetSkillsOfAnEmployee(id);
+            skills = DatabaseConnections.Instance.GetSkillsOfAnEmployee(id);
             numberOfSkills = skills.Count;
 
             Grids = new Grid[numberOfSkills];
@@ -113,7 +113,7 @@ namespace Skills
                 //Grid.SetRow(LabelsForLevels[i], 1);
                 //Grid.SetColumn(LabelsForLevels[i], 0);
 
-                ActualSkills[i] = new Label { Content = DatabaseConnections.GetSkillByID(skills[i]), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+                ActualSkills[i] = new Label { Content = DatabaseConnections.Instance.GetSkillByID(skills[i]), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
                 Grid.SetRow(ActualSkills[i], 0);
                 Grid.SetColumn(ActualSkills[i], 0);
 
@@ -121,7 +121,7 @@ namespace Skills
 
                 //Grid.SetColumn(Doppelpunkt[i], 1);
 
-                ActualLevels[i] = new Label { Content = DatabaseConnections.Level_DigitToString(DatabaseConnections.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+                ActualLevels[i] = new Label { Content = DatabaseConnections.Instance.Level_DigitToString(DatabaseConnections.Instance.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
                 Grid.SetRow(ActualLevels[i], 0);
                 Grid.SetColumn(ActualLevels[i], 2);
 
@@ -154,7 +154,7 @@ namespace Skills
                 EditableLevls[i].Items.Add(SecondLevel);
                 EditableLevls[i].Items.Add(ThirdLevel);
                 EditableLevls[i].Items.Add(FourthLevel);
-                switch (DatabaseConnections.GetSkillLevelByID(skills[i]))
+                switch (DatabaseConnections.Instance.GetSkillLevelByID(skills[i]))
                 {
                     case 1:
                         FirstLevel.IsSelected = true;
@@ -186,10 +186,10 @@ namespace Skills
 
                 lvwOutput.Items.Add(Grids[i]);
 
-                tbxFirstName.Text = DatabaseConnections.GetFirstNameByID(id);
-                tbxLastName.Text = DatabaseConnections.GetLastNameByID(id);
+                tbxFirstName.Text = DatabaseConnections.Instance.GetFirstNameByID(id);
+                tbxLastName.Text = DatabaseConnections.Instance.GetLastNameByID(id);
 
-                dpcDateOfBirth.SelectedDate = DatabaseConnections.GetDateOfBirthByID(id);
+                dpcDateOfBirth.SelectedDate = DatabaseConnections.Instance.GetDateOfBirthByID(id);
             }
 
             tbxFirstName.PreviewKeyDown += MainWindow.SpecialCharacterHandler;
@@ -297,7 +297,7 @@ namespace Skills
             DateTime actualDateOfBirth = (DateTime)dpcDateOfBirth.SelectedDate;
 
 
-            if (DatabaseConnections.GetFirstNameByID(_id) != actualFirstName || DatabaseConnections.GetLastNameByID(_id) != actualLastName || DatabaseConnections.GetDateOfBirthByID(_id) != actualDateOfBirth)
+            if (DatabaseConnections.Instance.GetFirstNameByID(_id) != actualFirstName || DatabaseConnections.Instance.GetLastNameByID(_id) != actualLastName || DatabaseConnections.Instance.GetDateOfBirthByID(_id) != actualDateOfBirth)
             {
                 if(actualFirstName == "")
                 {
@@ -310,12 +310,12 @@ namespace Skills
                     return;
                 }
                
-                if(DatabaseConnections.EmployeeExists(actualFirstName,actualLastName, new SqlDateTime(actualDateOfBirth)))
+                if(DatabaseConnections.Instance.EmployeeExists(actualFirstName,actualLastName, new SqlDateTime(actualDateOfBirth)))
                 {
                     MessageBox.Show("Mitarbeiter existiert schon!");
                     return;
                 }
-                DatabaseConnections.UpdateEmployee(_id, actualFirstName, actualLastName, actualDateOfBirth);
+                DatabaseConnections.Instance.UpdateEmployee(_id, actualFirstName, actualLastName, actualDateOfBirth);
 
             }
 
@@ -324,13 +324,13 @@ namespace Skills
             for (int i = 0; i < skills.Count; i++)
             {
 
-                if (DatabaseConnections.SkillExists(EditaleSkils[i].Text, _id) && EditaleSkils[i].Text != DatabaseConnections.GetSkillByID(DatabaseConnections.GetSkillsOfAnEmployee(_id)[i]))
+                if (DatabaseConnections.Instance.SkillExists(EditaleSkils[i].Text, _id) && EditaleSkils[i].Text != DatabaseConnections.Instance.GetSkillByID(DatabaseConnections.Instance.GetSkillsOfAnEmployee(_id)[i]))
                 {
                     MessageBox.Show("Kenntnis ist bereits vorhanden.");
                     return;
                 }
                 else
-                    DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+                    DatabaseConnections.Instance.ModifySkill(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
                 if (EditaleSkils[i].Text == "")
                 {
                     MessageBox.Show("Eingabefeld \"Kenntnis\" ist leer!");
@@ -342,20 +342,20 @@ namespace Skills
             {
 
 
-                if (DatabaseConnections.SkillExists(newSkill.Text, _id))
+                if (DatabaseConnections.Instance.SkillExists(newSkill.Text, _id))
                 {
                     MessageBox.Show("Kenntnis ist bereits vorhanden.");
                     return;
                 }
                 else
-                    DatabaseConnections.AddSkill(newSkill.Text, AssignSkillLevel(newLevel), _id);
+                    DatabaseConnections.Instance.AddSkill(newSkill.Text, AssignSkillLevel(newLevel), _id);
             }
 
 
 
             Close();
 
-            EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.GetFirstNameByID(_id), DatabaseConnections.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.GetDateOfBirthByID(_id)));
+            EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.Instance.GetFirstNameByID(_id), DatabaseConnections.Instance.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.Instance.GetDateOfBirthByID(_id)));
             newWindow.Show();
 
             //for (int i = 0; i < skills.Count; i++)
@@ -482,7 +482,7 @@ namespace Skills
         private void btnDeleteSkill_Click(object sender, RoutedEventArgs e)
         {
             int orderWithinOneEmployee = lvwOutput.Items.IndexOf(lvwOutput.SelectedItem);
-            DatabaseConnections.DeleteSkill(skills[orderWithinOneEmployee]);
+            DatabaseConnections.Instance.DeleteSkill(skills[orderWithinOneEmployee]);
             try
             {
                 //LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
@@ -500,7 +500,7 @@ namespace Skills
             }
 
             Close();
-            EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.GetFirstNameByID(_id), DatabaseConnections.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.GetDateOfBirthByID(_id)));
+            EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.Instance.GetFirstNameByID(_id), DatabaseConnections.Instance.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.Instance.GetDateOfBirthByID(_id)));
             newWindow.Show();
         }
         /// <summary>
@@ -510,7 +510,7 @@ namespace Skills
         /// <param name="e"></param>
         private void btnDeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseConnections.DeleteEmployee(_id);
+            DatabaseConnections.Instance .DeleteEmployee(_id);
             Close();
 
         }

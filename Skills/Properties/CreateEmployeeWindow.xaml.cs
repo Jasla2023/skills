@@ -196,7 +196,7 @@ namespace Skills.Properties
                         return;
                     }
 
-            if (DatabaseConnections.EmployeeExists(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)))
+            if (DatabaseConnections.Instance.EmployeeExists(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)))
             {
                 MessageBox.Show("Der Mitarbeiter existiert schon!");
                 return;

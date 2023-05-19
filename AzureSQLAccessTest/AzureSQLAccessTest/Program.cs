@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using static System.Formats.Asn1.AsnWriter;
-using Flurl;
+ 
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -92,7 +92,7 @@ public class AzureSQLAccessTest
         claims["jti"] = Guid.NewGuid().ToString("D");
 
         var signingCredentials = new X509SigningCredentials(x509cert);
-        var securityTokenDescriptor = new SecurityTokenDescriptor
+        var securityTokenDescriptor = new Microsoft.Tokens.SecurityTokenDescriptor
         {
             Claims = claims,
             SigningCredentials = signingCredentials

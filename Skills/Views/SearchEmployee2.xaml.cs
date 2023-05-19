@@ -89,7 +89,7 @@ namespace Skills
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Employee sr = (Employee)((DataGrid)dataGrid).SelectedItem;
-            EmployeeFound ef = new EmployeeFound(DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth(sr.FirstName, sr.LastName, new SqlDateTime(sr.BirthDate)), sr.FirstName, sr.LastName, new SqlDateTime(sr.BirthDate));
+            EmployeeFound ef = new EmployeeFound(DatabaseConnections.Instance.GetIDByFirstNameLastNameAndDateOfBirth(sr.FirstName, sr.LastName, new SqlDateTime(sr.BirthDate)), sr.FirstName, sr.LastName, new SqlDateTime(sr.BirthDate));
             Close();
             //SearchEmployee2 se = new SearchEmployee2();
             //se.Show();

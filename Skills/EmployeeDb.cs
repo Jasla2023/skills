@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Protocols.WSTrust;
@@ -16,7 +17,11 @@ namespace Skills
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(DatabaseConnections.connectionString);
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = DatabaseConnections.connectionString;
+            connection.AccessToken = DatabaseConnections.Instance.accessToken;
+            optionsBuilder.UseSqlServer(connection);
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

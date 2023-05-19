@@ -61,7 +61,8 @@ namespace Skills
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
             Views.CreateEmployee cew = new Views.CreateEmployee();
-            
+
+            MessageBox.Show(DatabaseConnections.Instance.accessToken);
 
             cew.Show();
         }
@@ -79,7 +80,9 @@ namespace Skills
         /// <param name="e"></param>
         private void btnSearch2_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(DatabaseConnections.Instance.accessToken);
             SearchEmployee2 se = new SearchEmployee2();
+            
             se.Show();
         }
         /// <summary>
@@ -90,6 +93,7 @@ namespace Skills
         private void btnSearch3_Click(object sender, RoutedEventArgs e)
         {
             RequiredSkills re = new RequiredSkills();
+            MessageBox.Show(DatabaseConnections.Instance.accessToken);
             re.Show();
         }
     }

@@ -186,7 +186,7 @@ namespace Skills
             try
             {
                 
-                List<int> SearchResult = DatabaseConnections.SearchEmployeeBySkills(s[0], l[0],s, l);
+                List<int> SearchResult = DatabaseConnections.Instance.SearchEmployeeBySkills(s[0], l[0],s, l);
                 if (SearchResult.Count > 0)
                 {
                     List<Grid> empGrids = new List<Grid>();
@@ -202,17 +202,17 @@ namespace Skills
                         empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition() {  });
                         empGrids[SearchResult.IndexOf(emp)].RowDefinitions.Add(new RowDefinition());
 
-                        Label fn = new Label { Content = DatabaseConnections.GetFirstNameByID(emp), FontWeight = FontWeights.Bold };
+                        Label fn = new Label { Content = DatabaseConnections.Instance.GetFirstNameByID(emp), FontWeight = FontWeights.Bold };
                         Grid.SetRow(fn, 0);
                         Grid.SetColumn(fn, 0);
                         empGrids[SearchResult.IndexOf(emp)].Children.Add(fn);
 
-                        Label ln = new Label { Content = DatabaseConnections.GetLastNameByID(emp), FontWeight = FontWeights.Bold };
+                        Label ln = new Label { Content = DatabaseConnections.Instance.GetLastNameByID(emp), FontWeight = FontWeights.Bold };
                         Grid.SetRow(ln, 0);
                         Grid.SetColumn(ln, 1);
                         empGrids[SearchResult.IndexOf(emp)].Children.Add(ln);
 
-                        List <Skill> skills = DatabaseConnections.GetEmployeeSkills(emp);
+                        List <Skill> skills = DatabaseConnections.Instance.GetEmployeeSkills(emp);
 
                         foreach(Skill skill in skills)
                         {
@@ -223,12 +223,12 @@ namespace Skills
                             Grid.SetColumn(minus, 0);
                             empGrids[SearchResult.IndexOf(emp)].Children.Add(minus);
 
-                            Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold  : FontWeights.Normal };
+                            Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold  : FontWeights.Normal };
                             Grid.SetRow(sn, skills.IndexOf(skill) + 1);
                             Grid.SetColumn(sn, 2);
                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sn);
 
-                            Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
+                            Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
                             Grid.SetRow(sl, skills.IndexOf(skill) + 1);
                             Grid.SetColumn(sl, 3);
                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sl);
@@ -257,7 +257,7 @@ namespace Skills
                                 s.Remove(s.Last());
 
 
-                                SearchResult = DatabaseConnections.SearchEmployeeBySkills(s[0], l[0], s, l);
+                                SearchResult = DatabaseConnections.Instance.SearchEmployeeBySkills(s[0], l[0], s, l);
                                 if (SearchResult.Count > 0)
                                 {
                                     List<Grid> empGrids = new List<Grid>();
@@ -273,17 +273,17 @@ namespace Skills
                                         empGrids[SearchResult.IndexOf(emp)].ColumnDefinitions.Add(new ColumnDefinition());
                                         empGrids[SearchResult.IndexOf(emp)].RowDefinitions.Add(new RowDefinition());
 
-                                        Label fn = new Label { Content = DatabaseConnections.GetFirstNameByID(emp), FontWeight = FontWeights.Bold };
+                                        Label fn = new Label { Content = DatabaseConnections.Instance.GetFirstNameByID(emp), FontWeight = FontWeights.Bold };
                                         Grid.SetRow(fn, 0);
                                         Grid.SetColumn(fn, 0);
                                         empGrids[SearchResult.IndexOf(emp)].Children.Add(fn);
 
-                                        Label ln = new Label { Content = DatabaseConnections.GetLastNameByID(emp), FontWeight = FontWeights.Bold };
+                                        Label ln = new Label { Content = DatabaseConnections.Instance.GetLastNameByID(emp), FontWeight = FontWeights.Bold };
                                         Grid.SetRow(ln, 0);
                                         Grid.SetColumn(ln, 1);
                                         empGrids[SearchResult.IndexOf(emp)].Children.Add(ln);
 
-                                        List<Skill> skills = DatabaseConnections.GetEmployeeSkills(emp);
+                                        List<Skill> skills = DatabaseConnections.Instance.GetEmployeeSkills(emp);
 
                                         foreach (Skill skill in skills)
                                         {
@@ -294,12 +294,12 @@ namespace Skills
                                             Grid.SetColumn(minus, 0);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(minus);
 
-                                            Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
+                                            Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
                                             Grid.SetRow(sn, skills.IndexOf(skill) + 1);
                                             Grid.SetColumn(sn, 2);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sn);
 
-                                            Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.GetSkillLevelByID(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
+                                            Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
                                             Grid.SetRow(sl, skills.IndexOf(skill) + 1);
                                             Grid.SetColumn(sl, 3);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sl);

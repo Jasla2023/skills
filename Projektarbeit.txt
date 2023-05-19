@@ -10,11 +10,16 @@
 3. Installing MS Visual Studio - 1h30m
 4. Writing the logic for search/modify window - 2h
 
+19.04.2023
+
+1. Debugging - 4h
+2. Teams-Videocall with PO - 1h
+
 24.04.2023
 
 1. Changing the output of skills of an employee - 2h
 2. Re-writing the search engine (input and output) - 4h
-3. Videocall with Jochen Scamell - 2h
+3. Videocall with Jochen Scammell - 2h
 
 25.04.2023
 
@@ -41,4 +46,55 @@
 
 1. Debugging the application - 2h
 2. Teams-Videocall with PO - 1h
-3. Videocall with Jochen Scamell - 2h30m
+3. Videocall with Jochen Scammell - 2h30m
+
+04.05.2023
+
+1. Adding the character restriction mechanism - 2h
+2. Testing the character restricting mechanism - 1h
+3. Debugging the character restricting mechanism - 3h
+
+
+05.05.2023
+
+1. Setting up a database in the cloud - 1h
+2. Debugging the application - 4h
+
+
+08.05.2023
+
+1. Writing the logic for the redisigned search form - 4h
+2. Videocall with Jochen Scammell - 1h30m
+
+09.05.2023
+
+1. Debugging the skill modifying mechanism - 3h
+2. Testing the skill modifying mechanism - 1h
+
+10.05.2023
+
+1. Debugging the search input - 4h
+2. Testing the new version of the search input - 1h
+3. Teams-Videocall with PO - 1h
+
+11.05.2023
+
+
+1. Attempting to implement Azure Authentication - 4h
+2. Attempting to re-write the database connections layer with async methods - 2h
+ 
+
+12.05.2023
+
+1. Attempting to refractor the application for using async methods - 4h
+
+15.05.2023
+
+1. Debugging the skill adding mechanism - 3h
+2. Testing the skill adding mechanism - 1h
+
+16.05.2023
+
+1. Teams-Videocall with PO - 1h
+2. Videocall with Jochen Scammell - 2h
+3. Refractoring - 2h

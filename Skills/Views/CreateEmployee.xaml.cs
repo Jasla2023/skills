@@ -226,7 +226,7 @@ namespace Skills.Views
                 return; 
             }
 
-            if(DatabaseConnections.EmployeeExists(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)))
+            if(DatabaseConnections.Instance.EmployeeExists(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate)))
             {
                 MessageBox.Show("Mitarbeiter existiert schon!");
                 return;
@@ -249,7 +249,7 @@ namespace Skills.Views
             
             try
             {
-                DatabaseConnections.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate), s, l);
+                DatabaseConnections.Instance.SaveEmployeeIntoDatabase(tbxFirstName.Text, tbxLastName.Text, new SqlDateTime((DateTime)dpcDateOfBirth.SelectedDate), s, l);
             }
             catch (Exception ex)
             {

@@ -46,7 +46,7 @@ namespace Skills
             tblWindowName.Text += "Kenntnisse von " + vornameNachname;
 
 
-            skills = DatabaseConnections.GetSkillsOfAnEmployee(id);
+            skills = DatabaseConnections.Instance.GetSkillsOfAnEmployee(id);
             int numberOfSkills = skills.Count;
 
             Grids = new Grid[numberOfSkills];
@@ -84,11 +84,11 @@ namespace Skills
                 Grid.SetRow(LabelsForLevels[i], 1);
                 Grid.SetColumn(LabelsForLevels[i], 0);
 
-                ActualSkills[i] = new Label { Content = DatabaseConnections.GetSkillByID(skills[i]), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
+                ActualSkills[i] = new Label { Content = DatabaseConnections.Instance.GetSkillByID(skills[i]), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
                 Grid.SetRow(ActualSkills[i], 0);
                 Grid.SetColumn(ActualSkills[i], 1);
 
-                ActualLevels[i] = new Label { Content = Level_DigitToString(DatabaseConnections.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
+                ActualLevels[i] = new Label { Content = Level_DigitToString(DatabaseConnections.Instance.GetSkillLevelByID(skills[i])), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Height = 25 };
                 Grid.SetRow(ActualLevels[i],  1);
                 Grid.SetColumn(ActualLevels[i], 1);
 
@@ -120,7 +120,7 @@ namespace Skills
                 EditableLevls[i].Items.Add(SecondLevel);
                 EditableLevls[i].Items.Add(ThirdLevel);
                 EditableLevls[i].Items.Add(FourthLevel);
-                switch (DatabaseConnections.GetSkillLevelByID(skills[i]))
+                switch (DatabaseConnections.Instance.GetSkillLevelByID(skills[i]))
                 {
                     case 1:
                         FirstLevel.IsSelected = true;
@@ -186,7 +186,7 @@ namespace Skills
         private void deleteSkill_Click(object sender, RoutedEventArgs e)
         {
             int orderWithinOneEmployee = Array.IndexOf(DeleteSkill, (Button)sender);
-            DatabaseConnections.DeleteSkill(skills[orderWithinOneEmployee]);
+            DatabaseConnections.Instance.DeleteSkill(skills[orderWithinOneEmployee]);
             LabelsForSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
             LabelsForLevels[orderWithinOneEmployee].Visibility= Visibility.Hidden;
             ActualSkills[orderWithinOneEmployee].Visibility = Visibility.Hidden;
@@ -298,7 +298,7 @@ namespace Skills
         {
             for(int i = 0; i < skills.Count; i++)
             {
-                DatabaseConnections.ModifySkill(DatabaseConnections.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+                DatabaseConnections.Instance.ModifySkill(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
 
             }
             MessageBox.Show("Die Daten wurden erfolgreich geändert!");

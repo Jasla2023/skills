@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,15 +18,108 @@ using System.Data.SqlTypes;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.Data;
+using System.Data.Common;
+using System.Xml.Linq;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.IdentityModel.JsonWebTokens;
+using System.Net.Http;
+using Flurl;
+
+
 
 namespace Skills
 {
 
-    public static class DatabaseConnections
+    public class DatabaseConnections
     {
+        public DatabaseConnections() 
+        {
+            Authenticate();
+        }
 
+        private static DatabaseConnections _instance;
 
-        public static string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=NeoxDatenbank;Integrated Security=True;Connect Timeout=30;Encrypt=False";
+        public static DatabaseConnections Instance { 
+            get 
+            {
+                if (_instance == null)
+                {
+                    _instance = new DatabaseConnections();
+                }
+                return _instance;
+            }
+        }
+
+        public string accessToken;
+
+        public void Authenticate()
+        {
+            
+            string instance = "https://login.microsoftonline.com";
+            string tenant = "jochenscammellneox.onmicrosoft.com";
+            string clientIdOrAppIdUri = "https://azuresqlaccesstestapp.jochenscammellneox.onmicrosoft.com"; //"6e08d520-cdd3-428e-9ff2-e769f6c4b744"
+            string scope = "https://database.windows.net/";
+            StoreLocation storeLocation = StoreLocation.CurrentUser; //StoreLocation.LocalMachine
+            string thumbprint = "bd26eaad2179b5bd0972c5fbeb79b8d68a42275e"; //AzureSQLAccessTestApp Certificate Thumbprint
+            try
+            {
+                var store = new X509Store(storeLocation);
+                store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+                var x509cert = store.Certificates.OfType<X509Certificate2>().FirstOrDefault(c => c.Thumbprint.Equals(thumbprint, StringComparison.InvariantCultureIgnoreCase));
+                if (x509cert != null)
+                {
+                    var clientAssertion = BuildClientAssertion(x509cert, instance, tenant, clientIdOrAppIdUri);
+                    accessToken =  RequestAccessTokenStringAsync(instance, tenant, scope, clientIdOrAppIdUri, clientAssertion);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private static string BuildClientAssertion(X509Certificate2 x509cert, string instance, string tenant, string clientIdOrAppIdUri)
+        {
+            var claims = new Dictionary<string, object>();
+            claims["aud"] = instance.AppendPathSegments(tenant, "v2.0").ToString();
+            claims["iss"] = clientIdOrAppIdUri;
+            claims["sub"] = clientIdOrAppIdUri;
+            claims["jti"] = Guid.NewGuid().ToString("D");
+
+            var signingCredentials = new Microsoft.IdentityModel.Tokens.X509SigningCredentials(x509cert);
+            var securityTokenDescriptor =   new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
+            {
+                
+                Claims = claims,
+                SigningCredentials = signingCredentials
+            };
+
+            var tokenHandler = new JsonWebTokenHandler();
+            var clientAssertion = tokenHandler.CreateToken(securityTokenDescriptor);
+            return clientAssertion;
+        }
+
+        private static string RequestAccessTokenStringAsync(string instance, string tenant, string scope, string clientIdOrAppIdUri, string clientAssertion)
+        {
+            var uri = instance.AppendPathSegments(tenant, "/oauth2/v2.0/token");
+            var entries = new Dictionary<string, string>();
+            entries.Add("scope", scope.AppendPathSegment(".default").ToString());
+            entries.Add("client_id", clientIdOrAppIdUri);
+            entries.Add("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
+            entries.Add("client_assertion", clientAssertion);
+            entries.Add("grant_type", "client_credentials");
+            FormUrlEncodedContent content = new FormUrlEncodedContent(entries);
+            var httpClient = new HttpClient();
+            var response = httpClient.PostAsync(uri, content).Result;
+            response.EnsureSuccessStatusCode();
+
+            string jsonString =  response.Content.ReadAsStringAsync().Result;
+            JsonNode jsonNode = JsonNode.Parse(jsonString);
+            JsonNode token = jsonNode["access_token"];
+            return token.GetValue<string>();
+        }
+
+        public static string connectionString = "Server=tcp:neox-expenses-sql-server.database.windows.net,1433;Initial Catalog=neox.expensesDB;Persist Security Info=False;";
 
         /// <summary>
         /// Adds a new record into the employees table in the databese and a record into the skills table in the database for each skill
@@ -36,10 +131,11 @@ namespace Skills
         /// <param name="firstSkillLevel">Level of the first skill of the employee</param>
         /// <param name="s">List of all the additional skills of the employee</param>
         /// <param name="l">List of all the levels corresponding to the additional skills of the employee</param>
-        public static void SaveEmployeeIntoDatabase(string firstName, string lastName, SqlDateTime bd,  List<string> s, List<int> l)
+        public void SaveEmployeeIntoDatabase(string firstName, string lastName, SqlDateTime bd,  List<string> s, List<int> l)
         {
             //Connection with Sql using ConnectionString
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             //Open the Sql Connection
             try
             {
@@ -99,10 +195,10 @@ namespace Skills
         /// <param name="BD">Date of birth of the employee</param>
         /// <returns>True if the employee with the specified first name, last name and date of birth exsists, otherwise false</returns>
         /// <exception cref="Exception">For internal use only</exception>
-        public static bool EmployeeExists(string FN, string LN, SqlDateTime BD)
+        public bool EmployeeExists(string FN, string LN, SqlDateTime BD)
         {
             SqlConnection connection = new SqlConnection(connectionString);
-
+            connection.AccessToken = accessToken;
             bool result;
 
             try
@@ -144,9 +240,10 @@ namespace Skills
         /// <param name="s">The name of all further skills (maximal number, including the firstSkill is 6)</param>
         /// <param name="l">The numeric representation of their levels</param>
         /// <returns></returns>
-        public static List<int> SearchEmployeeBySkills(string firstSkill, int firstSkillLevel, List<string> s, List<int> l)
+        public List<int> SearchEmployeeBySkills(string firstSkill, int firstSkillLevel, List<string> s, List<int> l)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             List<int> EmployeeIDs = new List<int>();
             try
             {
@@ -195,9 +292,10 @@ namespace Skills
         /// <param name="id">A valid existing employee_id</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws a new ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
-        public static string GetFirstNameByID(int id)
+        public string GetFirstNameByID(int id)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             string FN;
 
             try
@@ -230,9 +328,10 @@ namespace Skills
         /// <param name="id">A valid existing employee_id</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws an ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
-        public static string GetLastNameByID(int id)
+        public string GetLastNameByID(int id)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             string LN;
 
             try
@@ -264,9 +363,10 @@ namespace Skills
         /// <param name="id">A valid existing employee_id</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws an ArgumentException if the argument does not represent an existing employee_id in the employees table</exception>
-        public static DateTime? GetDateOfBirthByID(int id)
+        public DateTime? GetDateOfBirthByID(int id)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             DateTime? DOB;
 
             try
@@ -302,9 +402,10 @@ namespace Skills
         /// <param name="bd">Date of birth of the employee</param>
         /// <returns>Int representing an ID in the employees table (Primary key)</returns>
         /// <exception cref="ArgumentException">Throws an argument exception if an employee with the specified first name, last name and date of birth does not exist</exception>
-        public static int GetIDByFirstNameLastNameAndDateOfBirth(string fn, string ln, SqlDateTime bd)
+        public int GetIDByFirstNameLastNameAndDateOfBirth(string fn, string ln, SqlDateTime bd)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             int id = 0;
 
             try
@@ -338,9 +439,10 @@ namespace Skills
         /// <param name="id">A valid employee_id from the employees table</param>
         /// <param name="newFN">A new desired first name</param>
         /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
-        public static void SetFirstNameByID(int id, string newFN)
+        public void SetFirstNameByID(int id, string newFN)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
 
             try
             {
@@ -376,9 +478,10 @@ namespace Skills
         /// <param name="id">A valid employee_id from the employees table</param>
         /// <param name="newLN">A new desired last name</param>
         /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
-        public static void SetLastNameByID(int id, string newLN)
+        public void SetLastNameByID(int id, string newLN)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
 
             try
             {
@@ -411,9 +514,10 @@ namespace Skills
         /// <param name="id">A valid employee_id from the employees table</param>
         /// <param name="newBD">A new desired date of birth</param>
         /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
-        public static void SetBirthDateByID(int id, SqlDateTime newBD)
+        public void SetBirthDateByID(int id, SqlDateTime newBD)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
 
             try
             {
@@ -449,9 +553,10 @@ namespace Skills
         /// <param name="newLevel">A new desired level for the skill (in the digital representation). Must be within range [1;4]</param>
         /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
         /// <exception cref="ArgumentOutOfRangeException">Throws an ArgumentOutOfRangeException if newLevel is outside the permitted range [1;4]</exception>
-        public static void ModifySkill(int skillID, string newSkillName, int newLevel)
+        public void ModifySkill(int skillID, string newSkillName, int newLevel)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
 
             if (newLevel < 1 || newLevel > 4)
                 throw new ArgumentOutOfRangeException("Not a valid skill level!");
@@ -491,9 +596,10 @@ namespace Skills
         /// <param name="owner">A valid employee_id from the table employees from the database</param>
         /// <exception cref="ArgumentOutOfRangeException">Throws an ArgumentOutOfRangeException if newLevel is outside the permitted range [1;4]</exception>
         /// <exception cref="ArgumentException">Throws an ArgumentException if the owner does not represent a valid existing employee_id in the employees table</exception>
-        public static void AddSkill(string skillName, int skillLevel, int owner)
+        public void AddSkill(string skillName, int skillLevel, int owner)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             if (skillLevel < 1 || skillLevel > 4)
                 throw new ArgumentOutOfRangeException("Not a valid skill level!");
 
@@ -529,9 +635,10 @@ namespace Skills
         /// </summary>
         /// <param name="skillID">A valid skill ID from the skills table</param>
         /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
-        public static void DeleteSkill(int skillID)
+        public void DeleteSkill(int skillID)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
 
             try
             {
@@ -563,9 +670,10 @@ namespace Skills
         /// <param name="id">A valid employee_id from the table employees from the database</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws an argument exception if an employee with the given id does not exist in the employees table of the database</exception>
-        public static List<int> GetSkillsOfAnEmployee(int id)
+        public List<int> GetSkillsOfAnEmployee(int id)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             List<int> skills = new List<int>();
 
             try
@@ -601,9 +709,10 @@ namespace Skills
         /// <param name="skillID">A valid skill_id from the skills table from the database</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
-        public static string GetSkillByID(int skillID)
+        public string GetSkillByID(int skillID)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
             string sn = "";
             try
             {
@@ -639,9 +748,10 @@ namespace Skills
         /// <param name="skillID">A valid skill_id from the skills table from the database</param>
         /// <returns>An int between 1 and 4</returns>
         /// <exception cref="ArgumentException">Throws an argument exception if a skill with the given id does not exist in the skills table of the database</exception>
-        public static int GetSkillLevelByID(int skillID)
+        public int GetSkillLevelByID(int skillID)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
 
             int level = 0;
             try
@@ -679,9 +789,10 @@ namespace Skills
         /// <param name="owner">Valid employee_id from the table employees from the database</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws an ArgumentException if the owner does not represent a valid existing employee_id in the employees table</exception>
-        public static int GetSkillIDBySkillNameAndOwnerID(string skillName, int owner)
+        public int GetSkillIDBySkillNameAndOwnerID(string skillName, int owner)
         {
             SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
 
             int skillID = 0;
             try
@@ -719,12 +830,13 @@ namespace Skills
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns>skills list</returns>
-        public static List<Skill> GetEmployeeSkills(int employeeId)
+        public List<Skill> GetEmployeeSkills(int employeeId)
         {
             List<Skill> skills = new List<Skill>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.AccessToken = accessToken;
                 connection.Open();
 
                 string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
@@ -757,7 +869,7 @@ namespace Skills
         /// <param name="skillLevel">An integer in the range [1;4]</param>
         /// <returns>A string, representing the skill level description</returns>
         /// <exception cref="ArgumentException">Throws an Argument exception if skillLevel is outside of the range [1;4]</exception>
-        public static string GetConvertedSkillLevelIntoString(int skillLevel)
+        public string GetConvertedSkillLevelIntoString(int skillLevel)
         {
 
             string level;
@@ -794,10 +906,10 @@ namespace Skills
         /// <returns></returns>
         /// <exception cref="ArgumentException">Throws an argument exception if empID is not a valid employee_id from the skills table</exception>
         /// <exception cref="Exception">For internal use only</exception>
-        public static bool SkillExists(string skill, int empID)
+        public bool SkillExists(string skill, int empID)
         {
             SqlConnection connection = new SqlConnection(connectionString);
-
+            connection.AccessToken = accessToken;
             bool exists;
 
             try
@@ -845,10 +957,11 @@ namespace Skills
         /// <param name="birthdate">Date of birth of the employe</param>
         /// <returns>An employee object based on the data in the employees table</returns>
         /// <exception cref="Exception">Throws an exception if the employee with the specified first name, last name and date of birth does not exist in the employees table of the database</exception>
-        public static Employee GetEmployeeByFirstNameLastNameAndDateOfBirth(string firstName, string lastName, DateTime birthdate)
+        public Employee GetEmployeeByFirstNameLastNameAndDateOfBirth(string firstName, string lastName, DateTime birthdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.AccessToken = accessToken;
                 SqlCommand command = new SqlCommand("SELECT * FROM Employees WHERE FirstName=@firstName AND LastName=@lastName AND BirthDate=@birthdate", connection);
                 command.Parameters.AddWithValue("@firstName", firstName);
                 command.Parameters.AddWithValue("@lastName", lastName);
@@ -876,10 +989,11 @@ namespace Skills
         /// <param name="id">A valid existing employee_id from the employees table</param>
         /// <returns></returns>
         /// <exception cref="Exception">Throws an exception if the specified id does not represent a valid existing employee_id in the employees table of the database</exception>
-        public static Employee GetEmployeeById(int id)
+        public Employee GetEmployeeById(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.AccessToken = accessToken;
                 connection.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM Employees WHERE Employee_Id = @id", connection);
                 command.Parameters.AddWithValue("@id", id);
@@ -907,7 +1021,7 @@ namespace Skills
         /// <param name="l">A digit within the range [1;4] representing the skill level</param>
         /// <returns>A skill description of the corresponding skill level</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thtows an ArgumentOutOfRangeException if l is not within the range [1;4]</exception>
-        public static string Level_DigitToString(int l)
+        public string Level_DigitToString(int l)
         {
             switch (l)
             {
@@ -926,13 +1040,14 @@ namespace Skills
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
         /// <param name="dateOfBirth"></param>
-        public static void UpdateEmployee(int employeeId, string firstName, string lastName, DateTime dateOfBirth)
+        public void UpdateEmployee(int employeeId, string firstName, string lastName, DateTime dateOfBirth)
         {
             //Vorname, Nachname und Geburtsdatum akualisieren
             string sql = "UPDATE employees SET firstname = @FirstName, lastname = @LastName, birthdate = @Birthdate WHERE employee_id = @EmployeeId";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.AccessToken = accessToken;
                 SqlCommand command = new SqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@FirstName", firstName);
                 command.Parameters.AddWithValue("@LastName", lastName);
@@ -962,12 +1077,13 @@ namespace Skills
         /// delete the employee from the database
         /// </summary>
         /// <param name="employeeId"></param>
-        public static void DeleteEmployee(int employeeId)
+        public void DeleteEmployee(int employeeId)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    connection.AccessToken = accessToken;
                     connection.Open();
 
                     // Alle Skills des Mitarbeiters löschen, da Beziehung gelöscht werden muss
