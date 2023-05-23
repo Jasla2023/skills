@@ -1,0 +1,1 @@
+search_result['33']=["topic_0000000000000017.html","DatabaseConnections.GetSkillLevelByID Method","Returns a skill level of the skill with the skill ID in the digital format"];

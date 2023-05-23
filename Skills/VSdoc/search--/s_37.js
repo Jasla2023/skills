@@ -1,0 +1,1 @@
+search_result['37']=["topic_000000000000001B.html","DatabaseConnections.SkillExists Method","Checks if the given skill with the given name and the given owner ID exists in the skills table"];

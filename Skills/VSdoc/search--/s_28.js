@@ -1,0 +1,1 @@
+search_result['28']=["topic_0000000000000012.html","DatabaseConnections.ModifySkill Method","Modifies a skill with a known ID. Sets a new name and a new level for the skill"];

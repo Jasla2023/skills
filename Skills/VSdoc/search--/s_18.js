@@ -1,0 +1,1 @@
+search_result['18']=["topic_0000000000000008.html","DatabaseConnections.SaveEmployeeIntoDatabase Method","Adds a new record into the employees table in the databese and a record into the skills table in the database for each skill"];

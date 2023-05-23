@@ -24,6 +24,7 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System.Net.Http;
 using Flurl;
+using System.Transactions;
 
 
 
@@ -139,7 +140,10 @@ namespace Skills
             //Open the Sql Connection
             try
             {
-                connection.Open();
+                int row = 0;
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
 
                 //Sql Insert Command
                 SqlCommand command = new SqlCommand("Insert into Employees (FirstName,LastName, birthdate) values (@FirstName,@LastName, CONVERT (DATE, @birthdate))", connection);
@@ -161,20 +165,26 @@ namespace Skills
                 //command2.ExecuteNonQuery();
 
 
-                int row = 0;
+                
+                    foreach (string skill in s)
+                    {
+                        SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skillName, skillLevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
+                        insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkill", skill);
+                        insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkillLevel", l[row]);
+                        insertAllAdditionalSkills.Parameters.AddWithValue("@FN", firstName);
+                        insertAllAdditionalSkills.Parameters.AddWithValue("@LN", lastName);
+                        insertAllAdditionalSkills.Parameters.AddWithValue("@birthdate", bd);
 
-                foreach (string skill in s)
-                {
-                    SqlCommand insertAllAdditionalSkills = new SqlCommand("INSERT INTO skills (skillName, skillLevel, employee_id) VALUES (@NextSkill, @NextSkillLevel, (SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate))", connection);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkill", skill);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@NextSkillLevel", l[row]);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@FN", firstName);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@LN", lastName);
-                    insertAllAdditionalSkills.Parameters.AddWithValue("@birthdate", bd);
+                        insertAllAdditionalSkills.ExecuteNonQuery();
+                        row++;
+                          
+                        
+                    }
 
-                    insertAllAdditionalSkills.ExecuteNonQuery();
-                    row++;
+                    ts.Complete();
                 }
+
+
             }
             catch (SqlException)
             {

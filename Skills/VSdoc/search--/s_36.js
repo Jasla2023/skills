@@ -1,0 +1,1 @@
+search_result['36']=["topic_000000000000001A.html","DatabaseConnections.GetConvertedSkillLevelIntoString Method","Converts digit-based skill level into inst description"];

@@ -1,0 +1,1 @@
+search_result['23']=["topic_000000000000000D.html","DatabaseConnections.GetDateOfBirthByID Method","Returns the date of birth of the employee with the specifies ID from the table employees in the database"];

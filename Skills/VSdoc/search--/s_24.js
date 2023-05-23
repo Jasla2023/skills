@@ -1,0 +1,1 @@
+search_result['24']=["topic_000000000000000E.html","DatabaseConnections.GetIDByFirstNameLastNameAndDateOfBirth Method","Returns the id of an employee that has the specifies first name, last name and the date of birth"];

@@ -1,0 +1,1 @@
+search_result['71']=["topic_000000000000002E.html","MainWindow.SpecialCharacterHandler Method","The method restricting the special characters upon entry into the first and last name text boxes"];

@@ -1,0 +1,1 @@
+search_result['34']=["topic_0000000000000018.html","DatabaseConnections.GetSkillIDBySkillNameAndOwnerID Method","Returns a skill id from the table skills by its name and the id of the employee who possesses it"];
