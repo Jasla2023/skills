@@ -355,8 +355,13 @@ namespace Skills
 
             Close();
 
-            EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.Instance.GetFirstNameByID(_id), DatabaseConnections.Instance.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.Instance.GetDateOfBirthByID(_id)));
-            newWindow.Show();
+            MessageBox.Show("Änderungen werden erfolgreich gespeichert!");
+
+            //EmployeeFound newWindow = new EmployeeFound(_id, DatabaseConnections.Instance.GetFirstNameByID(_id), DatabaseConnections.Instance.GetLastNameByID(_id), new SqlDateTime((DateTime)DatabaseConnections.Instance.GetDateOfBirthByID(_id)));
+            //newWindow.Show();
+
+            var search = new SearchEmployee2();
+            search.Show();
 
             //for (int i = 0; i < skills.Count; i++)
             //{

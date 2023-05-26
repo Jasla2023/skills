@@ -77,7 +77,7 @@
 
                     <ColumnDefinition Width="70*"/>
 
-                   
+
 
                     <ColumnDefinition Width="5*" />
                 </Grid.ColumnDefinitions>
@@ -93,7 +93,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="1" Grid.Column="1">
-                    <TextBox Name="tbxName"  VerticalAlignment="Center" Margin="10" KeyUp="btnSearchEmployee_Click"/>
+                    <TextBox Name="tbxName"  VerticalAlignment="Center" Margin="10" KeyUp="btnSearchEmployee_Click" />
                 </Grid>
 
 
@@ -105,6 +105,7 @@
 
                     </Button>-->
                 </Grid>
+                <Label Grid.Column="1" Content="Name:" HorizontalAlignment="Left" Margin="10,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="204"/>
 
             </Grid>
 
