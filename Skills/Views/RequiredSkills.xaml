@@ -49,7 +49,7 @@
                     <Grid.Effect>
                         <DropShadowEffect ShadowDepth="0" BlurRadius="5" Color="#80000000" Opacity="0.5"/>
                     </Grid.Effect>
-                    <Image Source="/Images/logo.jpg" Width="Auto" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform">
+                    <Image Source="/Images/neoxLogo.jpg" Width="Auto" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform">
 
                     </Image>
                 </Grid>
