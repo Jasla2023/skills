@@ -113,7 +113,7 @@ namespace Skills
             var httpClient = new HttpClient();
             var response = httpClient.PostAsync(uri, content).Result;
             response.EnsureSuccessStatusCode();
-
+            
             string jsonString =  response.Content.ReadAsStringAsync().Result;
             JsonNode jsonNode = JsonNode.Parse(jsonString);
             JsonNode token = jsonNode["access_token"];
@@ -1070,7 +1070,7 @@ namespace Skills
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("Die Daten wurden erfolgreich aktualisiert!");
+                        //MessageBox.Show("Die Daten wurden erfolgreich aktualisiert!");
                     }
                     else
                     {
