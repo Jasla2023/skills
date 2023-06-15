@@ -261,7 +261,7 @@ namespace Skills
 
                 SqlCommand getEmployeeIDs = new SqlCommand();
                 getEmployeeIDs.Connection = connection;
-                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname = '" + firstSkill + "' AND skilllevel >= " + firstSkillLevel + "AND visible = 1";
+                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname = '" + firstSkill + "' AND skilllevel >= " + firstSkillLevel + " INTERSECT SELECT employee_id FROM employees WHERE visible = 1";
 
                 foreach (string skill in s)
                 {
