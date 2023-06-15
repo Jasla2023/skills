@@ -22,7 +22,7 @@ namespace Skills
     {
 
         private List<StackPanel> requiredSkills;
-        private List<TextBox> requiredSkillsTextBoxes;
+        private List<ComboBox> requiredSkillsTextBoxes;
         private List<ComboBox> requiredSkillsLevels;
         private int numOfSkills;
         /// <summary>
@@ -36,12 +36,15 @@ namespace Skills
             //MessageBox.Show("Bitte sortieren Sie die Kenntnisse absteigend nach Wichtigkeit beim Eingeben");
 
             requiredSkills = new List<StackPanel>();
-            requiredSkillsTextBoxes = new List<TextBox>();
+            requiredSkillsTextBoxes = new List<ComboBox>();
             requiredSkillsLevels = new List<ComboBox>();
 
             requiredSkills.Add(new StackPanel { Orientation = Orientation.Horizontal});
 
-            requiredSkillsTextBoxes.Add(new TextBox { MinWidth = 260.0, Margin = new Thickness(20.0), HorizontalAlignment = HorizontalAlignment.Left });
+            requiredSkillsTextBoxes.Add(DatabaseConnections.Instance.SkillSuggestions());
+            requiredSkillsTextBoxes.Last().MinWidth = 260.0;
+            requiredSkillsTextBoxes.Last().Margin = new Thickness(20.0);
+            requiredSkillsTextBoxes.Last().HorizontalAlignment = HorizontalAlignment.Left ;
             requiredSkills[0].Children.Add(requiredSkillsTextBoxes[0]);
 
             requiredSkillsLevels.Add(new ComboBox() {Height = 30.0 , Margin = new Thickness(20.0), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center  });
@@ -140,7 +143,10 @@ namespace Skills
             }
             requiredSkills.Add(new StackPanel { Orientation = Orientation.Horizontal });
 
-            requiredSkillsTextBoxes.Add(new TextBox { MinWidth = 260.0, Margin = new Thickness(20.0), HorizontalAlignment = HorizontalAlignment.Left });
+            requiredSkillsTextBoxes.Add(DatabaseConnections.Instance.SkillSuggestions());
+            requiredSkillsTextBoxes.Last().MinWidth = 260.0;
+            requiredSkillsTextBoxes.Last().Margin = new Thickness(20.0);
+            requiredSkillsTextBoxes.Last().HorizontalAlignment = HorizontalAlignment.Left;
             requiredSkills[numOfSkills].Children.Add(requiredSkillsTextBoxes[numOfSkills]);
 
 
@@ -172,7 +178,7 @@ namespace Skills
             List<string> s = new List<string>();
             List<int> l = new List<int>();
 
-            foreach(TextBox sk in requiredSkillsTextBoxes)
+            foreach(ComboBox sk in requiredSkillsTextBoxes)
             {
                 if (sk.Text == "")
                 {
