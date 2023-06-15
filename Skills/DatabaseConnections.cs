@@ -267,7 +267,7 @@ namespace Skills
                 {
                     if (s.IndexOf(skill) == 0)
                         continue;
-                    getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname = '" + skill + "' AND skilllevel >= " + l[s.IndexOf(skill)] + "AND visible = 1";
+                    getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname = '" + skill + "' AND skilllevel >= " + l[s.IndexOf(skill)];
                 }
 
                 SqlDataReader IDs = getEmployeeIDs.ExecuteReader();
