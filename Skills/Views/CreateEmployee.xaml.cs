@@ -214,7 +214,7 @@ namespace Skills.Views
                     MessageBox.Show("Es wurde kein Skill angegeben");
                     return;
                 }
-                s.Add(sk.Text);
+                s.Add(sk.Text.ToUpper());
                 l.Add(AssignSkillLevel(newLevel[newSkill.IndexOf(sk)]));
             }
             

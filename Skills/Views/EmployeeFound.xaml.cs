@@ -334,7 +334,7 @@ namespace Skills
                     return;
                 }
                 else
-                    DatabaseConnections.Instance.ModifySkill(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+                    DatabaseConnections.Instance.ModifySkill(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text.ToUpper(), AssignSkillLevel(EditableLevls[i]));
                 if (EditaleSkils[i].Text == "")
                 {
                     MessageBox.Show("Eingabefeld \"Kenntnis\" ist leer!");
@@ -352,7 +352,7 @@ namespace Skills
                     return;
                 }
                 else
-                    DatabaseConnections.Instance.AddSkill(newSkill.Text, AssignSkillLevel(newLevel), _id);
+                    DatabaseConnections.Instance.AddSkill(newSkill.Text.ToUpper(), AssignSkillLevel(newLevel), _id);
             }
 
 
