@@ -27,10 +27,10 @@ namespace Skills
         private Label[] ActualLevels;
         //private Label[] Doppelpunkt;
 
-        private TextBox[] EditaleSkils;
+        private ComboBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
 
-        private TextBox newSkill;
+        private ComboBox newSkill;
         private ComboBox newLevel;
 
         private Grid[] Grids;
@@ -83,7 +83,7 @@ namespace Skills
             ActualLevels = new Label[numberOfSkills];
 
 
-            EditaleSkils = new TextBox[numberOfSkills];
+            EditaleSkils = new ComboBox[numberOfSkills];
             EditableLevls = new ComboBox[numberOfSkills];
 
 
@@ -141,7 +141,11 @@ namespace Skills
                 Grid.SetColumn(EditLevel[i], 6);*/
 
 
-                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden };
+                EditaleSkils[i] = DatabaseConnections.Instance.SkillSuggestions();
+                EditaleSkils[i].Text = (string)ActualSkills[i].Content;
+                EditaleSkils[i].HorizontalAlignment = HorizontalAlignment.Left;
+                EditaleSkils[i].VerticalAlignment = VerticalAlignment.Center;
+                EditaleSkils[i].Visibility = Visibility.Hidden;
                 Grid.SetRow(EditaleSkils[i], 0);
                 Grid.SetColumn(EditaleSkils[i], 0);
 
@@ -418,7 +422,9 @@ namespace Skills
             Grid.SetRow(newLabel2, 1);
             Grid.SetColumn(newLabel2, 0);
 
-            newSkill = new TextBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+            newSkill = DatabaseConnections.Instance.SkillSuggestions();
+            newSkill.HorizontalAlignment = HorizontalAlignment.Left;
+            newSkill.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetRow(newSkill, 0);
             Grid.SetColumn(newSkill, 1);
 
