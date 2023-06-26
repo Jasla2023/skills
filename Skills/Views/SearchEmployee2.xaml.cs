@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Data.SqlTypes;
 using System.Runtime.Remoting.Contexts;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Skills
 {
@@ -108,11 +109,15 @@ namespace Skills
             using (var context = new EmployeeDb())
             {
                 var employees = context.Employees
-                    .AsEnumerable()
-                    .Where(emp => searchNames.All(name => emp.FirstName.ToLower().Contains(name.ToLower()) || emp.LastName.ToLower().Contains(name.ToLower())))
-                    .Where(emp => emp.Visible)
-                    .ToList();
-                dataGrid.ItemsSource = employees;
+                .AsEnumerable()
+                .Where(emp => searchNames.Any(name =>
+                 name.Length > 0 &&
+                 (emp.FirstName.ToLower().StartsWith(name.ToLower()[0].ToString()) ||
+                  emp.LastName.ToLower().StartsWith(name.ToLower()[0].ToString()))))
+                .Where(emp => emp.Visible)
+                .ToList();
+            dataGrid.ItemsSource = employees;
+
             }
         }
     }
