@@ -93,7 +93,7 @@ namespace Skills.Views
             newSkill.Add(DatabaseConnections.Instance.SkillSuggestions());
             newSkill.Last().HorizontalAlignment = HorizontalAlignment.Left; 
             newSkill.Last().VerticalAlignment = VerticalAlignment.Center;
-            AutomationProperties.SetAutomationId(newSkill.Last(), "tbxSkill");
+            AutomationProperties.SetAutomationId(newSkill.Last(), "tbxSkill" + newSkill.IndexOf(newSkill.Last()));
             Grid.SetRow(newSkill.Last(), 0);
             Grid.SetColumn(newSkill.Last(), 1);
 

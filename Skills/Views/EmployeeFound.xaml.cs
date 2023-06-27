@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -143,13 +144,14 @@ namespace Skills
 
                 EditaleSkils[i] = DatabaseConnections.Instance.SkillSuggestions();
                 EditaleSkils[i].Text = (string)ActualSkills[i].Content;
+                EditaleSkils[i].Name = "EditaleSkilsComboBox" + i.ToString(); 
                 EditaleSkils[i].HorizontalAlignment = HorizontalAlignment.Left;
                 EditaleSkils[i].VerticalAlignment = VerticalAlignment.Center;
                 EditaleSkils[i].Visibility = Visibility.Hidden;
                 Grid.SetRow(EditaleSkils[i], 0);
                 Grid.SetColumn(EditaleSkils[i], 0);
 
-                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden };
+                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden, Name = "EditableLevelComboBox" + i.ToString() };
                 ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" };
                 ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
                 ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };
