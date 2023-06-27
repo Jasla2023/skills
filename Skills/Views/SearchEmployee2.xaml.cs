@@ -109,16 +109,17 @@ namespace Skills
             using (var context = new EmployeeDb())
             {
                 var employees = context.Employees
-                .AsEnumerable()
-                .Where(emp => searchNames.Any(name =>
-                 name.Length > 0 &&
-                 (emp.FirstName.ToLower().StartsWith(name.ToLower()[0].ToString()) ||
-                  emp.LastName.ToLower().StartsWith(name.ToLower()[0].ToString()))))
-                .Where(emp => emp.Visible)
-                .ToList();
-            dataGrid.ItemsSource = employees;
+                    .AsEnumerable()
+                    .Where(emp => searchNames.All(name =>
+                        !string.IsNullOrWhiteSpace(name) &&
+                        (emp.FirstName.ToLower().StartsWith(name.ToLower()) ||
+                        emp.LastName.ToLower().StartsWith(name.ToLower()))))
+                    .Where(emp => emp.Visible)
+                    .ToList();
 
+                dataGrid.ItemsSource = employees;
             }
+
         }
     }
 }
