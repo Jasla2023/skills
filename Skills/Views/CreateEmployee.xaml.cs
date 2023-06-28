@@ -30,7 +30,7 @@ namespace Skills.Views
         private TextBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
 
-        private List<TextBox> newSkill;
+        private List<ComboBox> newSkill;
         private List<ComboBox> newLevel;
 
         private Grid[] Grids;
@@ -52,7 +52,7 @@ namespace Skills.Views
         public CreateEmployee()
         {
             InitializeComponent();
-            newSkill = new List<TextBox>();
+            newSkill = new List<ComboBox>();
             newLevel = new List<ComboBox>();
             tbxFirstName.PreviewKeyDown += MainWindow.SpecialCharacterHandler;
             tbxLastName.PreviewKeyDown += MainWindow.SpecialCharacterHandler;
@@ -90,8 +90,10 @@ namespace Skills.Views
             Grid.SetRow(newLabel2, 1);
             Grid.SetColumn(newLabel2, 0);
 
-            newSkill.Add(new TextBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center});
-            AutomationProperties.SetAutomationId(newSkill.Last(), "tbxSkill");
+            newSkill.Add(DatabaseConnections.Instance.SkillSuggestions());
+            newSkill.Last().HorizontalAlignment = HorizontalAlignment.Left; 
+            newSkill.Last().VerticalAlignment = VerticalAlignment.Center;
+            AutomationProperties.SetAutomationId(newSkill.Last(), "tbxSkill" + newSkill.IndexOf(newSkill.Last()));
             Grid.SetRow(newSkill.Last(), 0);
             Grid.SetColumn(newSkill.Last(), 1);
 
@@ -205,14 +207,14 @@ namespace Skills.Views
             //}
 
 
-            foreach (TextBox sk in newSkill)
+            foreach (ComboBox sk in newSkill)
             {
                 if (sk.Text == "")
                 {
                     MessageBox.Show("Es wurde kein Skill angegeben");
                     return;
                 }
-                s.Add(sk.Text);
+                s.Add(sk.Text.ToUpper());
                 l.Add(AssignSkillLevel(newLevel[newSkill.IndexOf(sk)]));
             }
             

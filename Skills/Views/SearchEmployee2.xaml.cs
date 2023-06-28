@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Data.SqlTypes;
 using System.Runtime.Remoting.Contexts;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Skills
 {
@@ -32,7 +33,7 @@ namespace Skills
             InitializeComponent();
 
             context = new EmployeeDb();
-            employees =context.Employees.ToList();
+            employees = context.Employees.ToList();
             dataGrid.DataContext = employees;
 
           
@@ -76,7 +77,7 @@ namespace Skills
             var searchTerm = tbxName.Text;
 
             var emps = employees
-                   .Where(emp => emp.FirstName.Contains(searchTerm) || emp.LastName.Contains(searchTerm))
+                   .Where(emp => emp.FirstName.Contains(searchTerm) || emp.LastName.Contains(searchTerm)  )
                    .ToList();
             //dataGrid.ItemsSource = emps;
 
@@ -109,10 +110,16 @@ namespace Skills
             {
                 var employees = context.Employees
                     .AsEnumerable()
-                    .Where(emp => searchNames.All(name => emp.FirstName.ToLower().Contains(name.ToLower()) || emp.LastName.ToLower().Contains(name.ToLower())))
+                    .Where(emp => searchNames.All(name =>
+                        !string.IsNullOrWhiteSpace(name) &&
+                        (emp.FirstName.ToLower().StartsWith(name.ToLower()) ||
+                        emp.LastName.ToLower().StartsWith(name.ToLower()))))
+                    .Where(emp => emp.Visible)
                     .ToList();
+
                 dataGrid.ItemsSource = employees;
             }
+
         }
     }
 }

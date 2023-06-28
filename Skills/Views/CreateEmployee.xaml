@@ -8,7 +8,7 @@
     xmlns:uc1="clr-namespace:Skills"
 
     mc:Ignorable="d"
-    Title="Mitarbeiterdaten ändern" Height="650" Width="1200" MinHeight="750" MinWidth="1200" ResizeMode="CanResize"
+    Title="Mitarbeiter erfassen" Height="650" Width="1200" MinHeight="750" MinWidth="1200" ResizeMode="CanResize"
     WindowStartupLocation="CenterScreen" MouseDown="Border_MouseDown" >
 
 

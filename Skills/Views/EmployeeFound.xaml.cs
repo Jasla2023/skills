@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -27,10 +28,10 @@ namespace Skills
         private Label[] ActualLevels;
         //private Label[] Doppelpunkt;
 
-        private TextBox[] EditaleSkils;
+        private ComboBox[] EditaleSkils;
         private ComboBox[] EditableLevls;
 
-        private TextBox newSkill;
+        private ComboBox newSkill;
         private ComboBox newLevel;
 
         private Grid[] Grids;
@@ -83,7 +84,7 @@ namespace Skills
             ActualLevels = new Label[numberOfSkills];
 
 
-            EditaleSkils = new TextBox[numberOfSkills];
+            EditaleSkils = new ComboBox[numberOfSkills];
             EditableLevls = new ComboBox[numberOfSkills];
 
 
@@ -141,11 +142,16 @@ namespace Skills
                 Grid.SetColumn(EditLevel[i], 6);*/
 
 
-                EditaleSkils[i] = new TextBox { Text = (string)ActualSkills[i].Content, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden };
+                EditaleSkils[i] = DatabaseConnections.Instance.SkillSuggestions();
+                EditaleSkils[i].Text = (string)ActualSkills[i].Content;
+                EditaleSkils[i].Name = "EditaleSkilsComboBox" + i.ToString(); 
+                EditaleSkils[i].HorizontalAlignment = HorizontalAlignment.Left;
+                EditaleSkils[i].VerticalAlignment = VerticalAlignment.Center;
+                EditaleSkils[i].Visibility = Visibility.Hidden;
                 Grid.SetRow(EditaleSkils[i], 0);
                 Grid.SetColumn(EditaleSkils[i], 0);
 
-                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden };
+                EditableLevls[i] = new ComboBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Visibility = Visibility.Hidden, Name = "EditableLevelComboBox" + i.ToString() };
                 ComboBoxItem FirstLevel = new ComboBoxItem { Content = "Grundkenntnisse" };
                 ComboBoxItem SecondLevel = new ComboBoxItem { Content = "Fortgeschrittene Kenntnisse" };
                 ComboBoxItem ThirdLevel = new ComboBoxItem { Content = "Bereits in Projekt eingesetzt" };
@@ -330,7 +336,7 @@ namespace Skills
                     return;
                 }
                 else
-                    DatabaseConnections.Instance.ModifySkill(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text, AssignSkillLevel(EditableLevls[i]));
+                    DatabaseConnections.Instance.ModifySkill(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(ActualSkills[i].Content.ToString(), _id), EditaleSkils[i].Text.ToUpper(), AssignSkillLevel(EditableLevls[i]));
                 if (EditaleSkils[i].Text == "")
                 {
                     MessageBox.Show("Eingabefeld \"Kenntnis\" ist leer!");
@@ -348,7 +354,7 @@ namespace Skills
                     return;
                 }
                 else
-                    DatabaseConnections.Instance.AddSkill(newSkill.Text, AssignSkillLevel(newLevel), _id);
+                    DatabaseConnections.Instance.AddSkill(newSkill.Text.ToUpper(), AssignSkillLevel(newLevel), _id);
             }
 
 
@@ -418,7 +424,9 @@ namespace Skills
             Grid.SetRow(newLabel2, 1);
             Grid.SetColumn(newLabel2, 0);
 
-            newSkill = new TextBox { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center };
+            newSkill = DatabaseConnections.Instance.SkillSuggestions();
+            newSkill.HorizontalAlignment = HorizontalAlignment.Left;
+            newSkill.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetRow(newSkill, 0);
             Grid.SetColumn(newSkill, 1);
 

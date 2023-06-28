@@ -261,7 +261,7 @@ namespace Skills
 
                 SqlCommand getEmployeeIDs = new SqlCommand();
                 getEmployeeIDs.Connection = connection;
-                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname = '" + firstSkill + "' AND skilllevel >= " + firstSkillLevel;
+                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname = '" + firstSkill + "' AND skilllevel >= " + firstSkillLevel + " INTERSECT SELECT employee_id FROM employees WHERE visible = 1";
 
                 foreach (string skill in s)
                 {
@@ -421,7 +421,7 @@ namespace Skills
             try
             {
                 connection.Open();
-                SqlCommand getID = new SqlCommand("SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = CONVERT(DATE, @BD)", connection);
+                SqlCommand getID = new SqlCommand("SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = CONVERT(DATE, @BD) AND visible = 1", connection);
                 getID.Parameters.AddWithValue("@FN", fn);
                 getID.Parameters.AddWithValue("@LN", ln);
                 getID.Parameters.AddWithValue("@BD", bd);
@@ -972,7 +972,7 @@ namespace Skills
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.AccessToken = accessToken;
-                SqlCommand command = new SqlCommand("SELECT * FROM Employees WHERE FirstName=@firstName AND LastName=@lastName AND BirthDate=@birthdate", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM Employees WHERE FirstName=@firstName AND LastName=@lastName AND BirthDate=@birthdate AND visible = 1", connection);
                 command.Parameters.AddWithValue("@firstName", firstName);
                 command.Parameters.AddWithValue("@lastName", lastName);
                 command.Parameters.AddWithValue("@birthdate", birthdate);
@@ -1063,7 +1063,7 @@ namespace Skills
                 command.Parameters.AddWithValue("@LastName", lastName);
                 command.Parameters.AddWithValue("@Birthdate", dateOfBirth);
                 command.Parameters.AddWithValue("@EmployeeId", employeeId);
-
+ 
                 try
                 {
                     connection.Open();
@@ -1097,14 +1097,14 @@ namespace Skills
                     connection.Open();
 
                     // Alle Skills des Mitarbeiters löschen, da Beziehung gelöscht werden muss
-                    using (SqlCommand command = new SqlCommand("DELETE FROM Skills WHERE Employee_Id = @employeeId", connection))
-                    {
-                        command.Parameters.AddWithValue("@employeeId", employeeId);
-                        command.ExecuteNonQuery();
-                    }
+                    //using (SqlCommand command = new SqlCommand("DELETE FROM Skills WHERE Employee_Id = @employeeId", connection))
+                    //{
+                    //    command.Parameters.AddWithValue("@employeeId", employeeId);
+                    //    command.ExecuteNonQuery();
+                    //}
 
                     // Mitarbeiter löschen
-                    using (SqlCommand command = new SqlCommand("DELETE FROM Employees WHERE Employee_Id = @employeeId", connection))
+                    using (SqlCommand command = new SqlCommand("UPDATE Employees SET visible = 0 WHERE Employee_Id = @employeeId", connection))
                     {
                         command.Parameters.AddWithValue("@employeeId", employeeId);
                         command.ExecuteNonQuery();
@@ -1120,7 +1120,44 @@ namespace Skills
 
 
 
+        public ComboBox SkillSuggestions()
+        {
+            List<string> skills = new List<string>();
 
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.AccessToken = accessToken;
+
+            try
+            {
+                connection.Open();
+
+                SqlCommand skillHistory = new SqlCommand("SELECT DISTINCT skillname FROM skills", connection);
+                SqlDataReader history = skillHistory.ExecuteReader();
+                
+                while (history.Read())
+                {
+                    skills.Add(history.GetString(0));
+                }
+            }
+            catch(SqlException)
+            {
+                throw;
+            }
+            finally { connection.Close(); }
+
+            ComboBox result = new ComboBox { IsEditable = true};
+
+            List<ComboBoxItem> s = new List<ComboBoxItem>();
+            
+            foreach(string skill in skills)
+            {
+                s.Add(new ComboBoxItem { Content = skill });
+                result.Items.Add(s.Last());
+            }
+
+
+            return result;
+        }
 
     }
 }
