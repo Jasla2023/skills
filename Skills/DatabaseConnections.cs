@@ -213,21 +213,25 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand getDuplicates = new SqlCommand("SELECT COUNT(1) \"c\" FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate",connection);
-                getDuplicates.Parameters.AddWithValue("FN", FN);
-                getDuplicates.Parameters.AddWithValue("LN", LN);
-                getDuplicates.Parameters.AddWithValue("@birthdate", BD);
-                SqlDataReader duplicates = getDuplicates.ExecuteReader();
-                int numberOfDuplicates = -1;
-                while (duplicates.Read())
-                    numberOfDuplicates = Convert.ToInt32(duplicates["c"]);
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand getDuplicates = new SqlCommand("SELECT COUNT(1) \"c\" FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = @birthdate", connection);
+                    getDuplicates.Parameters.AddWithValue("FN", FN);
+                    getDuplicates.Parameters.AddWithValue("LN", LN);
+                    getDuplicates.Parameters.AddWithValue("@birthdate", BD);
+                    SqlDataReader duplicates = getDuplicates.ExecuteReader();
+                    int numberOfDuplicates = -1;
+                    while (duplicates.Read())
+                        numberOfDuplicates = Convert.ToInt32(duplicates["c"]);
 
-                if (numberOfDuplicates == -1)
-                    throw new Exception("Error in the SQL-query");
+                    if (numberOfDuplicates == -1)
+                        throw new Exception("Error in the SQL-query");
 
-                result = numberOfDuplicates > 0;
-
+                    result = numberOfDuplicates > 0;
+                    duplicates.Close();
+                    ts.Complete();
+                }
                 
             }
             catch (SqlException)
@@ -257,23 +261,27 @@ namespace Skills
             List<int> EmployeeIDs = new List<int>();
             try
             {
-                connection.Open();
-
-                SqlCommand getEmployeeIDs = new SqlCommand();
-                getEmployeeIDs.Connection = connection;
-                getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname = '" + firstSkill + "' AND skilllevel >= " + firstSkillLevel + " INTERSECT SELECT employee_id FROM employees WHERE visible = 1";
-
-                foreach (string skill in s)
+                using (TransactionScope ts = new TransactionScope())
                 {
-                    if (s.IndexOf(skill) == 0)
-                        continue;
-                    getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname = '" + skill + "' AND skilllevel >= " + l[s.IndexOf(skill)];
+                    connection.Open();
+
+                    SqlCommand getEmployeeIDs = new SqlCommand();
+                    getEmployeeIDs.Connection = connection;
+                    getEmployeeIDs.CommandText = "SELECT employee_id FROM skills WHERE skillname = '" + firstSkill + "' AND skilllevel >= " + firstSkillLevel + " INTERSECT SELECT employee_id FROM employees WHERE visible = 1";
+
+                    foreach (string skill in s)
+                    {
+                        if (s.IndexOf(skill) == 0)
+                            continue;
+                        getEmployeeIDs.CommandText += " INTERSECT SELECT employee_id FROM skills WHERE skillname = '" + skill + "' AND skilllevel >= " + l[s.IndexOf(skill)];
+                    }
+
+                    SqlDataReader IDs = getEmployeeIDs.ExecuteReader();
+                    while (IDs.Read())
+                        EmployeeIDs.Add(IDs.GetInt32(0));
+                    IDs.Close();
+                    ts.Complete();
                 }
-
-                SqlDataReader IDs = getEmployeeIDs.ExecuteReader();
-                while (IDs.Read())
-                    EmployeeIDs.Add(IDs.GetInt32(0));
-
             }
             catch (SqlException)
             {
@@ -310,15 +318,20 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand getFirstName = new SqlCommand("SELECT firstname FROM employees WHERE employee_id = @EID", connection);
-                getFirstName.Parameters.AddWithValue("@EID", id);
-                SqlDataReader firstName = getFirstName.ExecuteReader();
-                FN = "";
-                while (firstName.Read())
-                    FN = firstName.GetString(0);
-                if (FN == "")
-                    throw new ArgumentException("Not a valid ID!");
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand getFirstName = new SqlCommand("SELECT firstname FROM employees WHERE employee_id = @EID", connection);
+                    getFirstName.Parameters.AddWithValue("@EID", id);
+                    SqlDataReader firstName = getFirstName.ExecuteReader();
+                    FN = "";
+                    while (firstName.Read())
+                        FN = firstName.GetString(0);
+                    if (FN == "")
+                        throw new ArgumentException("Not a valid ID!");
+                    firstName.Close();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -346,15 +359,20 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand getLastName = new SqlCommand("SELECT lastname FROM employees WHERE employee_id = @EID", connection);
-                getLastName.Parameters.AddWithValue("@EID", id);
-                SqlDataReader lastName = getLastName.ExecuteReader();
-                LN = "";
-                while (lastName.Read())
-                    LN = lastName.GetString(0);
-                if (LN == "")
-                    throw new ArgumentException("Not a valid ID!");
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand getLastName = new SqlCommand("SELECT lastname FROM employees WHERE employee_id = @EID", connection);
+                    getLastName.Parameters.AddWithValue("@EID", id);
+                    SqlDataReader lastName = getLastName.ExecuteReader();
+                    LN = "";
+                    while (lastName.Read())
+                        LN = lastName.GetString(0);
+                    if (LN == "")
+                        throw new ArgumentException("Not a valid ID!");
+                    lastName.Close();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -381,15 +399,20 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand getDateOfBirth = new SqlCommand("SELECT birthdate FROM employees WHERE employee_id = @EID", connection);
-                getDateOfBirth.Parameters.AddWithValue("@EID", id);
-                SqlDataReader dateOfBirth = getDateOfBirth.ExecuteReader();
-                DOB = null;
-                while (dateOfBirth.Read())
-                    DOB = dateOfBirth.GetDateTime(0);
-                if (DOB == null)
-                    throw new ArgumentException("Not a valid ID!");
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand getDateOfBirth = new SqlCommand("SELECT birthdate FROM employees WHERE employee_id = @EID", connection);
+                    getDateOfBirth.Parameters.AddWithValue("@EID", id);
+                    SqlDataReader dateOfBirth = getDateOfBirth.ExecuteReader();
+                    DOB = null;
+                    while (dateOfBirth.Read())
+                        DOB = dateOfBirth.GetDateTime(0);
+                    if (DOB == null)
+                        throw new ArgumentException("Not a valid ID!");
+                    dateOfBirth.Close();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -420,17 +443,23 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand getID = new SqlCommand("SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = CONVERT(DATE, @BD) AND visible = 1", connection);
-                getID.Parameters.AddWithValue("@FN", fn);
-                getID.Parameters.AddWithValue("@LN", ln);
-                getID.Parameters.AddWithValue("@BD", bd);
-                SqlDataReader empID = getID.ExecuteReader();
-                id = 0;
-                while (empID.Read())
-                    id = empID.GetInt32(0);
-                if (id == 0)
-                    throw new ArgumentException("Mitarbeiter existiert nicht!");
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand getID = new SqlCommand("SELECT employee_id FROM employees WHERE firstname = @FN AND lastname = @LN AND birthdate = CONVERT(DATE, @BD) AND visible = 1", connection);
+                    getID.Parameters.AddWithValue("@FN", fn);
+                    getID.Parameters.AddWithValue("@LN", ln);
+                    getID.Parameters.AddWithValue("@BD", bd);
+                    SqlDataReader empID = getID.ExecuteReader();
+                    id = 0;
+                    while (empID.Read())
+                        id = empID.GetInt32(0);
+                    if (id == 0)
+                        throw new ArgumentException("Mitarbeiter existiert nicht!");
+
+                    empID.Close();
+                    ts.Complete();
+                }
             }
             catch(SqlException)
             {
@@ -456,19 +485,23 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", id);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if(c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
-                SqlCommand setFirstName = new SqlCommand("UPDATE employees SET firstname = @FN WHERE employee_id = @ID", connection);
-                setFirstName.Parameters.AddWithValue("@FN", newFN);
-                setFirstName.Parameters.AddWithValue("@ID", id);
-                c.Close();
-                setFirstName.ExecuteNonQuery();
-                
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", id);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
+                    SqlCommand setFirstName = new SqlCommand("UPDATE employees SET firstname = @FN WHERE employee_id = @ID", connection);
+                    setFirstName.Parameters.AddWithValue("@FN", newFN);
+                    setFirstName.Parameters.AddWithValue("@ID", id);
+                    c.Close();
+                    setFirstName.ExecuteNonQuery();
+
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -495,19 +528,22 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", id);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
-                SqlCommand setLastName = new SqlCommand("UPDATE employees SET lastname = @LN WHERE employee_id = @ID", connection);
-                setLastName.Parameters.AddWithValue("@LN", newLN);
-                setLastName.Parameters.AddWithValue("@ID", id);
-                c.Close();
-                setLastName.ExecuteNonQuery();
-             
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", id);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
+                    SqlCommand setLastName = new SqlCommand("UPDATE employees SET lastname = @LN WHERE employee_id = @ID", connection);
+                    setLastName.Parameters.AddWithValue("@LN", newLN);
+                    setLastName.Parameters.AddWithValue("@ID", id);
+                    c.Close();
+                    setLastName.ExecuteNonQuery();
+                    ts.Complete();
+                }
             }
             catch (ArgumentException)
             {
@@ -531,19 +567,22 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", id);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
-                SqlCommand setDateOfBirth = new SqlCommand("UPDATE employees SET birthdate = CONVERT(DATE,@BD) WHERE employee_id = @ID", connection);
-                setDateOfBirth.Parameters.AddWithValue("@BD", newBD);
-                setDateOfBirth.Parameters.AddWithValue("@ID", id);
-                c.Close();
-                setDateOfBirth.ExecuteNonQuery();
-              
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", id);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
+                    SqlCommand setDateOfBirth = new SqlCommand("UPDATE employees SET birthdate = CONVERT(DATE,@BD) WHERE employee_id = @ID", connection);
+                    setDateOfBirth.Parameters.AddWithValue("@BD", newBD);
+                    setDateOfBirth.Parameters.AddWithValue("@ID", id);
+                    c.Close();
+                    setDateOfBirth.ExecuteNonQuery();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -573,21 +612,26 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", skillID);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", skillID);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
 
 
-                SqlCommand updateSkill = new SqlCommand("UPDATE skills SET skillname = @SN, skilllevel = @SL WHERE skill_id = @ID", connection);
-                updateSkill.Parameters.AddWithValue("@SN", newSkillName);
-                updateSkill.Parameters.AddWithValue("@SL", newLevel);
-                updateSkill.Parameters.AddWithValue("@ID", skillID);
-                c.Close();
-                updateSkill.ExecuteNonQuery();
+                    SqlCommand updateSkill = new SqlCommand("UPDATE skills SET skillname = @SN, skilllevel = @SL WHERE skill_id = @ID", connection);
+                    updateSkill.Parameters.AddWithValue("@SN", newSkillName);
+                    updateSkill.Parameters.AddWithValue("@SL", newLevel);
+                    updateSkill.Parameters.AddWithValue("@ID", skillID);
+                    c.Close();
+                    updateSkill.ExecuteNonQuery();
+
+                    ts.Complete();
+                }
             }
             catch (SqlException) 
             { 
@@ -615,20 +659,24 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", owner);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Owner is not a valid employee_id!");
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", owner);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Owner is not a valid employee_id!");
 
-                SqlCommand addSkill = new SqlCommand("INSERT INTO skills (skillname, skilllevel, employee_id) values (@SN, @SL, @EID)", connection) ;
-                addSkill.Parameters.AddWithValue("@SN", skillName);
-                addSkill.Parameters.AddWithValue("@SL", skillLevel);
-                addSkill.Parameters.AddWithValue("@EID", owner);
-                c.Close();
-                addSkill.ExecuteNonQuery();
+                    SqlCommand addSkill = new SqlCommand("INSERT INTO skills (skillname, skilllevel, employee_id) values (@SN, @SL, @EID)", connection);
+                    addSkill.Parameters.AddWithValue("@SN", skillName);
+                    addSkill.Parameters.AddWithValue("@SL", skillLevel);
+                    addSkill.Parameters.AddWithValue("@EID", owner);
+                    c.Close();
+                    addSkill.ExecuteNonQuery();
+                    ts.Complete();
+                }
             }
             catch(SqlException)
             {
@@ -652,18 +700,22 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", skillID);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", skillID);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
 
-                SqlCommand deleteSkill = new SqlCommand("DELETE FROM skills WHERE skill_id = @ID", connection);
-                deleteSkill.Parameters.AddWithValue("@ID", skillID);
-                c.Close();
-                deleteSkill.ExecuteNonQuery();
+                    SqlCommand deleteSkill = new SqlCommand("DELETE FROM skills WHERE skill_id = @ID", connection);
+                    deleteSkill.Parameters.AddWithValue("@ID", skillID);
+                    c.Close();
+                    deleteSkill.ExecuteNonQuery();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -688,19 +740,24 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", id);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
-                SqlCommand getSkills = new SqlCommand("SELECT skill_id FROM skills WHERE employee_id = @EID", connection);
-                getSkills.Parameters.AddWithValue("@EID", id);
-                c.Close();
-                SqlDataReader s = getSkills.ExecuteReader();
-                while(s.Read())
-                    skills.Add(s.GetInt32(0));
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", id);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
+                    SqlCommand getSkills = new SqlCommand("SELECT skill_id FROM skills WHERE employee_id = @EID", connection);
+                    getSkills.Parameters.AddWithValue("@EID", id);
+                    c.Close();
+                    SqlDataReader s = getSkills.ExecuteReader();
+                    while (s.Read())
+                        skills.Add(s.GetInt32(0));
+                    s.Close();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -726,21 +783,24 @@ namespace Skills
             string sn = "";
             try
             {
-                
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", skillID);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
-                SqlCommand getSkillName = new SqlCommand("SELECT skillname FROM skills WHERE skill_id = @ID", connection);
-                getSkillName.Parameters.AddWithValue("@ID", skillID);
-                c.Close();
-                SqlDataReader skillName = getSkillName.ExecuteReader();
-                while(skillName.Read())
-                    sn = skillName.GetString(0);
-                
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", skillID);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
+                    SqlCommand getSkillName = new SqlCommand("SELECT skillname FROM skills WHERE skill_id = @ID", connection);
+                    getSkillName.Parameters.AddWithValue("@ID", skillID);
+                    c.Close();
+                    SqlDataReader skillName = getSkillName.ExecuteReader();
+                    while (skillName.Read())
+                        sn = skillName.GetString(0);
+                    skillName.Close();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -766,21 +826,24 @@ namespace Skills
             int level = 0;
             try
             {
-
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", skillID);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
-                SqlCommand getLevel = new SqlCommand("SELECT skilllevel FROM skills WHERE skill_id = @ID", connection);
-                getLevel.Parameters.AddWithValue("@ID", skillID);
-                c.Close();
-                SqlDataReader l = getLevel.ExecuteReader();
-                while(l.Read())
-                    level = l.GetInt32(0);
-
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM skills WHERE skill_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", skillID);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
+                    SqlCommand getLevel = new SqlCommand("SELECT skilllevel FROM skills WHERE skill_id = @ID", connection);
+                    getLevel.Parameters.AddWithValue("@ID", skillID);
+                    c.Close();
+                    SqlDataReader l = getLevel.ExecuteReader();
+                    while (l.Read())
+                        level = l.GetInt32(0);
+                    l.Close();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -807,21 +870,25 @@ namespace Skills
             int skillID = 0;
             try
             {
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", owner);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Owner is not a valid employee_id!");
+                    SqlCommand getSkillID = new SqlCommand("SELECT skill_id FROM skills WHERE skillname LIKE '%" + skillName + "%' AND employee_id = @ID", connection);
 
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", owner);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Owner is not a valid employee_id!");
-                SqlCommand getSkillID = new SqlCommand("SELECT skill_id FROM skills WHERE skillname LIKE '%"+skillName+"%' AND employee_id = @ID", connection);
-                
-                getSkillID.Parameters.AddWithValue("@ID", owner);
-                c.Close();
-                SqlDataReader id = getSkillID.ExecuteReader();
-                while(id.Read())
-                    skillID = id.GetInt32(0);
+                    getSkillID.Parameters.AddWithValue("@ID", owner);
+                    c.Close();
+                    SqlDataReader id = getSkillID.ExecuteReader();
+                    while (id.Read())
+                        skillID = id.GetInt32(0);
+                    id.Close();
+                    ts.Complete();
+                }
             }
             catch (SqlException)
             {
@@ -847,27 +914,34 @@ namespace Skills
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.AccessToken = accessToken;
-                connection.Open();
 
-                string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@employee_Id", employeeId);
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (TransactionScope ts = new TransactionScope())
                 {
-                    while (reader.Read())
+
+                    connection.Open();
+
+                    string query = "SELECT * FROM skills WHERE employee_id = @employee_Id";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@employee_Id", employeeId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        Skill skill = new Skill();
-                        skill.Skill_Id = (int)reader["skill_id"];
-                        skill.SkillName = (string)reader["skillname"];
+                        while (reader.Read())
+                        {
+                            Skill skill = new Skill();
+                            skill.Skill_Id = (int)reader["skill_id"];
+                            skill.SkillName = (string)reader["skillname"];
 
 
-                        skill.SkillLevel = Level_DigitToString((int)reader["skilllevel"]);
-                        //skill.SkillLevelString = GetConvertedSkillLevelIntoString((int)reader["skilllevel"]);
-                        skill.Employee_Id = employeeId;
+                            skill.SkillLevel = Level_DigitToString((int)reader["skilllevel"]);
+                            //skill.SkillLevelString = GetConvertedSkillLevelIntoString((int)reader["skilllevel"]);
+                            skill.Employee_Id = employeeId;
 
-                        skills.Add(skill);
+                            skills.Add(skill);
+                        }
                     }
+
+                    ts.Complete();
                 }
             }
 
@@ -924,27 +998,31 @@ namespace Skills
 
             try
             {
-                connection.Open();
-                SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
-                check.Parameters.AddWithValue("@ID", empID);
-                SqlDataReader c = check.ExecuteReader();
-                while (c.Read())
-                    if (c.GetInt32(0) == 0)
-                        throw new ArgumentException("Not a valid ID!");
-                c.Close();
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    connection.Open();
+                    SqlCommand check = new SqlCommand("SELECT COUNT(1) FROM employees WHERE employee_id = @ID", connection);
+                    check.Parameters.AddWithValue("@ID", empID);
+                    SqlDataReader c = check.ExecuteReader();
+                    while (c.Read())
+                        if (c.GetInt32(0) == 0)
+                            throw new ArgumentException("Not a valid ID!");
+                    c.Close();
 
 
-                SqlCommand skillExists = new SqlCommand("SELECT COUNT(1) FROM skills WHERE employee_id = @ID AND skillname = @SN", connection);
-                skillExists.Parameters.AddWithValue("@ID", empID);
-                skillExists.Parameters.AddWithValue("@SN", skill);
-                SqlDataReader skillDuplicates = skillExists.ExecuteReader();
-                int numberOfDuplicates = -1;
-                while (skillDuplicates.Read())
-                    numberOfDuplicates = skillDuplicates.GetInt32(0);
-                if (numberOfDuplicates == -1)
-                    throw new Exception("Error in the SQL-query");
-                exists = numberOfDuplicates > 0;
-
+                    SqlCommand skillExists = new SqlCommand("SELECT COUNT(1) FROM skills WHERE employee_id = @ID AND skillname = @SN", connection);
+                    skillExists.Parameters.AddWithValue("@ID", empID);
+                    skillExists.Parameters.AddWithValue("@SN", skill);
+                    SqlDataReader skillDuplicates = skillExists.ExecuteReader();
+                    int numberOfDuplicates = -1;
+                    while (skillDuplicates.Read())
+                        numberOfDuplicates = skillDuplicates.GetInt32(0);
+                    if (numberOfDuplicates == -1)
+                        throw new Exception("Error in the SQL-query");
+                    exists = numberOfDuplicates > 0;
+                    skillDuplicates.Close();
+                    ts.Complete();  
+                }
             }
             catch (SqlException)
             {
@@ -972,6 +1050,8 @@ namespace Skills
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.AccessToken = accessToken;
+                
+
                 SqlCommand command = new SqlCommand("SELECT * FROM Employees WHERE FirstName=@firstName AND LastName=@lastName AND BirthDate=@birthdate AND visible = 1", connection);
                 command.Parameters.AddWithValue("@firstName", firstName);
                 command.Parameters.AddWithValue("@lastName", lastName);
@@ -1058,6 +1138,9 @@ namespace Skills
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.AccessToken = accessToken;
+
+                
+
                 SqlCommand command = new SqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@FirstName", firstName);
                 command.Parameters.AddWithValue("@LastName", lastName);
@@ -1066,15 +1149,19 @@ namespace Skills
  
                 try
                 {
-                    connection.Open();
-                    int rowsAffected = command.ExecuteNonQuery();
-                    if (rowsAffected > 0)
+                    using (TransactionScope ts = new TransactionScope())
                     {
-                        //MessageBox.Show("Die Daten wurden erfolgreich aktualisiert!");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Mitarbeiter wurde nicht gefunden.");
+                        connection.Open();
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            //MessageBox.Show("Die Daten wurden erfolgreich aktualisiert!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Mitarbeiter wurde nicht gefunden.");
+                        }
+                        ts.Complete();
                     }
                 }
                 catch (Exception ex)
@@ -1094,21 +1181,28 @@ namespace Skills
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.AccessToken = accessToken;
-                    connection.Open();
 
-                    // Alle Skills des Mitarbeiters löschen, da Beziehung gelöscht werden muss
-                    //using (SqlCommand command = new SqlCommand("DELETE FROM Skills WHERE Employee_Id = @employeeId", connection))
-                    //{
-                    //    command.Parameters.AddWithValue("@employeeId", employeeId);
-                    //    command.ExecuteNonQuery();
-                    //}
-
-                    // Mitarbeiter löschen
-                    using (SqlCommand command = new SqlCommand("UPDATE Employees SET visible = 0 WHERE Employee_Id = @employeeId", connection))
+                    using (TransactionScope ts = new TransactionScope())
                     {
-                        command.Parameters.AddWithValue("@employeeId", employeeId);
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Mitarbeiter wurde erfolgreich gelöscht.");
+
+                        connection.Open();
+
+                        // Alle Skills des Mitarbeiters löschen, da Beziehung gelöscht werden muss
+                        //using (SqlCommand command = new SqlCommand("DELETE FROM Skills WHERE Employee_Id = @employeeId", connection))
+                        //{
+                        //    command.Parameters.AddWithValue("@employeeId", employeeId);
+                        //    command.ExecuteNonQuery();
+                        //}
+
+                        // Mitarbeiter löschen
+                        using (SqlCommand command = new SqlCommand("UPDATE Employees SET visible = 0 WHERE Employee_Id = @employeeId", connection))
+                        {
+                            command.Parameters.AddWithValue("@employeeId", employeeId);
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Mitarbeiter wurde erfolgreich gelöscht.");
+                        }
+
+                        ts.Complete();
                     }
                 }
             }
@@ -1129,14 +1223,19 @@ namespace Skills
 
             try
             {
-                connection.Open();
-
-                SqlCommand skillHistory = new SqlCommand("SELECT DISTINCT skillname FROM skills", connection);
-                SqlDataReader history = skillHistory.ExecuteReader();
-                
-                while (history.Read())
+                using (TransactionScope ts = new TransactionScope())
                 {
-                    skills.Add(history.GetString(0));
+                    connection.Open();
+
+                    SqlCommand skillHistory = new SqlCommand("SELECT DISTINCT skillname FROM skills", connection);
+                    SqlDataReader history = skillHistory.ExecuteReader();
+
+                    while (history.Read())
+                    {
+                        skills.Add(history.GetString(0));
+                    }
+                    history.Close();
+                    ts.Complete();
                 }
             }
             catch(SqlException)

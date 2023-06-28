@@ -57,10 +57,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>132A01BD51F097894F987E12627E84B4438852E1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>458FBC28083CB66F8DBC05BB5E6D8E4EA58E717B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Skills_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Skills_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -330,6 +330,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Skills_1_TemporaryKey.pfx" />
+    <None Include="Skills_2_TemporaryKey.pfx" />
     <None Include="Skills_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
