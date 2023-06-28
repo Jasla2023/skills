@@ -300,12 +300,12 @@ namespace Skills
                                             Grid.SetColumn(minus, 0);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(minus);
 
-                                            Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
+                                            Label sn = new Label { Content = skill.SkillName, FontWeight = s.Contains(skill.SkillName, StringComparer.OrdinalIgnoreCase) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
                                             Grid.SetRow(sn, skills.IndexOf(skill) + 1);
                                             Grid.SetColumn(sn, 2);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sn);
 
-                                            Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
+                                            Label sl = new Label { Content = skill.SkillLevel, FontWeight = s.Contains(skill.SkillName, StringComparer.OrdinalIgnoreCase) && l[s.IndexOf(skill.SkillName)] <= DatabaseConnections.Instance.GetSkillLevelByID(DatabaseConnections.Instance.GetSkillIDBySkillNameAndOwnerID(skill.SkillName, emp)) ? FontWeights.Bold : FontWeights.Normal };
                                             Grid.SetRow(sl, skills.IndexOf(skill) + 1);
                                             Grid.SetColumn(sl, 3);
                                             empGrids[SearchResult.IndexOf(emp)].Children.Add(sl);
